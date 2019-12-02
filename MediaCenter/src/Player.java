@@ -23,7 +23,7 @@ public class Player {
         System.out.println("VLC started.");
     }
 
-    public void addToPlaylist(String path){
+    public void addToQueue(String path){
         // "write" the parms into stdin
         line = "add " + path + "\n";
         try {
@@ -46,6 +46,96 @@ public class Player {
 
     public void play(){
         line = "play" + "\n";
+        try {
+            stdin.write(line.getBytes() );
+            stdin.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void emptyQueue(){
+        line = "clear" + "\n";
+        try {
+            stdin.write(line.getBytes() );
+            stdin.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void fullscreenON(){
+        line = "fullscreen on" + "\n";
+        try {
+            stdin.write(line.getBytes() );
+            stdin.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void fullscreenOFF(){
+        line = "fullscreen off" + "\n";
+        try {
+            stdin.write(line.getBytes() );
+            stdin.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void incVolume(){
+        line = "volup 1" + "\n";
+        try {
+            stdin.write(line.getBytes() );
+            stdin.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void decVolume(){
+        line = "voldown 1" + "\n";
+        try {
+            stdin.write(line.getBytes() );
+            stdin.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void nextContent(){
+        line = "next" + "\n";
+        try {
+            stdin.write(line.getBytes() );
+            stdin.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void prevContent(){
+        line = "prev" + "\n";
+        try {
+            stdin.write(line.getBytes() );
+            stdin.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void shuffleON(){
+        line = "random on" + "\n";
+        try {
+            stdin.write(line.getBytes() );
+            stdin.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void shuffleOFF(){
+        line = "random off" + "\n";
         try {
             stdin.write(line.getBytes() );
             stdin.flush();
