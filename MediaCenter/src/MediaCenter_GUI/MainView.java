@@ -1,4 +1,4 @@
-package GUI;
+package MediaCenter_GUI;
 
 import javax.swing.*;
 import java.awt.GridBagConstraints;
@@ -88,6 +88,7 @@ public class MainView extends JFrame
         gbLeftPanel.setConstraints( lbUsernameLabel, gbcLeftPanel );
         pnLeftPanel.add( lbUsernameLabel );
 
+        // Secção das Categorias
         String []dataCategorias = { "Rock", "Metal", "Pop", "Trance", "Action", "History", "asdas", "asdas","adas","qqqq","test","testa","teste" };
         lsCategorias = new JList( dataCategorias );
         lsCategorias.setName( "Categorias" );

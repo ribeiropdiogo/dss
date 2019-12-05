@@ -1,4 +1,4 @@
-package GUI;
+package MediaCenter_GUI;
 
 import javax.swing.*;
 import java.awt.GridBagConstraints;

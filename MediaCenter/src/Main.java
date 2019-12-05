@@ -1,5 +1,4 @@
-import GUI.LoginForm;
-import GUI.MainView;
+import MediaCenter_GUI.LoginForm;
 
 public class Main {
     public static void main(String[] args) {
