@@ -66,7 +66,6 @@ public class MessageDialog extends JFrame
         gbPanel0.setConstraints( lbMessage, gbcPanel0 );
         pnPanel0.add( lbMessage );
 
-        setDefaultCloseOperation( EXIT_ON_CLOSE );
 
         setContentPane( pnPanel0 );
         pack();
