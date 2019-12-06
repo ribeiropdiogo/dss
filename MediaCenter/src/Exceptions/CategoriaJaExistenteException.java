@@ -1,4 +1,4 @@
-package MediaCenterSystem.BusinessLogic;
+package Exceptions;
 
 public class CategoriaJaExistenteException extends Throwable {
 

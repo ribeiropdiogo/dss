@@ -1,4 +1,4 @@
-package MediaCenterSystem.BusinessLogic;
+package Exceptions;
 
 public class ConteudoNaoEncontradoException extends Throwable {
 

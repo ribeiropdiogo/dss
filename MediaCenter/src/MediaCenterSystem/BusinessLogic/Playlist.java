@@ -1,5 +1,7 @@
 package MediaCenterSystem.BusinessLogic;
 
+import Exceptions.ConteudoNaoEncontradoException;
+
 import java.util.*;
 
 public class Playlist {

@@ -1,6 +1,6 @@
 package MediaCenterSystem.BusinessLogic.Cadastrado;
 
-import MediaCenterSystem.BusinessLogic.PasswordIncorretaException;
+import Exceptions.PasswordIncorretaException;
 import MediaCenterSystem.BusinessLogic.Playlist;
 
 import java.util.ArrayList;
