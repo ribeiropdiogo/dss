@@ -4,23 +4,23 @@ import Exceptions.PasswordIncorretaException;
 
 public class Cadastrado {
 
-    private Long id;
+    private String id;
     private String username;
     private String email;
     private String password;
 
-    public Cadastrado(Long id, String username, String email, String password) {
+    public Cadastrado(String id, String username, String email, String password) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
     }
 
-    public Long getId(){
+    public String getId(){
         return id;
     }
 
-    public void setId(Long id){
+    public void setId(String id){
         this.id = id;
     }
 
@@ -36,7 +36,7 @@ public class Cadastrado {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void alteraEmail(String email) {
         this.email = email;
     }
 
@@ -51,11 +51,7 @@ public class Cadastrado {
     public void alteraPass(String pOld, String pNew, String pNewC) throws PasswordIncorretaException {
 
         if(this.password.equals(pOld)){
-
-            if(pNew.equals(pNewC)) {
-                this.password = pNew;
-            }else throw new PasswordIncorretaException("Novas passwords não são iguais");
-
+            this.password = pNew;
         }else throw new PasswordIncorretaException("Password atual não igual");
     }
 

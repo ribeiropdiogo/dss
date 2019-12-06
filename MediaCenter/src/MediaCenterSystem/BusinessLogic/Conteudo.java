@@ -15,7 +15,7 @@ public class Conteudo {
     private Double duracao;
     private String autor;
     private String path;
-    private Set<Long> donos;
+    private Set<String> donos;
     private HashMap<String,Categoria> categorias;
 
     Conteudo(Long id, String nome, Long tamanho, Double duracao, String autor, String path){
@@ -37,9 +37,10 @@ public class Conteudo {
         return this.id;
     }
 
-    public void remove(Long idConta){
+    public int removeDono(String idConta){
 
         this.donos.remove(idConta);
+        return donos.size();
 
     }
 

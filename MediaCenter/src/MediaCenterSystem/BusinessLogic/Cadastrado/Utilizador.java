@@ -1,5 +1,6 @@
 package MediaCenterSystem.BusinessLogic.Cadastrado;
 
+import Exceptions.AmizadeException;
 import Exceptions.PasswordIncorretaException;
 import MediaCenterSystem.BusinessLogic.Playlist;
 
@@ -12,10 +13,10 @@ public class Utilizador extends Cadastrado{
 
     private Set<Long> contents;
     private Set<Long> playlists;
-    private Set<Long> amigos;
-    private Set<Long> pedidos;
+    private Set<String> amigos;
+    private Set<String> pedidos;
 
-    public Utilizador(Long id, String username, String email, String password) {
+    public Utilizador(String id, String username, String email, String password) {
         super(id, username, email, password);
         contents = new HashSet<>();
         playlists = new HashSet<>();
@@ -24,10 +25,14 @@ public class Utilizador extends Cadastrado{
     }
 
 
-    public void remove(Long idContent){
+    public void removeContent(Long idContent){
 
         this.contents.remove(idContent);
 
+    }
+
+    public void removePedido(String idAmigo){
+        amigos.remove(idAmigo);
     }
 
     public void addContent(Long cid){
@@ -58,16 +63,16 @@ public class Utilizador extends Cadastrado{
     /* CRIAR PLAYLIST falta o put */
 
 
-    public boolean temAmigo(Long idAmigo){
+    public boolean temAmigo(String idAmigo){
 
         return this.amigos.contains(idAmigo);
     }
 
-    public void removeAmigo(Long idAmigo){
+    public void removeAmigo(String idAmigo){
         this.amigos.remove(idAmigo);
     }
 
-    public void respondePedido(Long idAmigo, boolean resp){
+    public void respondePedido(String idAmigo, boolean resp){
 
         if(resp){
             this.amigos.add(idAmigo);
@@ -78,11 +83,11 @@ public class Utilizador extends Cadastrado{
 
 
     /*nova execao?*/
-    public void formConvite(Long idConta) throws PasswordIncorretaException {
+    public void formConvite(String idConta) throws AmizadeException {
 
         if(!this.pedidos.contains(idConta)){
             this.pedidos.add(idConta);
-        }else throw new PasswordIncorretaException( "utilizador já convidado");
+        }else throw new AmizadeException( "O utilizador " + super.getId() + " já foi convidado, aguarde resposta!");
 
     }
 
