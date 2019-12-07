@@ -1,5 +1,10 @@
 package MediaCenter_GUI;
 
+import Exceptions.PasswordIncorretaException;
+import Exceptions.UtilizadorInexistenteException;
+import MediaCenterSystem.MediaCenter;
+import com.sun.tools.javac.Main;
+
 import javax.swing.*;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -25,28 +30,6 @@ public class LoginForm extends JFrame
     JButton btGuestLogin;
     JButton btLoginButton;
     JButton btForgotButton;
-    /**
-     */
-    public static void main( String args[] )
-    {
-        try
-        {
-            UIManager.setLookAndFeel("javax.swing.plaf.mac.MacLookAndFeel");
-        }
-        catch ( ClassNotFoundException e )
-        {
-        }
-        catch ( InstantiationException e )
-        {
-        }
-        catch ( IllegalAccessException e )
-        {
-        }
-        catch ( UnsupportedLookAndFeelException e )
-        {
-        }
-        thelogin = new LoginForm();
-    }
 
     public void CloseFrame(){
         super.dispose();
@@ -54,7 +37,7 @@ public class LoginForm extends JFrame
 
     /**
      */
-    public LoginForm()
+    public LoginForm(MediaCenter mediacenter)
     {
         super( "Login" );
 
@@ -165,8 +148,27 @@ public class LoginForm extends JFrame
         {
             public void actionPerformed(ActionEvent e)
             {
-                CloseFrame();
-                MainView md = new MainView();
+                String username = tfUsernameField.getText();
+                char[] password = tfPasswordField.getPassword();
+
+                if (!username.isBlank() && password.length>0) {
+                    try {
+                        mediacenter.login(username, new String(password));
+                    } catch (PasswordIncorretaException p) {
+                        MessageDialog md = new MessageDialog("Error", "Incorrect Password");
+                    } catch (UtilizadorInexistenteException u) {
+                        MessageDialog md = new MessageDialog("Error", "Username does not exist");
+                    }
+                } else if (username.isBlank() && password.length>0){
+                    MessageDialog md = new MessageDialog("Error","Please fill your username");
+                } else if (password.length==0 && !username.isBlank()){
+                    MessageDialog md = new MessageDialog("Error","Pleasy type in your password");
+                } else {
+                    MessageDialog md = new MessageDialog("Error","You need to type your username and password");
+                }
+
+                //CloseFrame();
+                //MainView md = new MainView(mediacenter);
             }
         });
 
@@ -174,7 +176,7 @@ public class LoginForm extends JFrame
         {
             public void actionPerformed(ActionEvent e)
             {
-                MessageDialog md = new MessageDialog("Error","Incorrect Password");
+                ResetPasswordForm rpf = new ResetPasswordForm(mediacenter);
             }
         });
 
@@ -182,7 +184,9 @@ public class LoginForm extends JFrame
         {
             public void actionPerformed(ActionEvent e)
             {
-                MessageDialog md = new MessageDialog("Error","Incorrect Password");
+                mediacenter.loginGuest();
+                CloseFrame();
+                MainView mv = new MainView(mediacenter);
             }
         });
     }

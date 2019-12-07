@@ -239,7 +239,7 @@ public class MediaCenter {
             throw new UtilizadorRepetidoException("Já existe um cadastrado com o username " + idConta + "!");
 
         if(tipo.equals("admin"))
-            membros.put(idConta, new Administrador(idConta, email, password));
+            membros.put(idConta, new Administrador(idConta,email, password));
         else
             membros.put(idConta, new Utilizador(idConta, email, password));
     }
