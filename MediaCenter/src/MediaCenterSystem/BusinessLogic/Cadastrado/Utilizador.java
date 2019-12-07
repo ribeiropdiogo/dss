@@ -3,6 +3,9 @@ package MediaCenterSystem.BusinessLogic.Cadastrado;
 import Exceptions.AmizadeException;
 import Exceptions.PasswordIncorretaException;
 import MediaCenterSystem.BusinessLogic.Playlist;
+import MediaCenterSystem.DataAccess.ConteudoDAO;
+import MediaCenterSystem.DataAccess.PlaylistDAO;
+import Utilities.Par;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,9 +18,11 @@ public class Utilizador extends Cadastrado{
     private Set<Long> playlists;
     private Set<String> amigos;
     private Set<String> pedidos;
+    private ConteudoDAO conteudos;
+    private PlaylistDAO pls;
 
-    public Utilizador(String id, String username, String email, String password) {
-        super(id, username, email, password);
+    public Utilizador(String username, String email, String password) {
+        super(username, email, password);
         contents = new HashSet<>();
         playlists = new HashSet<>();
         amigos = new HashSet<>();
@@ -39,11 +44,8 @@ public class Utilizador extends Cadastrado{
         this.contents.add(cid);
     }
 
-    public List<Long> getPlaylists() {
-
-        List<Long> ret = new ArrayList<>(playlists);
-
-        return ret;
+    public List<Par<Long, String>> getPlaylists() {
+        return new ArrayList<>();
     }
 
     public void setPlaylists(Set<Long> playlists) {
@@ -87,10 +89,13 @@ public class Utilizador extends Cadastrado{
 
         if(!this.pedidos.contains(idConta)){
             this.pedidos.add(idConta);
-        }else throw new AmizadeException( "O utilizador " + super.getId() + " já foi convidado, aguarde resposta!");
+        }else throw new AmizadeException( "O utilizador " + super.getUsername() + " já foi convidado, aguarde resposta!");
 
     }
 
+    public Set<Long> getContentList() {
+        return new HashSet<>(contents);
+    }
     public boolean checkOwnership(Long idContent){
 
         return(this.contents.contains(idContent));

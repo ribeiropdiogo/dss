@@ -2,26 +2,21 @@ package MediaCenterSystem.BusinessLogic.Cadastrado;
 
 import Exceptions.PasswordIncorretaException;
 
-public class Cadastrado {
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-    private String id;
+public abstract class Cadastrado {
+
     private String username;
     private String email;
     private String password;
 
-    public Cadastrado(String id, String username, String email, String password) {
-        this.id = id;
+    public Cadastrado(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
-    }
-
-    public String getId(){
-        return id;
-    }
-
-    public void setId(String id){
-        this.id = id;
     }
 
     public String getUsername() {
@@ -56,8 +51,11 @@ public class Cadastrado {
     }
 
     public boolean checkPassword(String password){
-
         return this.password.equals(password);
+    }
+
+    public Set<Long> getContentList() {
+        return new HashSet<>();
     }
 
     public boolean checkMail(String email){

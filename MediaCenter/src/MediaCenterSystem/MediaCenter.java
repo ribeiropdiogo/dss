@@ -1,16 +1,17 @@
 package MediaCenterSystem;
 
-import Exceptions.AmizadeException;
-import Exceptions.PasswordFracaException;
-import Exceptions.PasswordIncorretaException;
-import Exceptions.UtilizadorInexistenteException;
+import Exceptions.*;
 import MediaCenterSystem.BusinessLogic.Album;
+import MediaCenterSystem.BusinessLogic.Cadastrado.Administrador;
 import MediaCenterSystem.BusinessLogic.Cadastrado.Cadastrado;
 import MediaCenterSystem.BusinessLogic.Cadastrado.Utilizador;
+import MediaCenterSystem.BusinessLogic.Categoria;
 import MediaCenterSystem.BusinessLogic.Conteudo;
 import MediaCenterSystem.BusinessLogic.Playlist;
 import MediaCenterSystem.DataAccess.*;
+import Utilities.Par;
 
+import java.lang.SecurityException;
 import java.util.List;
 import java.util.Set;
 
@@ -132,50 +133,196 @@ public class MediaCenter {
         membros.put(idConta, c);
     }
 
-    public Set<String> getCategorias(long idContent){return null;}
+    public Set<String> getCategorias(long idContent){
+        return conteudos.get(idContent).getCategorias();
+    }
 
-    public void adicionarCategoria(long idContent, String idCat){}
+    public void adicionarCategoria(long idContent, String idCat) {
+        Categoria ca = reassureCategory(idCat);
+        Conteudo c = conteudos.get(idContent);
 
-    public void alterarCategoria(long idContent, String oldCat, String newCat){}
+        c.adicionaCategoria(idCat, ca);
 
-    public void removerCategoria(long idContent, String idCat){}
+        conteudos.put(idContent, c);
+    }
 
-    public String getPath(String idContent){return null;}
+    public void alterarCategoria(long idContent, String oldCat, String newCat){
+        Categoria ca = reassureCategory(newCat);
+        Conteudo c = conteudos.get(idContent);
 
-    public void randomPlaylist(String idConta, String nome, String desc){}
+        c.alteraCategoria(oldCat, newCat, ca);
 
-    public void newPlaylist(String idConta, String nome, String desc, String cat){}
+        conteudos.put(idContent, c);
+    }
 
-    public void artistPlaylist(String idConta, String nome, String desc, String artista){}
+    public void removerCategoria(long idContent, String idCat) {
+        Conteudo c = conteudos.get(idContent);
 
-    public void newPlaylist(String idConta, String nome, String desc){}
+        c.eliminaCategoria(idCat);
 
-    public void getPlaylists(String idConta){}
+        conteudos.put(idContent, c);
+    }
 
-    public void removePlaylist(String idConta, long idPlaylist){}
+    public String getPath(long idContent){
+        return conteudos.get(idContent).getPath();
+    }
 
-    public void editPName(long idPlaylist, String pNome){}
+    public void randomPlaylist(String idConta, String nome, String desc){
+        this.addPlaylist(idConta, this.randomPlaylist(nome, desc));
+    }
 
-    public void editPDesc(long idPlaylist, String pDesc){}
+    public void newPlaylist(String idConta, String nome, String desc, String cat){
+        this.addPlaylist(idConta, this.newCatPlaylist(nome, desc, cat));
+    }
 
-    public void adicionaPlaylist(long idPlaylist, long idContent){}
+    public void artistPlaylist(String idConta, String nome, String desc, String artista){
+        this.addPlaylist(idConta, this.artistPlaylist(nome, desc, artista));
+    }
 
-    public void checkPermissions(long idConta, long idContent){}
+    public void newPlaylist(String idConta, String nome, String desc){
+        this.addPlaylist(idConta, this.newPlaylist(nome, desc));
+    }
+
+    public List<Par<Long, String>> getPlaylists(String idConta) {
+        return ((Utilizador)membros.get(idConta)).getPlaylists();
+    }
+
+    public void removePlaylist(String idConta, long idPlaylist) {
+        Utilizador u = (Utilizador)membros.get(idConta);
+
+        u.removePlaylist(idPlaylist);
+
+        membros.put(idConta, u);
+    }
+
+    public void editPName(long idPlaylist, String pNome) {
+        Playlist p = playlists.get(idPlaylist);
+
+        p.setNome(pNome);
+
+        playlists.put(idPlaylist, p);
+    }
+
+    public void editPDesc(long idPlaylist, String pDesc) {
+        Playlist p = playlists.get(idPlaylist);
+
+        p.setDescricao(pDesc);
+
+        playlists.put(idPlaylist, p);
+    }
+
+    public void adicionaPlaylist(long idPlaylist, long idContent) throws ConteudoRepetidoException {
+        Playlist p = playlists.get(idPlaylist);
+        Conteudo cn = conteudos.get(idContent);
+
+        p.addContent(idContent, cn);
+
+        playlists.put(idPlaylist, p);
+    }
+
+    public boolean checkPermissions(String idConta, long idContent){
+        return ((Utilizador)membros.get(idConta)).checkOwnership(idContent);
+    }
 
     public void download(long idContent){}
 
     public void upload(String idConta, String nome, String autor, String album, String path){}
 
-    public void newConta(String tipo, String idConta, String email, String password){}
+    public void newConta(String tipo, String idConta, String email, String password) throws UtilizadorRepetidoException {
+        if(membros.contains(idConta))
+            throw new UtilizadorRepetidoException("Já existe um cadastrado com o username " + idConta + "!");
 
-    public void removeAccount(String idConta){}
+        if(tipo.equals("admin"))
+            membros.put(idConta, new Administrador(idConta, email, password));
+        else
+            membros.put(idConta, new Utilizador(idConta, email, password));
+    }
 
-    public void forgottenPassword(String username, String email){}
+    public void removeAccount(String idConta){
+        Cadastrado c = membros.get(idConta);
 
-    public void login(String username, String password){}
+        Set<Long> list = c.getContentList();
+
+        list.forEach(it -> this.removeContent(idConta, it));
+
+        membros.remove(idConta);
+    }
+
+    public void forgottenPassword(String username, String email) throws UtilizadorInexistenteException, SecurityException {
+        String password;
+        Cadastrado c = this.getUser(username);
+
+        if(!c.checkMail(email))
+            throw new SecurityException("O email indicado não corresponde à conta indicada.");
+
+        password = this.generatePassword();
+
+        c.setPassword(password);
+
+        this.sendMail(email, password);
+
+        membros.put(username, c);
+    }
+
+    public void login(String username, String password) throws UtilizadorInexistenteException, PasswordIncorretaException {
+        Cadastrado c = this.getUser(username);
+
+        if(!c.checkPassword(password))
+            throw new PasswordIncorretaException("A password indica está incorreta!");
+    }
+
+    public String generatePassword() {
+        return "";
+    }
+
+    public void sendMail(String email, String password) {}
 
     private boolean isWeakPassword(String pass) {
         return true;
+    }
+
+    private Cadastrado getUser(String id) throws UtilizadorInexistenteException {
+        if(!membros.contains(id))
+            throw new UtilizadorInexistenteException("Não existe um membro com o username \"" + id + "\"!");
+        return membros.get(id);
+    }
+
+    private Categoria reassureCategory(String idCat) {
+        Categoria ca;
+
+        if(categorias.contains(idCat))
+            ca = categorias.get(idCat);
+        else {
+            ca = new Categoria(idCat);
+            categorias.put(idCat, ca);
+        }
+
+        return ca;
+    }
+
+    // Playlists
+    private Playlist randomPlaylist(String nome, String desc) {
+        return null;
+    }
+
+    private Playlist newCatPlaylist(String nome, String desc, String cat) {
+        return null;
+    }
+
+    private Playlist artistPlaylist(String nome, String desc, String artista) {
+        return null;
+    }
+
+    private Playlist newPlaylist(String nome, String desc) {
+        return new Playlist(nome, desc);
+    }
+
+    private void addPlaylist(String idConta, Playlist pl) {
+        Utilizador u = (Utilizador)membros.get(idConta);
+
+        u.addPlaylist(pl);
+
+        membros.put(idConta, u);
     }
 
 }
