@@ -9,19 +9,25 @@ import MediaCenterSystem.BusinessLogic.Categoria;
 import MediaCenterSystem.BusinessLogic.Conteudo;
 import MediaCenterSystem.BusinessLogic.Playlist;
 import MediaCenterSystem.DataAccess.*;
+import Utilities.MediaMailer;
 import Utilities.Par;
 
+import javax.mail.MessagingException;
 import java.lang.SecurityException;
 import java.util.List;
 import java.util.Set;
 
+import static java.util.Collections.shuffle;
+
 public class MediaCenter {
+    private static final int MAX_RAND_SONGS = 25;
 
     private CategoriaDAO categorias;
     private AlbumDAO albuns;
     private PlaylistDAO playlists;
     private CadastradoDAO membros;
     private ConteudoDAO conteudos;
+    private MediaMailer mailer;
 
     public void loginGuest(){}
 
@@ -248,7 +254,7 @@ public class MediaCenter {
         membros.remove(idConta);
     }
 
-    public void forgottenPassword(String username, String email) throws UtilizadorInexistenteException, SecurityException {
+    public void forgottenPassword(String username, String email) throws UtilizadorInexistenteException, SecurityException, EmailException {
         String password;
         Cadastrado c = this.getUser(username);
 
@@ -275,7 +281,16 @@ public class MediaCenter {
         return "";
     }
 
-    public void sendMail(String email, String password) {}
+    public void sendMail(String email, String password) throws EmailException {
+        String subject = "[MediaCente¶] Nova password.";
+        String msg = "A sua nova password é " + password;
+
+        try {
+            mailer.sendMessage(email, subject, msg);
+        } catch (MessagingException me) {
+            throw new EmailException("Ocorreu um erro ao enviar o email!");
+        }
+    }
 
     private boolean isWeakPassword(String pass) {
         return true;
@@ -302,15 +317,42 @@ public class MediaCenter {
 
     // Playlists
     private Playlist randomPlaylist(String nome, String desc) {
-        return null;
+        Playlist pl = new Playlist(nome, desc);
+        List<Long> ls = conteudos.getAll();
+        int li = ls.size() < MAX_RAND_SONGS ? ls.size() : MAX_RAND_SONGS;
+
+        shuffle(ls);
+        ls = ls.subList(0, li);
+
+        pl.addContents(conteudos.getAll(ls));
+
+        return pl;
     }
 
     private Playlist newCatPlaylist(String nome, String desc, String cat) {
-        return null;
+        Playlist pl = new Playlist(nome, desc);
+        List<Conteudo> ls = conteudos.getWithCategoria(cat);
+        int li = ls.size() < MAX_RAND_SONGS ? ls.size() : MAX_RAND_SONGS;
+
+        shuffle(ls);
+        ls = ls.subList(0, li);
+
+        pl.addContents(ls);
+
+        return pl;
     }
 
     private Playlist artistPlaylist(String nome, String desc, String artista) {
-        return null;
+        Playlist pl = new Playlist(nome, desc);
+        List<Conteudo> ls = conteudos.getWithArtist(artista);
+        int li = ls.size() < MAX_RAND_SONGS ? ls.size() : MAX_RAND_SONGS;
+
+        shuffle(ls);
+        ls = ls.subList(0, li);
+
+        pl.addContents(ls);
+
+        return pl;
     }
 
     private Playlist newPlaylist(String nome, String desc) {
