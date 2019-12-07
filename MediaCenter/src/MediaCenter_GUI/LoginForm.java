@@ -1,9 +1,9 @@
 package MediaCenter_GUI;
 
+import Client.MediaCenterInterface;
+import Client.RemoteMediaCenter;
 import Exceptions.PasswordIncorretaException;
 import Exceptions.UtilizadorInexistenteException;
-import MediaCenterSystem.MediaCenter;
-import com.sun.tools.javac.Main;
 
 import javax.swing.*;
 import java.awt.GridBagConstraints;
@@ -37,7 +37,7 @@ public class LoginForm extends JFrame
 
     /**
      */
-    public LoginForm(MediaCenter mediacenter)
+    public LoginForm(MediaCenterInterface mediacenter)
     {
         super( "Login" );
 
@@ -152,13 +152,7 @@ public class LoginForm extends JFrame
                 char[] password = tfPasswordField.getPassword();
 
                 if (!username.isBlank() && password.length>0) {
-                    try {
                         mediacenter.login(username, new String(password));
-                    } catch (PasswordIncorretaException p) {
-                        MessageDialog md = new MessageDialog("Error", "Incorrect Password");
-                    } catch (UtilizadorInexistenteException u) {
-                        MessageDialog md = new MessageDialog("Error", "Username does not exist");
-                    }
                 } else if (username.isBlank() && password.length>0){
                     MessageDialog md = new MessageDialog("Error","Please fill your username");
                 } else if (password.length==0 && !username.isBlank()){
@@ -167,8 +161,7 @@ public class LoginForm extends JFrame
                     MessageDialog md = new MessageDialog("Error","You need to type your username and password");
                 }
 
-                //CloseFrame();
-                //MainView md = new MainView(mediacenter);
+                CloseFrame();
             }
         });
 
@@ -176,7 +169,7 @@ public class LoginForm extends JFrame
         {
             public void actionPerformed(ActionEvent e)
             {
-                ResetPasswordForm rpf = new ResetPasswordForm(mediacenter);
+                //ResetPasswordForm rpf = new ResetPasswordForm(mediacenter);
             }
         });
 
@@ -186,7 +179,6 @@ public class LoginForm extends JFrame
             {
                 mediacenter.loginGuest();
                 CloseFrame();
-                MainView mv = new MainView(mediacenter);
             }
         });
     }

@@ -1,5 +1,6 @@
 package MediaCenter_GUI;
 
+import Client.MediaCenterInterface;
 import MediaCenterSystem.MediaCenter;
 
 import javax.swing.*;
@@ -48,7 +49,7 @@ public class MainView extends JFrame
         super.dispose();
     }
 
-    public MainView(MediaCenter mediacenter)
+    public MainView(MediaCenterInterface mediacenter)
     {
         super( "Media Center" );
 
@@ -380,8 +381,8 @@ public class MainView extends JFrame
         {
             public void actionPerformed(ActionEvent e)
             {
+                mediacenter.logout();
                 CloseFrame();
-                LoginForm l = new LoginForm(mediacenter);
             }
         });
 
