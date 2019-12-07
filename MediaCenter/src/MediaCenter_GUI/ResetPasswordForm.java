@@ -1,5 +1,6 @@
 package MediaCenter_GUI;
 
+import Exceptions.UtilizadorInexistenteException;
 import MediaCenterSystem.MediaCenter;
 
 import javax.swing.*;
@@ -116,8 +117,12 @@ public class ResetPasswordForm extends JFrame {
                if (username.isBlank() || email.isBlank()){
                    MessageDialog md = new MessageDialog("Error","You need to type your username and email");
                } else {
-                   mediacenter.forgottenPassword(username,email);
-                   CloseFrame();
+                   try {
+                       mediacenter.forgottenPassword(username, email);
+                       CloseFrame();
+                   } catch (UtilizadorInexistenteException u){
+                       MessageDialog md = new MessageDialog("Error","User does not exist");
+                   }
                }
             }
         });

@@ -1,6 +1,6 @@
 package MediaCenterSystem.BusinessLogic;
 
-import Exceptions.ConteudoNaoEncontradoException;
+import Exceptions.ConteudoRepetidoException;
 
 import java.util.*;
 
@@ -12,9 +12,7 @@ public class Playlist {
     private Map<Long,Conteudo> conteudos;
 
 
-    Playlist(Long id, String nome, String descricao){
-
-        this.id = id;
+    public Playlist(String nome, String descricao){
         this.nome = nome;
         this.descricao = descricao;
         this.conteudos = new HashMap<>();
@@ -22,10 +20,6 @@ public class Playlist {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNome() {
@@ -48,11 +42,11 @@ public class Playlist {
         this.conteudos.remove(idContent);
     }
 
-    public void addContent(Long idContent, Conteudo cn) throws ConteudoNaoEncontradoException {
+    public void addContent(long idContent, Conteudo cn) throws ConteudoRepetidoException {
 
         if (this.conteudos.containsKey(idContent)) {
             this.conteudos.put(idContent, cn);
-        } else throw new ConteudoNaoEncontradoException("Conteudo Repetido");
+        } else throw new ConteudoRepetidoException("Conteudo Repetido");
     }
 
     public void addContents(List<Conteudo> cVetor){

@@ -53,13 +53,8 @@ public class Conteudo {
     }
 
 
-    public void adicionaCategoria(String idCat, Categoria ca) throws CategoriaJaExistenteException {
-
-        if(!categorias.containsKey(idCat)){
-
-            categorias.put(idCat,ca);
-
-        }else throw new CategoriaJaExistenteException("Categoria Já existe");
+    public void adicionaCategoria(String idCat, Categoria ca) {
+        categorias.put(idCat,ca);
     }
 
     public void alteraCategoria(String oldCat, String newCat,Categoria ca){
@@ -78,11 +73,8 @@ public class Conteudo {
         return this.donos.size();
     }
 
-    public HashMap<String,Categoria> getCategorias(){
-
-        Map<String,Categoria> ret = new HashMap<>(categorias);
-
-        return (HashMap<String, Categoria>) ret;
+    public Set<String> getCategorias(){
+        return new HashSet<>();
     }
 
 }
