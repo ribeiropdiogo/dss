@@ -120,8 +120,8 @@ public class ResetPasswordForm extends JFrame {
                    try {
                        mediacenter.forgottenPassword(username, email);
                        CloseFrame();
-                   } catch (UtilizadorInexistenteException u){
-                       MessageDialog md = new MessageDialog("Error","User does not exist");
+                   } catch (Exception u){
+                       MessageDialog md = new MessageDialog("Error",u.getMessage());
                    }
                }
             }
