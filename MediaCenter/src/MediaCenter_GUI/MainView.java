@@ -1,5 +1,7 @@
 package MediaCenter_GUI;
 
+import MediaCenterSystem.MediaCenter;
+
 import javax.swing.*;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -41,34 +43,12 @@ public class MainView extends JFrame
 
 
     JPanel pnHead;
-    /**
-     */
-    public static void main( String args[] )
-    {
-        try
-        {
-            UIManager.setLookAndFeel("javax.swing.plaf.mac.MacLookAndFeel");
-        }
-        catch ( ClassNotFoundException e )
-        {
-        }
-        catch ( InstantiationException e )
-        {
-        }
-        catch ( IllegalAccessException e )
-        {
-        }
-        catch ( UnsupportedLookAndFeelException e )
-        {
-        }
-        theaaa = new MainView();
-    }
 
     public void CloseFrame(){
         super.dispose();
     }
 
-    public MainView()
+    public MainView(MediaCenter mediacenter)
     {
         super( "Media Center" );
 
@@ -401,7 +381,7 @@ public class MainView extends JFrame
             public void actionPerformed(ActionEvent e)
             {
                 CloseFrame();
-                LoginForm l = new LoginForm();
+                LoginForm l = new LoginForm(mediacenter);
             }
         });
 

@@ -172,7 +172,11 @@ public class MediaCenter {
 
     public void forgottenPassword(String username, String email){}
 
-    public void login(String username, String password){}
+    public void login(String username, String password) throws PasswordIncorretaException, UtilizadorInexistenteException{
+        //para efeitos de teste
+        throw new PasswordIncorretaException("");
+        //---------------------
+    }
 
     private boolean isWeakPassword(String pass) {
         return true;
