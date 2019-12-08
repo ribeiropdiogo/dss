@@ -12,7 +12,7 @@ public class Client {
     private static MediaCenterInterface mci;
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        mci = new RemoteMediaCenter("localhost", 12345);
+        mci = new RemoteMediaCenter("localhost", 16899);
 
         LoginForm lf = new LoginForm(mci);
     }

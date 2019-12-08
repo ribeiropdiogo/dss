@@ -1,6 +1,7 @@
 package Client;
 
 import Exceptions.*;
+import MediaCenter_GUI.GuestView;
 import MediaCenter_GUI.LoginForm;
 import MediaCenter_GUI.MainView;
 import MediaCenter_GUI.MessageDialog;
@@ -22,7 +23,7 @@ public class RemoteMediaCenter implements MediaCenterInterface{
     private final PrintWriter out;
 
     public RemoteMediaCenter(String host, int port) throws IOException {
-        this.socket = new Socket(InetAddress.getByName(host),port);
+        this.socket = new Socket(host,port);
         System.out.println("> Connected to "+ socket.getRemoteSocketAddress());
         this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.out = new PrintWriter(socket.getOutputStream());
@@ -31,7 +32,7 @@ public class RemoteMediaCenter implements MediaCenterInterface{
     public void loginGuest() {
         out.println("loginGuest");
         out.flush();
-        MainView mv = new MainView(this);
+        GuestView mv = new GuestView(this);
     }
 
     public void logout() {
