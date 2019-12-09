@@ -87,8 +87,11 @@ public class CadastradoDAO {
     }
 
     public void put(String idConta, Administrador conta) {
+        System.out.println("wtf1");
         this.put(idConta, (Cadastrado)conta);
+        System.out.println("wtf2");
         DBAcess.putQuery(mytA, idUser(idConta), "('" + idConta + "')");
+        System.out.println("wtf3");
     }
 
     public boolean contains(String idConta){

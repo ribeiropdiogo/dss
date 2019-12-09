@@ -78,6 +78,7 @@ public abstract class DBAcess {
 
     public static Integer getSize(ResultSet rs) {
         try {
+            rs.next();
             return rs.getInt(1);
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
