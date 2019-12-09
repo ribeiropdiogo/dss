@@ -29,6 +29,10 @@ public class MediaCenter {
     private ConteudoDAO conteudos;
     private MediaMailer mailer;
 
+    public MediaCenter() {
+        membros = CadastradoDAO.getInstance();
+    }
+
     public void loginGuest(){}
 
     public void logout(){}

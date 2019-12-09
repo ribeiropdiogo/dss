@@ -6,11 +6,27 @@ import java.util.*;
 
 public class Playlist {
 
+    private static int nextID = 0;
+
     private int id;
     private String nome;
     private String descricao;
     private Map<Integer,Conteudo> conteudos;
 
+    public static void setCurrentNextID(int nextID) {
+        Playlist.nextID = nextID;
+    }
+
+    public static Playlist getInstance(int id, String nome, String descricao, Map<Integer, Conteudo> conteudos) {
+        return new Playlist(id, nome, descricao, conteudos);
+    }
+
+    private Playlist(int id, String nome, String descricao, Map<Integer, Conteudo> conteudos) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.conteudos = new HashMap<>(conteudos);
+    }
 
     public Playlist(String nome, String descricao){
         this.nome = nome;

@@ -13,6 +13,14 @@ public class Server {
         //md.newConta("utitilizador","chuck","chuck@norris.xyz","kick");
         System.out.println("> Server is running and waiting for connection");
 
+        try {
+            md.newConta("admin","ruifcp","niggjoe@gmail.com","loles");
+            System.out.println("Conta criada com sucesso");
+        } catch(Exception exc) {
+            System.out.println("Erro");
+            System.out.println(exc.getMessage());
+        }
+
         while (true) {
             Socket socket = ss.accept();
 

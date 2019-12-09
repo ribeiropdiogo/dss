@@ -1,6 +1,8 @@
 package MediaCenterSystem.BusinessLogic;
 
 import Exceptions.CategoriaJaExistenteException;
+import MediaCenterSystem.BusinessLogic.Cadastrado.Utilizador;
+import jdk.jshell.execution.Util;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,8 +17,8 @@ public class Conteudo {
     private Double duracao;
     private String autor;
     private String path;
-    private Set<String> donos;
-    private HashMap<String,Categoria> categorias;
+    private HashMap<String, Categoria> categorias;
+    private HashMap<String, Utilizador> donos;
 
     Conteudo(int id, String nome, Long tamanho, Double duracao, String autor, String path){
         this.id = id;
@@ -25,7 +27,7 @@ public class Conteudo {
         this.duracao = duracao;
         this.autor = autor;
         this.path = path;
-        this.donos = new HashSet<>();
+        this.donos = new HashMap<>();
         this.categorias = new HashMap<>();
     }
 
