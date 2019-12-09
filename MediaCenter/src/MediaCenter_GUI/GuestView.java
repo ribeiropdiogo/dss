@@ -2,14 +2,20 @@ package MediaCenter_GUI;
 
 import Client.MediaCenterInterface;
 import MediaCenterSystem.MediaCenter;
+import MediaPlayer.MediaPlayer;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class GuestView extends JFrame
 {
@@ -27,11 +33,11 @@ public class GuestView extends JFrame
 
     JPanel pnRightPanel;
     JTable tbContentTable;
+    private String[][] data;
     JPanel pnPanelReproducao;
     JButton btPrev;
     JButton btPlay;
     JButton btNext;
-    JButton btAddConteudo;
     JButton btShuffle;
 
 
@@ -134,25 +140,39 @@ public class GuestView extends JFrame
         GridBagConstraints gbcRightPanel = new GridBagConstraints();
         pnRightPanel.setLayout( gbRightPanel );
 
-        String [][]dataContentTable = new String[][] { new String[] {"musica1", "owner",
-                "1:11", "+ ..."},
-                new String[] {"musica2", "owner",
-                        "1:11", "+ ..."},
-                new String[] {"musica3", "owner",
-                        "1:11", "+ ..."},
-                new String[] {"musica4", "owner",
-                        "1:11", "+ ..."},
-                new String[] {"musica5", "owner",
-                        "1:11", "+ ..."},
-                new String[] {"musica6", "owner",
-                        "1:11", "+ ..."},
-                new String[] {"musica7", "owner",
-                        "1:11", "+ ..."} };
-        String []colsContentTable = new String[] { "Name", "Owner", "Duration", "Options" };
-        tbContentTable = new JTable( dataContentTable, colsContentTable );
+        String[] columnNames = new String[] { "Name", "Owner", "Duration", "Options" };
+        data = new String[][] { new String[] {"musica1", "owner", "1:11", "+ ..."},
+                new String[] {"musica2", "owner", "1:11", "+ ...", "1"},
+                new String[] {"musica3", "owner", "1:11", "+ ...", "1"},
+                new String[] {"musica4", "owner", "1:11", "+ ...", "1"},
+                new String[] {"musica5", "owner", "1:11", "+ ...", "1"},
+                new String[] {"musica6", "owner", "1:11", "+ ...", "1"},
+                new String[] {"musica6", "owner", "1:11", "+ ...", "1"},
+                new String[] {"musica6", "owner", "1:11", "+ ...", "1"},
+                new String[] {"musica6", "owner", "1:11", "+ ...", "1"},
+                new String[] {"musica7", "owner", "1:11", "+ ...", "1"} };
+
+        tbContentTable = new JTable() {
+            public boolean isCellEditable(int nRow, int nCol) {
+                return false;
+            }
+        };
+
+        DefaultTableModel musicTableModel = (DefaultTableModel) tbContentTable.getModel();
+        musicTableModel.setColumnIdentifiers(columnNames);
+
+        DefaultTableModel tableModel = (DefaultTableModel) tbContentTable.getModel();
+        for (int i = 0; i < data.length; i++){
+            tableModel.addRow(data[i]);
+        }
+
+        tbContentTable.setModel(tableModel);
+
+
         tbContentTable.setAutoCreateRowSorter( true );
+        tbContentTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tbContentTable.setAutoscrolls( false );
-        tbContentTable.setEnabled( false );
+        //tbContentTable.setEnabled( false );
         tbContentTable.setName( "" );
         JScrollPane scpContentTable = new JScrollPane( tbContentTable );
         gbcRightPanel.gridx = 0;
@@ -219,18 +239,6 @@ public class GuestView extends JFrame
         gbPanelReproducao.setConstraints( btPrev, gbcPanelReproducao );
         pnPanelReproducao.add( btPrev );
 
-        btAddConteudo = new JButton( "add"  );
-        gbcPanelReproducao.gridx = 5;
-        gbcPanelReproducao.gridy = 0;
-        gbcPanelReproducao.gridwidth = 1;
-        gbcPanelReproducao.gridheight = 1;
-        gbcPanelReproducao.fill = GridBagConstraints.NONE;
-        gbcPanelReproducao.weightx = 1;
-        gbcPanelReproducao.weighty = 0;
-        gbcPanelReproducao.anchor = GridBagConstraints.EAST;
-        gbPanelReproducao.setConstraints( btAddConteudo, gbcPanelReproducao );
-        pnPanelReproducao.add( btAddConteudo );
-
         btShuffle = new JButton( "shuffle"  );
         gbcPanelReproducao.gridx = 0;
         gbcPanelReproducao.gridy = 0;
@@ -269,20 +277,36 @@ public class GuestView extends JFrame
         setSize(900,666);
         setVisible( true );
 
+
+        MediaPlayer mp = new MediaPlayer();
+
+
         btLogoutButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
                 mediacenter.logout();
+                mp.exit();
                 CloseFrame();
             }
         });
 
-        btAddConteudo.addActionListener(new ActionListener()
+        btPlay.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
-                UploadForm uf = new UploadForm();
+                tbContentTable.getValueAt(tbContentTable.getSelectedRow(),3);
+                int row = tbContentTable.getSelectedRow();
+                System.out.println("Selected row "+row+" - id = "+data[row][4]);
+                tableModel.removeRow(row);
+                tableModel.fireTableDataChanged();
+            }
+        });
+
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                mp.exit();
+                super.windowClosing(e);
             }
         });
     }

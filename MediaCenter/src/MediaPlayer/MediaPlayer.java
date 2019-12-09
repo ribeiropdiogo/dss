@@ -1,3 +1,5 @@
+package MediaPlayer;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -45,6 +47,24 @@ public class MediaPlayer {
     }
 
     public void play(){
+        line = "play" + "\n";
+        try {
+            stdin.write(line.getBytes() );
+            stdin.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Esta função apenas funde a addToQueue e a Play
+    public void play(String path){
+        line = "add " + path + "\n";
+        try {
+            stdin.write(line.getBytes() );
+            stdin.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         line = "play" + "\n";
         try {
             stdin.write(line.getBytes() );
@@ -145,22 +165,21 @@ public class MediaPlayer {
     }
 
     public void exit(){
+        System.out.println("Closing VLC.");
         line = "quit" + "\n";
         try {
             stdin.write(line.getBytes() );
             stdin.flush();
             stdin.close();
             // clean up if any output in stdout
-            BufferedReader brCleanUp =
-                    new BufferedReader (new InputStreamReader (stdout));
+            BufferedReader brCleanUp = new BufferedReader (new InputStreamReader (stdout));
             while ((line = brCleanUp.readLine ()) != null) {
                 //System.out.println ("[Stdout] " + line);
             }
             brCleanUp.close();
 
             // clean up if any output in stderr
-            brCleanUp =
-                    new BufferedReader (new InputStreamReader (stderr));
+            brCleanUp = new BufferedReader (new InputStreamReader (stderr));
             while ((line = brCleanUp.readLine ()) != null) {
                 //System.out.println ("[Stderr] " + line);
             }

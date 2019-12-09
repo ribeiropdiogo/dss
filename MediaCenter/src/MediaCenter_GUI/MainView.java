@@ -2,8 +2,10 @@ package MediaCenter_GUI;
 
 import Client.MediaCenterInterface;
 import MediaCenterSystem.MediaCenter;
+import MediaPlayer.MediaPlayer;
 
 import javax.swing.*;
+import javax.swing.table.TableModel;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -353,7 +355,6 @@ public class MainView extends JFrame
 
 
 
-
         sppSplitPane1.setRightComponent(pnRightPanel);
         gbcMainview.gridx = 0;
         gbcMainview.gridy = 0;
@@ -368,7 +369,6 @@ public class MainView extends JFrame
 
 
 
-
         setDefaultCloseOperation( EXIT_ON_CLOSE );
 
         setContentPane( pnMainview );
@@ -376,6 +376,8 @@ public class MainView extends JFrame
         setLocationRelativeTo(null);
         setSize(900,666);
         setVisible( true );
+
+        MediaPlayer mp = new MediaPlayer();
 
         btLogoutButton.addActionListener(new ActionListener()
         {
@@ -391,6 +393,14 @@ public class MainView extends JFrame
             public void actionPerformed(ActionEvent e)
             {
                 UploadForm uf = new UploadForm();
+            }
+        });
+
+        btPlay.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+
             }
         });
     }
