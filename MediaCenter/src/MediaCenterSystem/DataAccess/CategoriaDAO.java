@@ -10,14 +10,30 @@ public class CategoriaDAO {
 
     private static final String myt = "Categoria";
 
+    private static CategoriaDAO inst = null;
+
+    private CategoriaDAO () {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        }
+        catch (ClassNotFoundException e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
+    public static CategoriaDAO getInstance() {
+        if (inst == null) {
+            inst = new CategoriaDAO();
+        }
+        return inst;
+    }
+
     public boolean contains(String idCat){
-        String sql = DBBaseQueries.count(myt,"nome='"+idCat+"'");
-        return ((Integer)DBAcess.excuteQuery(sql,DBAcess::getSize)) > 0;
+        return DBAcess.countQuery(myt, "nome='"+idCat+"'") > 0;
     }
 
     public Categoria get(String idCat){
-        String sql = DBBaseQueries.select("nome='"+idCat+"'",myt);
-        return (Categoria)DBAcess.excuteQuery(sql, this::getCategoria);
+        return (Categoria)DBAcess.getQuery(myt, "nome='"+idCat+"'", this::getCategoria);
     }
 
     public void put(String idCat, Categoria ca) {
