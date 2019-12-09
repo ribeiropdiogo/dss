@@ -154,10 +154,12 @@ public class LoginForm extends JFrame
                 if (!username.isBlank() && password.length>0) {
                     try{
                         mediacenter.login(username, new String(password));
-                        CloseFrame();
-                    } catch (Exception exc){
-                        MessageDialog md = new MessageDialog("Error",exc.getMessage());
+                    } catch (PasswordIncorretaException p){
+                        MessageDialog md = new MessageDialog("Error",p.getMessage());
+                    } catch (UtilizadorInexistenteException u){
+                        MessageDialog md = new MessageDialog("Error",u.getMessage());
                     }
+
                 } else if (username.isBlank() && password.length>0){
                     MessageDialog md = new MessageDialog("Error","Please fill your username");
                 } else if (password.length==0 && !username.isBlank()){

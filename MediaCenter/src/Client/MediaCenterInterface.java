@@ -41,7 +41,7 @@ public interface MediaCenterInterface {
     void newConta(String tipo, String idConta, String email, String password) throws UtilizadorRepetidoException ;
     void removeAccount(String idConta);
     void forgottenPassword(String username, String email) throws UtilizadorInexistenteException, SecurityException;
-    void login(String username, String password);
+    void login(String username, String password) throws PasswordIncorretaException, UtilizadorInexistenteException;
     String generatePassword();
     void sendMail(String email, String password);
 

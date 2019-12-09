@@ -10,10 +10,10 @@ public class Server {
         ServerSocket ss = new ServerSocket(16899);
 
         MediaCenter md = new MediaCenter();
-        //md.newConta("utitilizador","chuck","chuck@norris.xyz","kick");
         System.out.println("> Server is running and waiting for connection");
 
         try {
+            //md.newConta("utilizador","test","test@test.xyz","test");
             md.newConta("admin","ruifcp","niggjoe@gmail.com","loles");
             System.out.println("Conta criada com sucesso");
         } catch(Exception exc) {

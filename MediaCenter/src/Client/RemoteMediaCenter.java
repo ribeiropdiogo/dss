@@ -42,15 +42,17 @@ public class RemoteMediaCenter implements MediaCenterInterface{
         LoginForm l = new LoginForm(this);
     }
 
-    public void login(String username, String password) {
+    public void login(String username, String password) throws PasswordIncorretaException, UtilizadorInexistenteException{
         out.println("login "+username+" "+password);
         out.flush();
         try {
             String r = in.readLine();
             if(r.equals("wrongpassword")){
-                MessageDialog md = new MessageDialog("Error", "Incorrect Password");
+                //MessageDialog md = new MessageDialog("Error", "Incorrect Password");
+                throw new PasswordIncorretaException("Incorrect Password");
             } else if (r.equals("usernexists")){
-                MessageDialog md = new MessageDialog("Error", "Username does not exist");
+                //MessageDialog md = new MessageDialog("Error", "Username does not exist");
+                throw new UtilizadorInexistenteException("User not found");
             } else if (r.equals("ok")){
                 MainView md = new MainView(this);
             }
