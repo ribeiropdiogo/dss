@@ -22,6 +22,24 @@ public class CadastradoDAO {
     private static final String uAmigos = "Amigos";
     private static final String uPedidos = "Pedidos";
 
+    private static CadastradoDAO inst = null;
+
+    private CadastradoDAO () {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        }
+        catch (ClassNotFoundException e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
+    public static CadastradoDAO getInstance() {
+        if (inst == null) {
+            inst = new CadastradoDAO();
+        }
+        return inst;
+    }
+
     public Cadastrado get(String idConta){
         Cadastrado al = null;
 
