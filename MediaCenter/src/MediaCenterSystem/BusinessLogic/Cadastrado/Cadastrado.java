@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-public abstract class Cadastrado {
+abstract
+public class Cadastrado {
 
     private String username;
     private String email;
@@ -21,10 +21,6 @@ public abstract class Cadastrado {
 
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getEmail() {
@@ -54,7 +50,7 @@ public abstract class Cadastrado {
         return this.password.equals(password);
     }
 
-    public Set<Long> getContentList() {
+    public Set<Integer> getContentList() {
         return new HashSet<>();
     }
 

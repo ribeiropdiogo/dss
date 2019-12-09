@@ -6,10 +6,10 @@ import java.util.*;
 
 public class Playlist {
 
-    private Long id;
+    private int id;
     private String nome;
     private String descricao;
-    private Map<Long,Conteudo> conteudos;
+    private Map<Integer,Conteudo> conteudos;
 
 
     public Playlist(String nome, String descricao){
@@ -18,7 +18,7 @@ public class Playlist {
         this.conteudos = new HashMap<>();
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
@@ -38,11 +38,11 @@ public class Playlist {
         this.descricao = descricao;
     }
 
-    public void removeContent(Long idContent){
+    public void removeContent(int idContent){
         this.conteudos.remove(idContent);
     }
 
-    public void addContent(long idContent, Conteudo cn) throws ConteudoRepetidoException {
+    public void addContent(int idContent, Conteudo cn) throws ConteudoRepetidoException {
 
         if (this.conteudos.containsKey(idContent)) {
             this.conteudos.put(idContent, cn);

@@ -7,12 +7,12 @@ import java.util.Set;
 
 public class ConteudoDAO {
 
-    public Conteudo get(long idConteudo){return null;}
-    public List<Conteudo> getAll(Set<Long> al){return null;}
-    public List<Conteudo> getAll(List<Long> al){return null;}
-    public void remove(long idContent){}
-    public void put(long idContent, Conteudo c){}
+    public Conteudo get(int idConteudo){return null;}
+    public List<Conteudo> getAll(Set<Integer> al){return null;}
+    public List<Conteudo> getAll(List<Integer> al){return null;}
+    public void remove(int idContent){}
+    public void put(int idContent, Conteudo c){}
     public List<Conteudo> getWithArtist(String artista){return null;}
     public List<Conteudo> getWithCategoria(String categoria){return null;}
-    public List<Long> getAll(){return null;}
+    public List<Integer> getAll(){return null;}
 }

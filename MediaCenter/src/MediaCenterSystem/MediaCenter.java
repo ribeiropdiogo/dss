@@ -33,7 +33,7 @@ public class MediaCenter {
 
     public void logout(){}
 
-    public void removeContent(long idPlaylist, long idContent){
+    public void removeContent(int idPlaylist, int idContent){
         Playlist pl = playlists.get(idPlaylist);
 
         pl.removeContent(idContent);
@@ -41,9 +41,9 @@ public class MediaCenter {
         playlists.put(idPlaylist, pl);
     }
 
-    public void addAlbum(long idPlaylist, long idAlbum){
+    public void addAlbum(int idPlaylist, int idAlbum){
         Album al = albuns.get(idAlbum);
-        Set<Long> sngs = al.getContents();
+        Set<Integer> sngs = al.getContents();
         Playlist pl = playlists.get(idPlaylist);
         List<Conteudo> cvector = conteudos.getAll(sngs);
 
@@ -89,7 +89,7 @@ public class MediaCenter {
         membros.put(idAmigo, am);
     }
 
-    public void removeContent(String idConta, long idContent){
+    public void removeContent(String idConta, int idContent){
         int sz;
         Conteudo con;
         List<Playlist> plays;
@@ -139,11 +139,11 @@ public class MediaCenter {
         membros.put(idConta, c);
     }
 
-    public Set<String> getCategorias(long idContent){
+    public Set<String> getCategorias(int idContent){
         return conteudos.get(idContent).getCategorias();
     }
 
-    public void adicionarCategoria(long idContent, String idCat) {
+    public void adicionarCategoria(int idContent, String idCat) {
         Categoria ca = reassureCategory(idCat);
         Conteudo c = conteudos.get(idContent);
 
@@ -152,7 +152,7 @@ public class MediaCenter {
         conteudos.put(idContent, c);
     }
 
-    public void alterarCategoria(long idContent, String oldCat, String newCat){
+    public void alterarCategoria(int idContent, String oldCat, String newCat){
         Categoria ca = reassureCategory(newCat);
         Conteudo c = conteudos.get(idContent);
 
@@ -161,7 +161,7 @@ public class MediaCenter {
         conteudos.put(idContent, c);
     }
 
-    public void removerCategoria(long idContent, String idCat) {
+    public void removerCategoria(int idContent, String idCat) {
         Conteudo c = conteudos.get(idContent);
 
         c.eliminaCategoria(idCat);
@@ -169,7 +169,7 @@ public class MediaCenter {
         conteudos.put(idContent, c);
     }
 
-    public String getPath(long idContent){
+    public String getPath(int idContent){
         return conteudos.get(idContent).getPath();
     }
 
@@ -189,11 +189,11 @@ public class MediaCenter {
         this.addPlaylist(idConta, this.newPlaylist(nome, desc));
     }
 
-    public List<Par<Long, String>> getPlaylists(String idConta) {
+    public List<Par<Integer, String>> getPlaylists(String idConta) {
         return ((Utilizador)membros.get(idConta)).getPlaylists();
     }
 
-    public void removePlaylist(String idConta, long idPlaylist) {
+    public void removePlaylist(String idConta, int idPlaylist) {
         Utilizador u = (Utilizador)membros.get(idConta);
 
         u.removePlaylist(idPlaylist);
@@ -201,7 +201,7 @@ public class MediaCenter {
         membros.put(idConta, u);
     }
 
-    public void editPName(long idPlaylist, String pNome) {
+    public void editPName(int idPlaylist, String pNome) {
         Playlist p = playlists.get(idPlaylist);
 
         p.setNome(pNome);
@@ -209,7 +209,7 @@ public class MediaCenter {
         playlists.put(idPlaylist, p);
     }
 
-    public void editPDesc(long idPlaylist, String pDesc) {
+    public void editPDesc(int idPlaylist, String pDesc) {
         Playlist p = playlists.get(idPlaylist);
 
         p.setDescricao(pDesc);
@@ -217,7 +217,7 @@ public class MediaCenter {
         playlists.put(idPlaylist, p);
     }
 
-    public void adicionaPlaylist(long idPlaylist, long idContent) throws ConteudoRepetidoException {
+    public void adicionaPlaylist(int idPlaylist, int idContent) throws ConteudoRepetidoException {
         Playlist p = playlists.get(idPlaylist);
         Conteudo cn = conteudos.get(idContent);
 
@@ -226,11 +226,11 @@ public class MediaCenter {
         playlists.put(idPlaylist, p);
     }
 
-    public boolean checkPermissions(String idConta, long idContent){
+    public boolean checkPermissions(String idConta, int idContent){
         return ((Utilizador)membros.get(idConta)).checkOwnership(idContent);
     }
 
-    public void download(long idContent){}
+    public void download(int idContent){}
 
     public void upload(String idConta, String nome, String autor, String album, String path){}
 
@@ -247,7 +247,7 @@ public class MediaCenter {
     public void removeAccount(String idConta){
         Cadastrado c = membros.get(idConta);
 
-        Set<Long> list = c.getContentList();
+        Set<Integer> list = c.getContentList();
 
         list.forEach(it -> this.removeContent(idConta, it));
 
@@ -318,7 +318,7 @@ public class MediaCenter {
     // Playlists
     private Playlist randomPlaylist(String nome, String desc) {
         Playlist pl = new Playlist(nome, desc);
-        List<Long> ls = conteudos.getAll();
+        List<Integer> ls = conteudos.getAll();
         int li = ls.size() < MAX_RAND_SONGS ? ls.size() : MAX_RAND_SONGS;
 
         shuffle(ls);

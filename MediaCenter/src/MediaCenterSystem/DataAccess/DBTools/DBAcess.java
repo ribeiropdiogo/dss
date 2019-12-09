@@ -1,6 +1,10 @@
 package MediaCenterSystem.DataAccess.DBTools;
 
+import MediaCenterSystem.BusinessLogic.Categoria;
+
 import java.sql.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract class DBAcess {
 
@@ -36,11 +40,76 @@ public abstract class DBAcess {
     public static void putQuery(String table, String id, String newParams) {
         try (Connection conn = DBAcess.makeConnection()) {
             Statement stm = conn.createStatement();
-            stm.executeUpdate("DELETE FROM " + table + " WHERE " + id);
+
+            if(!id.equals(""))
+                stm.executeUpdate("DELETE FROM " + table + " WHERE " + id);
+
             String sql = "INSERT INTO " + table + " VALUES " + newParams;
             stm.executeUpdate(sql);
         }
         catch (Exception e) {throw new NullPointerException(e.getMessage());}
+    }
+
+    public static void removeEntry(String table, String ifs) {
+        try (Connection conn = DBAcess.makeConnection()) {
+            Statement stm = conn.createStatement();
+            stm.executeUpdate("DELETE FROM " + table + " WHERE " + ifs);
+        }
+        catch (Exception e) {throw new NullPointerException(e.getMessage());}
+    }
+
+    public static int countQuery(String table) {
+        return (Integer) DBAcess.excuteQuery(DBBaseQueries.count(table),DBAcess::getSize);
+    }
+
+    public static int countQuery(String table, String ifs) {
+        return (Integer) DBAcess.excuteQuery(DBBaseQueries.count(table,ifs),DBAcess::getSize);
+    }
+
+    public static Object getQuery(String table, String ifs, ResultProcesser rs) {
+        String sql = DBBaseQueries.select(ifs,table);
+        return DBAcess.excuteQuery(sql, rs);
+    }
+
+    public static Object getQuery(String table, String proj, String ifs, ResultProcesser rs) {
+        String sql = DBBaseQueries.projSel(proj,ifs,table);
+        return DBAcess.excuteQuery(sql, rs);
+    }
+
+    public static Integer getSize(ResultSet rs) {
+        try {
+            return rs.getInt(1);
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
+    public static Set<Integer> getIntSet(ResultSet rs) {
+        Set<Integer> set = null;
+        try {
+            set = new HashSet<>();
+
+            while(rs.next())
+                set.add(rs.getInt(1));
+
+            return set;
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
+    public static Set<String> getStringSet(ResultSet rs) {
+        Set<String> set = null;
+        try {
+            set = new HashSet<>();
+
+            while(rs.next())
+                set.add(rs.getString(1));
+
+            return set;
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        }
     }
 
 }

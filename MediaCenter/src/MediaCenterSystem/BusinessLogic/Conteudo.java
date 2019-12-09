@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class Conteudo {
 
-    private Long id;
+    private int id;
     private String nome;
     private Long tamanho;
     private Double duracao;
@@ -18,7 +18,7 @@ public class Conteudo {
     private Set<String> donos;
     private HashMap<String,Categoria> categorias;
 
-    Conteudo(Long id, String nome, Long tamanho, Double duracao, String autor, String path){
+    Conteudo(int id, String nome, Long tamanho, Double duracao, String autor, String path){
         this.id = id;
         this.nome = nome;
         this.tamanho = tamanho;
@@ -29,11 +29,7 @@ public class Conteudo {
         this.categorias = new HashMap<>();
     }
 
-    public void setId(Long id){
-        this.id = id;
-    }
-
-    public Long getId(){
+    public int getId(){
         return this.id;
     }
 

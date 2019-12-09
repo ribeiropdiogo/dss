@@ -14,8 +14,8 @@ import java.util.Set;
 
 public class Utilizador extends Cadastrado{
 
-    private Set<Long> contents;
-    private Set<Long> playlists;
+    private Set<Integer> contents;
+    private Set<Integer> playlists;
     private Set<String> amigos;
     private Set<String> pedidos;
     private ConteudoDAO conteudos;
@@ -29,30 +29,56 @@ public class Utilizador extends Cadastrado{
         pedidos = new HashSet<>();
     }
 
-
-    public void removeContent(Long idContent){
-
+    public void removeContent(int idContent){
         this.contents.remove(idContent);
-
     }
+
+    public void setContents(Set<Integer> contents) {
+        this.contents.addAll(contents);
+    }
+
+    public void setAmigos(Set<String> amigos) {
+        this.amigos.addAll(amigos);
+    }
+
+    public void setPedidos(Set<String> pedidos) {
+        this.pedidos.addAll(pedidos);
+    }
+
+    public void setPlaylists(Set<Integer> playlists) {
+        this.playlists.addAll(playlists);
+    }
+
+    public Set<Integer> getPlaylist() {
+        return new HashSet<>(playlists);
+    }
+
+    public Set<Integer> getContents() {
+        return new HashSet<>(contents);
+    }
+
+    public Set<String> getAmigos() {
+        return new HashSet<>(amigos);
+    }
+
+    public Set<String> getPedidos() {
+        return new HashSet<>(pedidos);
+    }
+
 
     public void removePedido(String idAmigo){
         amigos.remove(idAmigo);
     }
 
-    public void addContent(Long cid){
+    public void addContent(int cid){
         this.contents.add(cid);
     }
 
-    public List<Par<Long, String>> getPlaylists() {
+    public List<Par<Integer, String>> getPlaylists() {
         return new ArrayList<>();
     }
 
-    public void setPlaylists(Set<Long> playlists) {
-        this.playlists = playlists;
-    }
-
-    public void removePlaylist(Long idPlaylist){
+    public void removePlaylist(int idPlaylist){
 
         this.playlists.remove(idPlaylist);
     }
@@ -83,7 +109,6 @@ public class Utilizador extends Cadastrado{
 
     }
 
-
     /*nova execao?*/
     public void formConvite(String idConta) throws AmizadeException {
 
@@ -93,16 +118,13 @@ public class Utilizador extends Cadastrado{
 
     }
 
-    public Set<Long> getContentList() {
+    public Set<Integer> getContentList() {
         return new HashSet<>(contents);
     }
-    public boolean checkOwnership(Long idContent){
+    public boolean checkOwnership(int idContent){
 
         return(this.contents.contains(idContent));
         //EXCEPITON AQUI? OU NO MEDIA CENTER?
     }
-
-
-
 
 }
