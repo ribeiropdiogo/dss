@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 import java.lang.SecurityException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -96,6 +97,11 @@ public class RemoteMediaCenter implements MediaCenterInterface{
 
     public Set<String> getCategorias(long idContent) {
         return null;
+    }
+
+    public String[] getCategorias() {
+        String[] lista = {"Categoria 1", "Categoria 2", "Categoria 3"};
+        return lista;
     }
 
     public void adicionarCategoria(long idContent, String idCat) {

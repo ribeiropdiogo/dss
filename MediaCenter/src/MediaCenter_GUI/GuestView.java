@@ -111,7 +111,8 @@ public class GuestView extends JFrame
         pnLeftPanel.add( lbCategoriasLabel );
         sppSplitPane1.setLeftComponent(pnLeftPanel);
 
-        String []dataCategorias = { "Rock", "Metal", "Pop", "Trance", "Action", "History", "asdas", "asdas","adas","qqqq","test","testa","teste" };
+        String []dataCategorias = mediacenter.getCategorias();
+
         lsCategorias = new JList( dataCategorias );
         lsCategorias.setName( "Categorias" );
         lsCategorias.setBackground( new Color( 238,238,238 ) );
@@ -140,7 +141,7 @@ public class GuestView extends JFrame
         GridBagConstraints gbcRightPanel = new GridBagConstraints();
         pnRightPanel.setLayout( gbRightPanel );
 
-        String[] columnNames = new String[] { "Name", "Owner", "Duration", "Options" };
+        String[] columnNames = new String[] { "Name", "Owner", "Duration"};
         data = new String[][] { new String[] {"musica1", "owner", "1:11", "+ ..."},
                 new String[] {"musica2", "owner", "1:11", "+ ...", "1"},
                 new String[] {"musica3", "owner", "1:11", "+ ...", "1"},
@@ -215,7 +216,7 @@ public class GuestView extends JFrame
         gbPanelReproducao.setConstraints( btNext, gbcPanelReproducao );
         pnPanelReproducao.add( btNext );
 
-        btPlay = new JButton( "play"  );
+        btPlay = new JButton( "\u25B6"  );
         gbcPanelReproducao.gridx = 2;
         gbcPanelReproducao.gridy = 0;
         gbcPanelReproducao.gridwidth = 1;

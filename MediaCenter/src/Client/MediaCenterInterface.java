@@ -22,6 +22,7 @@ public interface MediaCenterInterface {
     void alteraPass(String idConta, String pOld, String pNew, String pNewC);
     void alteraEmail(String idConta, String newMl);
     Set<String> getCategorias(long idContent);
+    String[] getCategorias();
     void adicionarCategoria(long idContent, String idCat);
     void alterarCategoria(long idContent, String oldCat, String newCat);
     void removerCategoria(long idContent, String idCat) ;

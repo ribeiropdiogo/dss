@@ -5,6 +5,9 @@ import MediaCenterSystem.MediaCenter;
 import MediaPlayer.MediaPlayer;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.TableModel;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 
 public class MainView extends JFrame
 {
@@ -44,6 +48,7 @@ public class MainView extends JFrame
     JButton btPlay;
     JButton btNext;
     JButton btAddConteudo;
+    final JFileChooser fc;
     JButton btShuffle;
 
 
@@ -152,7 +157,7 @@ public class MainView extends JFrame
         pnLeftPanel.add( lbPlaylistsLabel );
         sppSplitPane1.setLeftComponent(pnLeftPanel);
 
-        String []dataPlaylists = { "Rock", "Metal", "Pop", "Trasta","teste" };
+        String []dataPlaylists = mediacenter.getCategorias();
         lsPlaylists = new JList( dataPlaylists );
         lsPlaylists.setName( "Playlists" );
         lsPlaylists.setBackground( new Color( 238,238,238 ) );
@@ -307,7 +312,7 @@ public class MainView extends JFrame
         gbPanelReproducao.setConstraints( btNext, gbcPanelReproducao );
         pnPanelReproducao.add( btNext );
 
-        btPlay = new JButton( "play"  );
+        btPlay = new JButton( "\u25B6"  );
         gbcPanelReproducao.gridx = 2;
         gbcPanelReproducao.gridy = 0;
         gbcPanelReproducao.gridwidth = 1;
@@ -372,6 +377,7 @@ public class MainView extends JFrame
 
 
         setDefaultCloseOperation( EXIT_ON_CLOSE );
+        fc = new JFileChooser();
 
         setContentPane( pnMainview );
         pack();
@@ -387,14 +393,6 @@ public class MainView extends JFrame
             {
                 mediacenter.logout();
                 CloseFrame();
-            }
-        });
-
-        btAddConteudo.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                UploadForm uf = new UploadForm();
             }
         });
 
@@ -419,6 +417,14 @@ public class MainView extends JFrame
             public void actionPerformed(ActionEvent e)
             {
                 mp.prevContent();
+            }
+        });
+
+        btAddConteudo.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                UploadForm uf = new UploadForm();
             }
         });
 
