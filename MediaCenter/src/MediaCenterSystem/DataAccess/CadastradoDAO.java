@@ -80,18 +80,22 @@ public class CadastradoDAO {
         String amigos = this.convertUserStrSet(idConta, conta.getAmigos());
         String pedidos = this.convertUserStrSet(idConta, conta.getPedidos());
 
-        DBAcess.putQuery(uContents, "", conts);
-        DBAcess.putQuery(uPlays, "", pls);
-        DBAcess.putQuery(uAmigos, "", amigos);
-        DBAcess.putQuery(uPedidos, "", pedidos);
+        if(!conts.equals(""))
+            DBAcess.putQuery(uContents, "", conts);
+
+        if(!pls.equals(""))
+            DBAcess.putQuery(uPlays, "", pls);
+
+        if(!amigos.equals(""))
+            DBAcess.putQuery(uAmigos, "", amigos);
+
+        if(!pedidos.equals(""))
+            DBAcess.putQuery(uPedidos, "", pedidos);
     }
 
     public void put(String idConta, Administrador conta) {
-        System.out.println("wtf1");
         this.put(idConta, (Cadastrado)conta);
-        System.out.println("wtf2");
         DBAcess.putQuery(mytA, idUser(idConta), "('" + idConta + "')");
-        System.out.println("wtf3");
     }
 
     public boolean contains(String idConta){
