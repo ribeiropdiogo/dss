@@ -303,6 +303,22 @@ public class GuestView extends JFrame
             }
         });
 
+        btNext.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+               mp.nextContent();
+            }
+        });
+
+        btPrev.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                mp.prevContent();
+            }
+        });
+
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 mp.exit();
