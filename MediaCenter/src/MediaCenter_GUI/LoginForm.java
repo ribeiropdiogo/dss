@@ -152,7 +152,12 @@ public class LoginForm extends JFrame
                 char[] password = tfPasswordField.getPassword();
 
                 if (!username.isBlank() && password.length>0) {
+                    try{
                         mediacenter.login(username, new String(password));
+                        CloseFrame();
+                    } catch (Exception exc){
+                        MessageDialog md = new MessageDialog("Error",exc.getMessage());
+                    }
                 } else if (username.isBlank() && password.length>0){
                     MessageDialog md = new MessageDialog("Error","Please fill your username");
                 } else if (password.length==0 && !username.isBlank()){
@@ -161,7 +166,6 @@ public class LoginForm extends JFrame
                     MessageDialog md = new MessageDialog("Error","You need to type your username and password");
                 }
 
-                CloseFrame();
             }
         });
 
