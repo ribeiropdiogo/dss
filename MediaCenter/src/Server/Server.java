@@ -14,7 +14,7 @@ public class Server {
 
         try {
             //md.newConta("utilizador","test","test@test.xyz","test");
-            md.newConta("utilizador","lebronjames","test@test.xyz","test");
+            md.newConta("utilizador","bruh2","test@test.xyz","test");
             System.out.println("Conta criada com sucesso");
         } catch(Exception exc) {
             System.out.println("Erro");

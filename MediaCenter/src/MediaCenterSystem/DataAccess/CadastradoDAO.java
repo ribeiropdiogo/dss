@@ -49,7 +49,7 @@ public class CadastradoDAO {
             al = (Administrador)DBAcess.getQuery(mytC, idUser(idConta), this::getAdmin);
         }
         else if (DBAcess.countQuery (mytU,idUser(idConta)) > 0){
-            Utilizador ul = (Utilizador)DBAcess.getQuery(mytU, idUser(idConta), this::getUtilizador);
+            Utilizador ul = (Utilizador)DBAcess.getQuery(mytC, idUser(idConta), this::getUtilizador);
             // e um utilizador
             String ifs = idUser2(idConta);
             Set<Integer> conts = (Set<Integer>) DBAcess.getQuery(uContents, "Conteudo_id", ifs, DBAcess::getIntSet);
@@ -74,6 +74,8 @@ public class CadastradoDAO {
     public void put(String idConta, Utilizador conta){
         this.put(idConta, (Cadastrado)conta);
         this.removeUserEntries(idConta);
+
+        DBAcess.putQuery(mytU, idUser(idConta), "('" + idConta + "')");
 
         String conts = this.convertUserIntSet(idConta, conta.getContents());
         String pls = this.convertUserIntSet(idConta, conta.getPlaylist());
@@ -149,6 +151,7 @@ public class CadastradoDAO {
     }
 
     private void removeUserEntries(String id) {
+        DBAcess.removeEntry(mytA, idUser(id));
         DBAcess.removeEntry(uContents, "Utilizador_username='" + id + "'");
         DBAcess.removeEntry(uPlays, "Utilizador_username='" + id + "'");
         DBAcess.removeEntry(uPedidos, "Utilizador_username='" + id + "'");
