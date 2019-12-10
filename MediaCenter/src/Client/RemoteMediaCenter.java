@@ -55,7 +55,7 @@ public class RemoteMediaCenter implements MediaCenterInterface{
                 //MessageDialog md = new MessageDialog("Error", "Username does not exist");
                 throw new UtilizadorInexistenteException("User not found");
             } else if (r.equals("ok")){
-                MainView md = new MainView(this);
+                MainView md = new MainView(this, username);
             }
         } catch (IOException e){
             e.printStackTrace();

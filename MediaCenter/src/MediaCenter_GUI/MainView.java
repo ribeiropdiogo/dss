@@ -58,7 +58,7 @@ public class MainView extends JFrame
         super.dispose();
     }
 
-    public MainView(MediaCenterInterface mediacenter)
+    public MainView(MediaCenterInterface mediacenter, String username)
     {
         super( "Media Center" );
 
@@ -81,7 +81,7 @@ public class MainView extends JFrame
         GridBagConstraints gbcLeftPanel = new GridBagConstraints();
         pnLeftPanel.setLayout( gbLeftPanel );
 
-        lbUsernameLabel = new JLabel( "username"  );
+        lbUsernameLabel = new JLabel( username );
         gbcLeftPanel.gridx = 0;
         gbcLeftPanel.gridy = 0;
         gbcLeftPanel.gridwidth = 1;
@@ -269,7 +269,8 @@ public class MainView extends JFrame
         tbContentTable = new JTable( dataContentTable, colsContentTable );
         tbContentTable.setAutoCreateRowSorter( true );
         tbContentTable.setAutoscrolls( false );
-        tbContentTable.setEnabled( false );
+        tbContentTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tbContentTable.setEnabled( true );
         tbContentTable.setName( "" );
         JScrollPane scpContentTable = new JScrollPane( tbContentTable );
         gbcRightPanel.gridx = 0;
@@ -400,7 +401,7 @@ public class MainView extends JFrame
         {
             public void actionPerformed(ActionEvent e)
             {
-
+                System.out.println("> Item selecionado "+tbContentTable.getSelectedRow());
             }
         });
 
@@ -424,7 +425,7 @@ public class MainView extends JFrame
         {
             public void actionPerformed(ActionEvent e)
             {
-                UploadForm uf = new UploadForm();
+                UploadForm uf = new UploadForm(mediacenter, username);
             }
         });
 

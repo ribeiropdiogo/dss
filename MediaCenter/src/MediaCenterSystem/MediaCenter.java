@@ -236,7 +236,9 @@ public class MediaCenter {
 
     public void download(int idContent){}
 
-    public void upload(String idConta, String nome, String autor, String album, String path){}
+    public void upload(String idConta, String nome, String autor, String album, String path){
+        
+    }
 
     public void newConta(String tipo, String idConta, String email, String password) throws UtilizadorRepetidoException {
         if(membros.contains(idConta))
