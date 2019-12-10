@@ -17,8 +17,8 @@ public class CadastradoDAO {
     private static final String mytU = "Utilizador";
     private static final String mytA = "Administrador";
 
-    private static final String uContents = "Utilizador_has_Conteudo";
-    private static final String uPlays = "Utilizador_has_Playlist";
+    private static final String uContents = "has_Conteudo";
+    private static final String uPlays = "has_Playlist";
     private static final String uAmigos = "Amigos";
     private static final String uPedidos = "Pedidos";
 
@@ -54,8 +54,8 @@ public class CadastradoDAO {
             String ifs = idUser2(idConta);
             Set<Integer> conts = (Set<Integer>) DBAcess.getQuery(uContents, "Conteudo_id", ifs, DBAcess::getIntSet);
             Set<Integer> pls = (Set<Integer>) DBAcess.getQuery(uPlays, "Playlist_id", ifs, DBAcess::getIntSet);
-            Set<String> amigos = (Set<String>) DBAcess.getQuery(uAmigos, "Utilizador_username1", ifs, DBAcess::getStringSet);
-            Set<String> pedidos = (Set<String>) DBAcess.getQuery(uPedidos, "Utilizador_username1", ifs, DBAcess::getStringSet);
+            Set<String> amigos = (Set<String>) DBAcess.getQuery(uAmigos, "username1", ifs, DBAcess::getStringSet);
+            Set<String> pedidos = (Set<String>) DBAcess.getQuery(uPedidos, "username1", ifs, DBAcess::getStringSet);
             ul.setContents(conts);
             ul.setPlaylists(pls);
             ul.setAmigos(amigos);
@@ -147,17 +147,17 @@ public class CadastradoDAO {
     }
 
     private String idUser2(String id) {
-        return "Utilizador_username='" + id + "'";
+        return "username='" + id + "'";
     }
 
     private void removeUserEntries(String id) {
         DBAcess.removeEntry(mytA, idUser(id));
-        DBAcess.removeEntry(uContents, "Utilizador_username='" + id + "'");
-        DBAcess.removeEntry(uPlays, "Utilizador_username='" + id + "'");
-        DBAcess.removeEntry(uPedidos, "Utilizador_username='" + id + "'");
-        DBAcess.removeEntry(uPedidos, "Utilizador_username1='" + id + "'");
-        DBAcess.removeEntry(uAmigos, "Utilizador_username='" + id + "'");
-        DBAcess.removeEntry(uAmigos, "Utilizador_username1='" + id + "'");
+        DBAcess.removeEntry(uContents, "username='" + id + "'");
+        DBAcess.removeEntry(uPlays, "username='" + id + "'");
+        DBAcess.removeEntry(uPedidos, "username='" + id + "'");
+        DBAcess.removeEntry(uPedidos, "username1='" + id + "'");
+        DBAcess.removeEntry(uAmigos, "username='" + id + "'");
+        DBAcess.removeEntry(uAmigos, "username1='" + id + "'");
     }
 
     private String convertUserIntSet(String idConta, Set<Integer> inters) {
