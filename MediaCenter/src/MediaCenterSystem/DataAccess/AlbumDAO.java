@@ -34,12 +34,12 @@ public class AlbumDAO {
     }
 
     public Album get(Object idAlbum){
-        String sql = "SELECT * FROM Album WHERE id='" + idAlbum + "'";
+        String sql = "SELECT * FROM Album WHERE Album_id='" + idAlbum + "'";
         return (Album)DBAcess.excuteQuery(sql, this::getAlbum);
     }
 
     public void put(int idAlbum, Album al){
-        String id = "id='" + al.getID() + "'";
+        String id = "Album_id='" + al.getID() + "'";
         String params = "('"+al.getID()+"','"+al.getNome()+"')";
         DBAcess.putQuery("Album", id, params);
     }

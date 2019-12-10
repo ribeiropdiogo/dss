@@ -288,7 +288,7 @@ public class MediaCenter {
     }
 
     public void sendMail(String email, String password) throws EmailException {
-        String subject = "[MediaCente¶] Nova password.";
+        String subject = "[MediaCenter] Nova password.";
         String msg = "A sua nova password é " + password;
 
         try {

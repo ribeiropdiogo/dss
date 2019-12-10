@@ -29,15 +29,15 @@ public class CategoriaDAO {
     }
 
     public boolean contains(String idCat){
-        return DBAcess.countQuery(myt, "nome='"+idCat+"'") > 0;
+        return DBAcess.countQuery(myt, "Categoria_nome='"+idCat+"'") > 0;
     }
 
     public Categoria get(String idCat){
-        return (Categoria)DBAcess.getQuery(myt, "nome='"+idCat+"'", this::getCategoria);
+        return (Categoria)DBAcess.getQuery(myt, "Categoria_nome='"+idCat+"'", this::getCategoria);
     }
 
     public void put(String idCat, Categoria ca) {
-        String id = "nome='" + idCat + "'";
+        String id = "Categoria_nome='" + idCat + "'";
         String params = "('"+ca.getNome()+"')";
         DBAcess.putQuery(myt, id, params);
     }
