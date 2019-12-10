@@ -33,6 +33,10 @@ public class UploadForm extends JFrame
 
     File selectedFile;
 
+    public void CloseFrame(){
+        super.dispose();
+    }
+
     public UploadForm(MediaCenterInterface mediacenter, String username)
     {
         super( "Upload" );
@@ -207,7 +211,8 @@ public class UploadForm extends JFrame
                         categoria = tfCategorias.getText();
                     }
                     //dialog = new MessageDialog("aaa",nome+", "+autor+", "+album+", "+categoria);
-                    mediacenter.upload(username,nome,autor,album,categoria);
+                    mediacenter.uploadFile(username,nome,autor,album,selectedFile);
+                    CloseFrame();
                 } else {
                     dialog = new MessageDialog("Error", "Please select a file");
                 }

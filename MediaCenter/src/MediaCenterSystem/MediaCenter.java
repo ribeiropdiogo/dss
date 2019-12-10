@@ -13,6 +13,7 @@ import Utilities.MediaMailer;
 import Utilities.Par;
 
 import javax.mail.MessagingException;
+import java.io.File;
 import java.lang.SecurityException;
 import java.util.List;
 import java.util.Set;

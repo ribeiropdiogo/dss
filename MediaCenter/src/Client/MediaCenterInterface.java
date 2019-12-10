@@ -6,6 +6,7 @@ import MediaCenterSystem.BusinessLogic.Categoria;
 import MediaCenterSystem.BusinessLogic.Playlist;
 import Utilities.Par;
 
+import java.io.File;
 import java.lang.SecurityException;
 import java.util.List;
 import java.util.Set;
@@ -38,6 +39,7 @@ public interface MediaCenterInterface {
     void adicionaPlaylist(long idPlaylist, long idContent) throws ConteudoRepetidoException ;
     boolean checkPermissions(String idConta, long idContent);
     void download(long idContent);
+    void uploadFile(String idConta, String nome, String autor, String album, File file);
     void upload(String idConta, String nome, String autor, String album, String path);
     void newConta(String tipo, String idConta, String email, String password) throws UtilizadorRepetidoException ;
     void removeAccount(String idConta);

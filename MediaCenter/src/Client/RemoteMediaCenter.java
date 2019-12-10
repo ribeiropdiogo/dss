@@ -7,10 +7,7 @@ import MediaCenter_GUI.MainView;
 import MediaCenter_GUI.MessageDialog;
 import Utilities.Par;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.lang.SecurityException;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -162,6 +159,30 @@ public class RemoteMediaCenter implements MediaCenterInterface{
 
     public void download(long idContent) {
 
+    }
+
+
+    public void uploadFile(String idConta, String nome, String autor, String album, File ficheiro){
+
+        out.println("upload "+ficheiro.length()+" "+ficheiro.getName());
+        out.flush();
+        try {
+            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+            FileInputStream fis = new FileInputStream(ficheiro);
+            byte[] buffer = new byte[(int)ficheiro.length()];
+
+            while (fis.read(buffer) > 0) {
+                dos.write(buffer);
+            }
+
+            fis.close();
+            //dos.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        //this.upload(idConta,nome,autor,album,"");
     }
 
     public void upload(String idConta, String nome, String autor, String album, String path) {

@@ -4,11 +4,9 @@ import Exceptions.PasswordIncorretaException;
 import Exceptions.UtilizadorInexistenteException;
 import MediaCenterSystem.MediaCenter;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class ServerWorker implements Runnable{
     private Socket socket;
@@ -55,6 +53,41 @@ public class ServerWorker implements Runnable{
                     case "logout":
                         this.md.logout();
                         System.out.println("> Logout");
+                        break;
+
+                    case "upload":
+                        StringBuilder builder = new StringBuilder();
+                        for (int i = 2; i < ops.length; i++){
+                            builder.append(ops[i]);
+                            if (i < ops.length-1)
+                                builder.append(" ");
+
+                        }
+                        String filename = builder.toString();
+
+
+                        System.out.println("> Uploading file "+filename);
+                        try {
+                            DataInputStream dis = new DataInputStream(socket.getInputStream());
+                            FileOutputStream fos = new FileOutputStream("src/Server/media/"+filename);
+                            int filesize = Integer.parseInt(ops[1]);
+                            byte[] buffer = new byte[filesize];
+
+                            int read = 0;
+                            int totalRead = 0;
+                            int remaining = filesize;
+                            while((read = dis.read(buffer, 0, Math.min(buffer.length, remaining))) > 0) {
+                                totalRead += read;
+                                remaining -= read;
+                                //System.out.println("read " + totalRead + " bytes.");
+                                fos.write(buffer, 0, read);
+                            }
+                            fos.close();
+                            //dis.close();
+                        } catch (Exception e){
+                            e.printStackTrace();
+                        }
+
                         break;
 
                     default:
