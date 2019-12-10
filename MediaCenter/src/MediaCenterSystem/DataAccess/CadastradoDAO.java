@@ -113,8 +113,8 @@ public class CadastradoDAO {
         }
         else {
             // e um utilizador
-            DBAcess.removeEntry(mytU, id);
             this.removeUserEntries(id);
+            DBAcess.removeEntry(mytU, id);
         }
 
         DBAcess.removeEntry(mytC, id);
@@ -151,7 +151,7 @@ public class CadastradoDAO {
     }
 
     private void removeUserEntries(String id) {
-        DBAcess.removeEntry(mytA, idUser(id));
+        //DBAcess.removeEntry(mytA, idUser(id));
         DBAcess.removeEntry(uContents, "username='" + id + "'");
         DBAcess.removeEntry(uPlays, "username='" + id + "'");
         DBAcess.removeEntry(uPedidos, "username='" + id + "'");
@@ -167,7 +167,7 @@ public class CadastradoDAO {
             ls.add("('" + idConta + "','" + it + "')");
         }
 
-        return makeVarStr(ls);
+        return DBAcess.makeVarStr(ls);
     }
 
     private String convertUserStrSet(String idConta, Set<String> inters) {
@@ -177,19 +177,7 @@ public class CadastradoDAO {
             ls.add("('" + idConta + "','" + it + "')");
         }
 
-        return makeVarStr(ls);
+        return DBAcess.makeVarStr(ls);
     }
 
-    private String makeVarStr(List<String> ls) {
-        StringBuilder sb = new StringBuilder();
-
-        for(int i = 0; i < ls.size() - 1; i++) {
-            sb.append(ls.get(i)).append(",");
-        }
-
-        if(ls.size() - 1 >= 0)
-            sb.append(ls.get(ls.size() - 1));
-
-        return sb.toString();
-    }
 }

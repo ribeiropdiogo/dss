@@ -20,7 +20,7 @@ public class Conteudo {
     private HashMap<String, Categoria> categorias;
     private HashMap<String, Utilizador> donos;
 
-    Conteudo(int id, String nome, Long tamanho, Double duracao, String autor, String path){
+    private Conteudo(int id, String nome, Long tamanho, Double duracao, String autor, String path){
         this.id = id;
         this.nome = nome;
         this.tamanho = tamanho;
@@ -31,8 +31,24 @@ public class Conteudo {
         this.categorias = new HashMap<>();
     }
 
+    public static Conteudo getInstance(int id, String nome, Long tamanho, Double duracao, String autor, String path) {
+        return new Conteudo(id,nome,tamanho,duracao,autor,path);
+    }
+
     public int getId(){
         return this.id;
+    }
+
+    public String getNome() {
+        return this.nome;
+    }
+
+    public long getTamanho() {
+        return this.tamanho;
+    }
+
+    public String getAutor() {
+        return this.autor;
     }
 
     public int removeDono(String idConta){
@@ -46,13 +62,12 @@ public class Conteudo {
         return this.path;
     }
 
-    public void setPath(String path){
-        this.path = path;
-    }
-
-
     public void adicionaCategoria(String idCat, Categoria ca) {
         categorias.put(idCat,ca);
+    }
+
+    public void adicionaDono(String idConta, Utilizador u) {
+        donos.put(idConta, u);
     }
 
     public void alteraCategoria(String oldCat, String newCat,Categoria ca){
@@ -71,8 +86,12 @@ public class Conteudo {
         return this.donos.size();
     }
 
-    public Set<String> getCategorias(){
-        return new HashSet<>();
+    public Map<String,Categoria> getCategorias(){
+        return new HashMap<>(categorias);
+    }
+
+    public Map<String,Utilizador> getDonos() {
+        return new HashMap<>(donos);
     }
 
 }

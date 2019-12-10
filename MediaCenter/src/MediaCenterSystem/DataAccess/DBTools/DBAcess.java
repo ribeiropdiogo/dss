@@ -4,6 +4,7 @@ import MediaCenterSystem.BusinessLogic.Categoria;
 
 import java.sql.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public abstract class DBAcess {
@@ -76,6 +77,36 @@ public abstract class DBAcess {
         return DBAcess.excuteQuery(sql, rs);
     }
 
+    public static Set<Integer> getIds(String table, String proj, String ifs) {
+        try (Connection con = DBAcess.makeConnection()) {
+            String msg = DBBaseQueries.projSel(proj,ifs,table);
+            Statement stm = con.createStatement();
+            ResultSet rs = stm.executeQuery(msg);
+            return DBAcess.getIntSet(rs);
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
+    public static Set<Integer> getIds(String table, String proj) {
+        return DBAcess.getIds(table,proj,"");
+    }
+
+    public static Set<String> getNames(String table, String proj, String ifs) {
+        try (Connection con = DBAcess.makeConnection()) {
+            String msg = DBBaseQueries.projSel(proj,ifs,table);
+            Statement stm = con.createStatement();
+            ResultSet rs = stm.executeQuery(msg);
+            return DBAcess.getStringSet(rs);
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
+    public static Set<String> getNames(String table, String proj) {
+        return DBAcess.getNames(table,proj,"");
+    }
+
     public static Integer getSize(ResultSet rs) {
         try {
             rs.next();
@@ -111,6 +142,19 @@ public abstract class DBAcess {
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
         }
+    }
+
+    public static String makeVarStr(List<String> ls) {
+        StringBuilder sb = new StringBuilder();
+
+        for(int i = 0; i < ls.size() - 1; i++) {
+            sb.append(ls.get(i)).append(",");
+        }
+
+        if(ls.size() - 1 >= 0)
+            sb.append(ls.get(ls.size() - 1));
+
+        return sb.toString();
     }
 
 }

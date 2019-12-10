@@ -1,9 +1,13 @@
 package MediaCenterSystem.DataAccess;
 
+import MediaCenterSystem.BusinessLogic.Cadastrado.Cadastrado;
+import MediaCenterSystem.BusinessLogic.Cadastrado.Utilizador;
+import MediaCenterSystem.BusinessLogic.Categoria;
 import MediaCenterSystem.BusinessLogic.Conteudo;
+import MediaCenterSystem.DataAccess.DBTools.DBAcess;
 
-import java.util.List;
-import java.util.Set;
+import java.sql.ResultSet;
+import java.util.*;
 
 public class ConteudoDAO {
 
@@ -14,9 +18,14 @@ public class ConteudoDAO {
 
     private static ConteudoDAO inst = null;
 
+    private CadastradoDAO cadastrados = null;
+    private CategoriaDAO categorias = null;
+
     private ConteudoDAO () {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
+            cadastrados = CadastradoDAO.getInstance();
+            categorias = CategoriaDAO.getInstance();
         }
         catch (ClassNotFoundException e) {
             throw new NullPointerException(e.getMessage());
@@ -30,13 +39,111 @@ public class ConteudoDAO {
         return inst;
     }
 
+    public Conteudo get(int idConteudo){
+        String ifs = idCont(idConteudo);
+        Conteudo cont = (Conteudo) DBAcess.getQuery(myt, ifs, this::getConteudo);
+        Set<String> cats = (Set<String>)DBAcess.getQuery(cCats, "Categoria_nome", ifs, DBAcess::getStringSet);
+        Set<String> owns = (Set<String>)DBAcess.getQuery(cCats, "username", ifs, DBAcess::getStringSet);
+        Categoria tmp1;
+        Utilizador tmp2;
 
-    public Conteudo get(int idConteudo){return null;}
-    public List<Conteudo> getAll(Set<Integer> al){return null;}
-    public List<Conteudo> getAll(List<Integer> al){return null;}
-    public void remove(int idContent){}
-    public void put(int idContent, Conteudo c){}
-    public List<Conteudo> getWithArtist(String artista){return null;}
-    public List<Conteudo> getWithCategoria(String categoria){return null;}
-    public List<Integer> getAll(){return null;}
+
+        for(String s : cats) {
+            cont.adicionaCategoria(s, categorias.get(s));
+        }
+
+        for(String s : owns) {
+            cont.adicionaDono(s, (Utilizador)cadastrados.get(s));
+        }
+
+        return cont;
+    }
+
+    public List<Conteudo> getAll(Collection<Integer> al) {
+        List<Conteudo> ls = new ArrayList<>();
+
+        al.forEach(x -> ls.add(this.get(x)));
+
+        return ls;
+    }
+
+    public void remove(int idContent){
+        this.removeContentEntries(idContent);
+        DBAcess.removeEntry(myt, idCont(idContent));
+    }
+
+    public void put(int idContent, Conteudo c) {
+        String params = "('" + idContent + "','" + c.getNome() + "','" + c.getTamanho() + "','" + c.getAutor() + "')";
+        DBAcess.putQuery(myt, idCont(idContent), params);
+        this.removeContentEntries(idContent);
+        Map<String,Categoria> cates = c.getCategorias();
+        Map<String,Utilizador> urs = c.getDonos();
+
+        String cats = this.convertContStrSet(idContent, cates.keySet());
+        String own = this.convertContStrSet(idContent, urs.keySet());
+
+        if(!cats.equals(""))
+            DBAcess.putQuery(cCats, "", cats);
+
+        if(!own.equals(""))
+            DBAcess.putQuery(cOwns, "", own);
+
+        cates.forEach((k,v) -> categorias.put(k, v));
+        urs.forEach((k,v) -> cadastrados.put(k, v));
+    }
+
+    public List<Conteudo> getWithArtist(String artista) {
+        String ifs = "autor='" + artista + "'";
+        List<Conteudo> ls = new ArrayList<>();
+        Set<Integer> allC = DBAcess.getIds(myt, "Conteudo_id", ifs);
+
+        allC.forEach(x -> ls.add(this.get(x)));
+
+        return ls;
+    }
+
+    public List<Conteudo> getWithCategoria(String categoria){
+        String ifs = "Categoria_nome='" + categoria + "'";
+        List<Conteudo> ls = new ArrayList<>();
+        Set<Integer> allC = DBAcess.getIds(myt, "Conteudo_id", ifs);
+
+        allC.forEach(x -> ls.add(this.get(x)));
+
+        return ls;
+    }
+
+    public Set<Integer> getAll(){
+        return DBAcess.getIds(myt, "Conteudo_id");
+    }
+
+    private Conteudo getConteudo(ResultSet rs) {
+        try {
+            Conteudo al = null;
+            if(rs.next())
+                al = Conteudo.getInstance(rs.getInt(1),rs.getString(2),rs.getLong(3),rs.getDouble(4),rs.getString(5),rs.getString(6));
+            return al;
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
+    private String idCont(int idConteudo) {
+        return "Conteudo_id='"+idConteudo+"'";
+    }
+
+    private void removeContentEntries(int idConteudo) {
+        String ifs =idCont(idConteudo);
+        DBAcess.removeEntry(cCats,ifs);
+        DBAcess.removeEntry(cOwns,ifs);
+    }
+
+    private String convertContStrSet(int idCont, Set<String> inters) {
+        List<String> ls = new ArrayList<>();
+
+        for(String it : inters) {
+            ls.add("('" + idCont + "','" + it + "')");
+        }
+
+        return DBAcess.makeVarStr(ls);
+    }
 }
