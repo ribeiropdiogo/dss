@@ -1,6 +1,7 @@
 package MediaCenterSystem.DataAccess;
 
 import MediaCenterSystem.BusinessLogic.Album;
+import MediaCenterSystem.BusinessLogic.Conteudo;
 import MediaCenterSystem.DataAccess.DBTools.DBAcess;
 import MediaCenterSystem.DataAccess.DBTools.DBBaseQueries;
 
@@ -20,16 +21,16 @@ public class AlbumDAO {
     private AlbumDAO() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conteudos = ConteudoDAO.getInstance();
             Album.setCurrentNextID(DBAcess.maxIds(myt,"Album_id") + 1);
         } catch (ClassNotFoundException e) {
             throw new NullPointerException(e.getMessage());
         }
     }
 
-    public static AlbumDAO getInstance() {
+    public static AlbumDAO getInstance(ConteudoDAO cont) {
         if (inst == null) {
             inst = new AlbumDAO();
+            inst.setContDAO(cont);
         }
         return inst;
     }
@@ -41,6 +42,10 @@ public class AlbumDAO {
 
     public boolean contains(String nomeAlbum) {
         return DBAcess.countQuery(myt, "nome='" + nomeAlbum + "'") > 0;
+    }
+
+    public void setContDAO(ConteudoDAO cont) {
+        conteudos = cont;
     }
 
     public Album get(String nomeAlbum) {

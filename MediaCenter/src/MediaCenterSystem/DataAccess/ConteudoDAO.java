@@ -27,7 +27,6 @@ public class ConteudoDAO {
             Class.forName("com.mysql.cj.jdbc.Driver");
             cadastrados = CadastradoDAO.getInstance();
             categorias = CategoriaDAO.getInstance();
-            albuns = AlbumDAO.getInstance();
             Conteudo.setCurrentNextID(DBAcess.maxIds(myt,"Conteudo_id") + 1);
         } catch (ClassNotFoundException e) {
             throw new NullPointerException(e.getMessage());
@@ -37,8 +36,13 @@ public class ConteudoDAO {
     public static ConteudoDAO getInstance() {
         if (inst == null) {
             inst = new ConteudoDAO();
+            inst.setAlbumDAO(AlbumDAO.getInstance(inst));
         }
         return inst;
+    }
+
+    public void setAlbumDAO(AlbumDAO album) {
+        this.albuns = album;
     }
 
     public Conteudo get(int idConteudo) {

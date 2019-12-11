@@ -33,10 +33,10 @@ public class MediaCenter {
 
     public MediaCenter() {
         categorias = CategoriaDAO.getInstance();
-        albuns = AlbumDAO.getInstance();
         playlists = PlaylistDAO.getInstance();
         membros = CadastradoDAO.getInstance();
         conteudos = ConteudoDAO.getInstance();
+        albuns = AlbumDAO.getInstance(conteudos);
         mailer = new MediaMailer();
     }
 
