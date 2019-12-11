@@ -39,6 +39,19 @@ public class AlbumDAO {
         return (Integer) DBAcess.excuteQuery(sql, DBAcess::getSize);
     }
 
+    public boolean contains(String nomeAlbum) {
+        return DBAcess.countQuery(myt, "nome='" + nomeAlbum + "'") > 0;
+    }
+
+    public Album get(String nomeAlbum) {
+        Album al = (Album) DBAcess.getQuery(myt, "nome='" + nomeAlbum + "'", this::getAlbum);
+        Set<Integer> conts = DBAcess.getIds("Conteudo", "Conteudo_id", "Album_id='" + al.getID() + "'");
+
+        conts.forEach(x -> al.addContuedo(x, conteudos.get(x)));
+
+        return al;
+    }
+
     public Album get(int idAlbum) {
         Album al = (Album) DBAcess.getQuery(myt, "Album_id='" + idAlbum + "'", this::getAlbum);
         Set<Integer> conts = DBAcess.getIds("Conteudo", "Conteudo_id", "Album_id='" + idAlbum + "'");

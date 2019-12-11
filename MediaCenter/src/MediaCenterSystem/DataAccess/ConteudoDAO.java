@@ -4,6 +4,7 @@ import MediaCenterSystem.BusinessLogic.Cadastrado.Utilizador;
 import MediaCenterSystem.BusinessLogic.Categoria;
 import MediaCenterSystem.BusinessLogic.Conteudo;
 import MediaCenterSystem.DataAccess.DBTools.DBAcess;
+import MediaCenterSystem.DataAccess.DBTools.DBBaseQueries;
 
 import java.sql.ResultSet;
 import java.util.*;
@@ -127,6 +128,11 @@ public class ConteudoDAO {
         return DBAcess.getIds(myt, "Conteudo_id");
     }
 
+    public int checkDup(String nome, String autor){
+        String ifs = "nome='" + nome + "' AND autor='" + autor + "'";
+        return (Integer)DBAcess.getQuery(myt,"Conteudo_id",ifs,this::getContID);
+    }
+
     private Conteudo getConteudo(ResultSet rs) {
         try {
             Conteudo al = null;
@@ -166,5 +172,18 @@ public class ConteudoDAO {
         }
 
         return DBAcess.makeVarStr(ls);
+    }
+
+    private Integer getContID(ResultSet rs) {
+        try {
+            int r = -1;
+
+            if(rs.next())
+                r = rs.getInt(1);
+
+            return r;
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        }
     }
 }

@@ -243,11 +243,36 @@ public class MediaCenter {
         return ((Utilizador) membros.get(idConta)).checkOwnership(idContent);
     }
 
-    public void download(int idContent) {
+    public String download(int idContent) {
+        return conteudos.get(idContent).getPath();
     }
 
-    public void upload(String idConta, String nome, String autor, String album, String path) {
+    public void upload(String idConta, String nome, long tamanho, long duracao, String autor, String path, String album) {
+        int cid, r = conteudos.checkDup(nome, autor);
+        int aid = -1;
+        Conteudo c;
+        Album a;
+        Utilizador u;
 
+        if(!album.equals("")) {
+            if (albuns.contains(album))
+                a = albuns.get(album);
+            else
+                a = new Album(album);
+            aid = a.getID();
+        }
+
+        if(r == -1) {
+            c = new Conteudo(nome,tamanho,duracao,autor,path,aid);
+        } else {
+            c = conteudos.get(r);
+        }
+
+        u = (Utilizador)membros.get(idConta);
+        c.adicionaDono(u.getUsername(), u);
+        u.addContent(c.getId());
+        conteudos.put(c.getId(), c);
+        membros.put(u.getUsername(), u);
     }
 
     public void newConta(String tipo, String idConta, String email, String password) throws UtilizadorRepetidoException {
