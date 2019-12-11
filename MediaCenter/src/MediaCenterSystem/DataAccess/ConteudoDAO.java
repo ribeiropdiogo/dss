@@ -123,7 +123,7 @@ public class ConteudoDAO {
         try {
             Conteudo al = null;
             if (rs.next())
-                al = Conteudo.getInstance(rs.getInt(1), rs.getString(2), rs.getLong(3), rs.getDouble(4), rs.getString(5), rs.getString(6));
+                al = Conteudo.getInstance(rs.getInt(1), rs.getString(2), rs.getLong(3), rs.getLong(4), rs.getString(5), rs.getString(6));
             return al;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());

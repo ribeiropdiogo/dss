@@ -12,7 +12,7 @@ public class Conteudo {
     private int id;
     private String nome;
     private Long tamanho;
-    private Double duracao;
+    private Long duracao;
     private String autor;
     private String path;
     private HashMap<String, Categoria> categorias;
@@ -22,11 +22,11 @@ public class Conteudo {
         Conteudo.nextID = nextID;
     }
 
-    public static Conteudo getInstance(int id, String nome, Long tamanho, Double duracao, String autor, String path) {
+    public static Conteudo getInstance(int id, String nome, Long tamanho, Long duracao, String autor, String path) {
         return new Conteudo(id, nome, tamanho, duracao, autor, path);
     }
 
-    private Conteudo(int id, String nome, Long tamanho, Double duracao, String autor, String path) {
+    private Conteudo(int id, String nome, Long tamanho, Long duracao, String autor, String path) {
         this.id = id;
         this.nome = nome;
         this.tamanho = tamanho;
@@ -37,7 +37,7 @@ public class Conteudo {
         this.categorias = new HashMap<>();
     }
 
-    public Conteudo(String nome, Long tamanho, Double duracao, String autor, String path) {
+    public Conteudo(String nome, Long tamanho, Long duracao, String autor, String path) {
         this(nextID++,nome,tamanho,duracao,autor,path);
     }
 
@@ -64,7 +64,7 @@ public class Conteudo {
 
     }
 
-    public double getDuracao() {
+    public long getDuracao() {
         return duracao;
     }
 

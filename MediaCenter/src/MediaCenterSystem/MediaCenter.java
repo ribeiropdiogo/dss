@@ -11,6 +11,7 @@ import MediaCenterSystem.BusinessLogic.Playlist;
 import MediaCenterSystem.DataAccess.*;
 import Utilities.MediaMailer;
 import Utilities.Par;
+import Utilities.Util;
 
 import javax.mail.MessagingException;
 import java.lang.SecurityException;
@@ -405,7 +406,7 @@ public class MediaCenter {
     }
 
     private String[] content2arr(Conteudo c) {
-        return new String[]{c.getNome(), c.getAutor(), Double.toString(c.getDuracao()), "+","...",Integer.toString(c.getId()),c.getPath()};
+        return new String[]{c.getNome(), c.getAutor(), Util.convertDuration(c.getDuracao()), "+","...",Integer.toString(c.getId()),c.getPath()};
     }
 
     private String[][] constructMat(List<Conteudo> conts) {
