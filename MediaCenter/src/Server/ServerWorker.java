@@ -82,6 +82,41 @@ public class ServerWorker implements Runnable {
                             }
                         break;
 
+                    case "rep_download":
+                        System.out.println("> Downloading file for local reproduction");
+                        //File ficheiro = new File(this.md.getPath(Integer.parseInt(ops[2])));
+                        File ficheirolocal = new File("src/Server/media/08 - All The Small Things.flac");
+                        out.println("local_download "+ficheirolocal.length()+" "+ficheirolocal.getName());
+                        out.flush();
+
+                        try {
+                            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+                            FileInputStream fis = new FileInputStream(ficheirolocal);
+                            byte[] buffer = new byte[(int) ficheirolocal.length()];
+
+                            while (fis.read(buffer) > 0) {
+                                dos.write(buffer);
+                            }
+
+                            fis.close();
+                            //dos.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+
+                    case "permission":
+                        System.out.println("> Checking permissions of "+ops[2]+" for "+ops[1]);
+                        boolean r;// = this.md.checkPermissions(ops[1],Integer.parseInt(ops[2]));
+                        r = true;
+                        if (r)
+                            out.println("true");
+                        else
+                            out.println("false");
+
+                        out.flush();
+                        break;
+
                     case "uploadFile":
                         StringBuilder builder = new StringBuilder();
                         for (int i = 2; i < ops.length; i++) {

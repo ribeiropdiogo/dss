@@ -8,6 +8,11 @@ public class Test {
     public static void main(String[] args) throws IOException {
         MediaCenterInterface mci = new RemoteMediaCenter("localhost", 16899);
         //MainView m = new MainView(mci, "asdasdasd");
-        mci.download(1);
+        //mci.downloadForReproduction(1);
+
+        /* Testar permissoes
+        if (mci.checkPermissions("uelele",12345))
+            System.out.println("> done");
+         */
     }
 }

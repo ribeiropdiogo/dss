@@ -151,6 +151,15 @@ public class RemoteMediaCenter implements MediaCenterInterface {
     }
 
     public boolean checkPermissions(String idConta, long idContent) {
+        out.println("permission "+idConta+" "+idContent);
+        out.flush();
+
+        try {
+            if (in.readLine().equals("true"));
+                return true;
+        } catch (IOException e){
+            e.printStackTrace();
+        }
         return false;
     }
 
@@ -196,6 +205,46 @@ public class RemoteMediaCenter implements MediaCenterInterface {
 
 
 
+    }
+
+    public void downloadForReproduction(long idContent) {
+        out.println("rep_download " + idContent);
+        out.flush();
+
+        try {
+            String[] resposta = in.readLine().split(" ");
+            StringBuilder builder = new StringBuilder();
+            for (int i = 2; i < resposta.length; i++) {
+                builder.append(resposta[i]);
+                if (i < resposta.length - 1)
+                    builder.append(" ");
+
+            }
+            String filename = builder.toString();
+
+            try {
+                DataInputStream dis = new DataInputStream(socket.getInputStream());
+                FileOutputStream fos = new FileOutputStream("src/Client/.reproduction/" + filename);
+                int filesize = Integer.parseInt(resposta[1]);
+                byte[] buffer = new byte[filesize];
+
+                int read = 0;
+                int totalRead = 0;
+                int remaining = filesize;
+                while ((read = dis.read(buffer, 0, Math.min(buffer.length, remaining))) > 0) {
+                    totalRead += read;
+                    remaining -= read;
+                    //System.out.println("read " + totalRead + " bytes.");
+                    fos.write(buffer, 0, read);
+                }
+                fos.close();
+                //dis.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
 
