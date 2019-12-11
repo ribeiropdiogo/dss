@@ -16,8 +16,8 @@ public class CadastradoDAO {
     private static final String mytU = "Utilizador";
     private static final String mytA = "Administrador";
 
-    private static final String uContents = "has_Conteudo";
-    private static final String uPlays = "has_Playlist";
+    private static final String uContents = "Utilizador_has_Conteudo";
+    private static final String uPlays = "Utilizador_has_Playlist";
     private static final String uAmigos = "Amigos";
     private static final String uPedidos = "Pedidos";
 
