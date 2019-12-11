@@ -54,6 +54,10 @@ public class Conteudo {
 
     }
 
+    public double getDuracao() {
+        return duracao;
+    }
+
     public String getPath() {
         return this.path;
     }

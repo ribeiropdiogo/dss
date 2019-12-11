@@ -57,6 +57,10 @@ public class ConteudoDAO {
         return cont;
     }
 
+    public List<Conteudo> getAllConts() {
+        return this.getAll(DBAcess.getIds(myt, "Conteudo_id"));
+    }
+
     public List<Conteudo> getAll(Collection<Integer> al) {
         List<Conteudo> ls = new ArrayList<>();
 
