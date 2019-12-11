@@ -287,6 +287,16 @@ public class MediaCenter {
             throw new PasswordIncorretaException("A password indica está incorreta!");
     }
 
+    public String[] getCategorias() {
+        List<String> cats = categorias.getCategorias();
+        String[] arr = new String[cats.size()];
+
+        for (int i =0; i < cats.size(); i++)
+            arr[i] = cats.get(i);
+
+        return arr;
+    }
+
     private String generatePassword() {
         return "";
     }
