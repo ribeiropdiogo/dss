@@ -14,21 +14,23 @@ public class Album {
         Album.nextID = nextID;
     }
 
-    public Album(int id, String nome) {
+    private Album(int id, String nome) {
         this.id = id;
         this.nome = nome;
-    }
-
-    public Album(int id,String nome, Map<Integer,Conteudo> conts){
-        this.id = id;
-        this.nome = nome;
-        conteudos = conts;
     }
 
     public Album(String nome) {
         this.id = ++nextID;
         this.nome = nome;
         conteudos = new HashMap<>();
+    }
+
+    public static Album getInstance(int id, String nome){
+        return new Album(id, nome);
+    }
+
+    public void addContuedo(int idConteudo, Conteudo c){
+        conteudos.put(idConteudo, c);
     }
 
     public int getID() {
@@ -41,6 +43,10 @@ public class Album {
 
     public Set<Integer> getContents(){
         return new HashSet<>(conteudos.keySet());
+    }
+
+    public Map<Integer, Conteudo> getMapContents() {
+        return new HashMap<>(conteudos);
     }
 
 }
