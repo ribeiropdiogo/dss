@@ -23,8 +23,6 @@ public class Client {
 
     public static void deleteFolder(File folder) {
         File[] files = folder.listFiles();
-
-        System.out.println(files.length);
         if(files!=null) { //some JVMs return null for empty dirs
             for(File f: files) {
                 System.out.println(f.getName());

@@ -9,6 +9,7 @@ import Utilities.Par;
 import java.io.*;
 import java.lang.SecurityException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -94,8 +95,25 @@ public class RemoteMediaCenter implements MediaCenterInterface {
     }
 
     public String[] getCategorias() {
-        String[] lista = {"Categoria 1", "Categoria 2", "Categoria 3"};
-        return lista;
+        out.println("categorias");
+        out.flush();
+        String[] categorias = null;
+
+        try {
+
+            String answer = in.readLine();
+
+            String[] ops = answer.split(" ");
+           
+            categorias = new String[ops.length-1];
+            for (int i = 0; i < ops.length; i++){
+                categorias[i] = ops[i];
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return categorias;
     }
 
     public void adicionarCategoria(long idContent, String idCat) {
