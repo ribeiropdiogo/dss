@@ -17,15 +17,15 @@ public class Playlist {
         Playlist.nextID = nextID;
     }
 
-    public static Playlist getInstance(int id, String nome, String descricao, Map<Integer, Conteudo> conteudos) {
-        return new Playlist(id, nome, descricao, conteudos);
+    public static Playlist getInstance(int id, String nome, String descricao) {
+        return new Playlist(id, nome, descricao);
     }
 
-    private Playlist(int id, String nome, String descricao, Map<Integer, Conteudo> conteudos) {
+    private Playlist(int id, String nome, String descricao) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
-        this.conteudos = new HashMap<>(conteudos);
+        this.conteudos = new HashMap<>();
     }
 
     public Playlist(String nome, String descricao){
@@ -65,10 +65,18 @@ public class Playlist {
         } else throw new ConteudoRepetidoException("Conteudo Repetido");
     }
 
+    public void addDefContent(int idContent, Conteudo cn) {
+        conteudos.put(idContent, cn);
+    }
+
     public void addContents(List<Conteudo> cVetor){
 
         for(Conteudo c : cVetor){
             this.conteudos.put(c.getId(),c);
         }
+    }
+
+    public Map<Integer,Conteudo> getContents() {
+        return new HashMap<>(conteudos);
     }
 }

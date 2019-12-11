@@ -54,7 +54,7 @@ public class AlbumDAO {
     public void put(int idAlbum, Album al){
         String id = "Album_id='" + al.getID() + "'";
         String params = "('"+al.getID()+"','"+al.getNome()+"')";
-        DBAcess.putQuery("Album", id, params);
+        DBAcess.putQuery(myt, id, params);
 
         al.getMapContents().forEach((k,v) -> conteudos.put(k, v));
     }
