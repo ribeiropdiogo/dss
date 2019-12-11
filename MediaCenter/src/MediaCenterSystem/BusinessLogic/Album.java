@@ -1,6 +1,9 @@
 package MediaCenterSystem.BusinessLogic;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class Album {
 
@@ -8,7 +11,7 @@ public class Album {
 
     private int id;
     private String nome;
-    private Map<Integer,Conteudo> conteudos;
+    private Map<Integer, Conteudo> conteudos;
 
     public static void setCurrentNextID(int nextID) {
         Album.nextID = nextID;
@@ -25,11 +28,11 @@ public class Album {
         conteudos = new HashMap<>();
     }
 
-    public static Album getInstance(int id, String nome){
+    public static Album getInstance(int id, String nome) {
         return new Album(id, nome);
     }
 
-    public void addContuedo(int idConteudo, Conteudo c){
+    public void addContuedo(int idConteudo, Conteudo c) {
         conteudos.put(idConteudo, c);
     }
 
@@ -41,7 +44,7 @@ public class Album {
         return nome;
     }
 
-    public Set<Integer> getContents(){
+    public Set<Integer> getContents() {
         return new HashSet<>(conteudos.keySet());
     }
 

@@ -14,9 +14,9 @@ public class Server {
 
         try {
             //md.newConta("utilizador","test","test@test.xyz","test");
-            md.newConta("utilizador","bruh2","test@test.xyz","test");
+            md.newConta("utilizador", "bruh2", "test@test.xyz", "test");
             System.out.println("Conta criada com sucesso");
-        } catch(Exception exc) {
+        } catch (Exception exc) {
             System.out.println("Erro");
             System.out.println(exc.getMessage());
         }
@@ -24,7 +24,7 @@ public class Server {
         while (true) {
             Socket socket = ss.accept();
 
-            ServerWorker sw = new ServerWorker(socket,md);
+            ServerWorker sw = new ServerWorker(socket, md);
             new Thread(sw).start();
         }
     }

@@ -1,7 +1,5 @@
 package MediaCenterSystem.DataAccess.DBTools;
 
-import MediaCenterSystem.BusinessLogic.Categoria;
-
 import java.sql.*;
 import java.util.HashSet;
 import java.util.List;
@@ -24,7 +22,8 @@ public abstract class DBAcess {
     /**
      * Executa uma dada query em PLSQL, utilizando uma função de ordem superior para processar o resultado
      * da query.
-     * @param msg Código PLSQL a enviar.
+     *
+     * @param msg   Código PLSQL a enviar.
      * @param rproc Função que irá processar o ResultSet.
      * @return Objeto criado pela função de processamento.
      */
@@ -42,44 +41,46 @@ public abstract class DBAcess {
         try (Connection conn = DBAcess.makeConnection()) {
             Statement stm = conn.createStatement();
 
-            if(!id.equals(""))
+            if (!id.equals(""))
                 stm.executeUpdate("DELETE FROM " + table + " WHERE " + id);
 
             String sql = "INSERT INTO " + table + " VALUES " + newParams;
             stm.executeUpdate(sql);
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
         }
-        catch (Exception e) {throw new NullPointerException(e.getMessage());}
     }
 
     public static void removeEntry(String table, String ifs) {
         try (Connection conn = DBAcess.makeConnection()) {
             Statement stm = conn.createStatement();
             stm.executeUpdate("DELETE FROM " + table + " WHERE " + ifs);
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
         }
-        catch (Exception e) {throw new NullPointerException(e.getMessage());}
     }
 
     public static int countQuery(String table) {
-        return (Integer) DBAcess.excuteQuery(DBBaseQueries.count(table),DBAcess::getSize);
+        return (Integer) DBAcess.excuteQuery(DBBaseQueries.count(table), DBAcess::getSize);
     }
 
     public static int countQuery(String table, String ifs) {
-        return (Integer) DBAcess.excuteQuery(DBBaseQueries.count(table,ifs),DBAcess::getSize);
+        return (Integer) DBAcess.excuteQuery(DBBaseQueries.count(table, ifs), DBAcess::getSize);
     }
 
     public static Object getQuery(String table, String ifs, ResultProcesser rs) {
-        String sql = DBBaseQueries.select(ifs,table);
+        String sql = DBBaseQueries.select(ifs, table);
         return DBAcess.excuteQuery(sql, rs);
     }
 
     public static Object getQuery(String table, String proj, String ifs, ResultProcesser rs) {
-        String sql = DBBaseQueries.projSel(proj,ifs,table);
+        String sql = DBBaseQueries.projSel(proj, ifs, table);
         return DBAcess.excuteQuery(sql, rs);
     }
 
     public static Set<Integer> getIds(String table, String proj, String ifs) {
         try (Connection con = DBAcess.makeConnection()) {
-            String msg = DBBaseQueries.projSel(proj,ifs,table);
+            String msg = DBBaseQueries.projSel(proj, ifs, table);
             Statement stm = con.createStatement();
             ResultSet rs = stm.executeQuery(msg);
             return DBAcess.getIntSet(rs);
@@ -89,12 +90,12 @@ public abstract class DBAcess {
     }
 
     public static Set<Integer> getIds(String table, String proj) {
-        return DBAcess.getIds(table,proj,"");
+        return DBAcess.getIds(table, proj, "");
     }
 
     public static Set<String> getNames(String table, String proj, String ifs) {
         try (Connection con = DBAcess.makeConnection()) {
-            String msg = DBBaseQueries.projSel(proj,ifs,table);
+            String msg = DBBaseQueries.projSel(proj, ifs, table);
             Statement stm = con.createStatement();
             ResultSet rs = stm.executeQuery(msg);
             return DBAcess.getStringSet(rs);
@@ -104,7 +105,7 @@ public abstract class DBAcess {
     }
 
     public static Set<String> getNames(String table, String proj) {
-        return DBAcess.getNames(table,proj,"");
+        return DBAcess.getNames(table, proj, "");
     }
 
     public static Integer getSize(ResultSet rs) {
@@ -121,7 +122,7 @@ public abstract class DBAcess {
         try {
             set = new HashSet<>();
 
-            while(rs.next())
+            while (rs.next())
                 set.add(rs.getInt(1));
 
             return set;
@@ -135,7 +136,7 @@ public abstract class DBAcess {
         try {
             set = new HashSet<>();
 
-            while(rs.next())
+            while (rs.next())
                 set.add(rs.getString(1));
 
             return set;
@@ -147,11 +148,11 @@ public abstract class DBAcess {
     public static String makeVarStr(List<String> ls) {
         StringBuilder sb = new StringBuilder();
 
-        for(int i = 0; i < ls.size() - 1; i++) {
+        for (int i = 0; i < ls.size() - 1; i++) {
             sb.append(ls.get(i)).append(",");
         }
 
-        if(ls.size() - 1 >= 0)
+        if (ls.size() - 1 >= 0)
             sb.append(ls.get(ls.size() - 1));
 
         return sb.toString();

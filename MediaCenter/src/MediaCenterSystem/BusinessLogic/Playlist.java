@@ -2,7 +2,9 @@ package MediaCenterSystem.BusinessLogic;
 
 import Exceptions.ConteudoRepetidoException;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Playlist {
 
@@ -11,7 +13,7 @@ public class Playlist {
     private int id;
     private String nome;
     private String descricao;
-    private Map<Integer,Conteudo> conteudos;
+    private Map<Integer, Conteudo> conteudos;
 
     public static void setCurrentNextID(int nextID) {
         Playlist.nextID = nextID;
@@ -28,7 +30,7 @@ public class Playlist {
         this.conteudos = new HashMap<>();
     }
 
-    public Playlist(String nome, String descricao){
+    public Playlist(String nome, String descricao) {
         this.nome = nome;
         this.descricao = descricao;
         this.conteudos = new HashMap<>();
@@ -54,7 +56,7 @@ public class Playlist {
         this.descricao = descricao;
     }
 
-    public void removeContent(int idContent){
+    public void removeContent(int idContent) {
         this.conteudos.remove(idContent);
     }
 
@@ -69,14 +71,14 @@ public class Playlist {
         conteudos.put(idContent, cn);
     }
 
-    public void addContents(List<Conteudo> cVetor){
+    public void addContents(List<Conteudo> cVetor) {
 
-        for(Conteudo c : cVetor){
-            this.conteudos.put(c.getId(),c);
+        for (Conteudo c : cVetor) {
+            this.conteudos.put(c.getId(), c);
         }
     }
 
-    public Map<Integer,Conteudo> getContents() {
+    public Map<Integer, Conteudo> getContents() {
         return new HashMap<>(conteudos);
     }
 }

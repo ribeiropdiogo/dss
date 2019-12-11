@@ -1,6 +1,5 @@
 package MediaCenterSystem.DataAccess;
 
-import MediaCenterSystem.BusinessLogic.Cadastrado.Cadastrado;
 import MediaCenterSystem.BusinessLogic.Cadastrado.Utilizador;
 import MediaCenterSystem.BusinessLogic.Categoria;
 import MediaCenterSystem.BusinessLogic.Conteudo;
@@ -21,13 +20,12 @@ public class ConteudoDAO {
     private CadastradoDAO cadastrados = null;
     private CategoriaDAO categorias = null;
 
-    private ConteudoDAO () {
+    private ConteudoDAO() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             cadastrados = CadastradoDAO.getInstance();
             categorias = CategoriaDAO.getInstance();
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             throw new NullPointerException(e.getMessage());
         }
     }
@@ -39,21 +37,21 @@ public class ConteudoDAO {
         return inst;
     }
 
-    public Conteudo get(int idConteudo){
+    public Conteudo get(int idConteudo) {
         String ifs = idCont(idConteudo);
         Conteudo cont = (Conteudo) DBAcess.getQuery(myt, ifs, this::getConteudo);
-        Set<String> cats = (Set<String>)DBAcess.getQuery(cCats, "Categoria_nome", ifs, DBAcess::getStringSet);
-        Set<String> owns = (Set<String>)DBAcess.getQuery(cCats, "username", ifs, DBAcess::getStringSet);
+        Set<String> cats = DBAcess.getNames(cCats, "Categoria_nome", ifs);
+        Set<String> owns = DBAcess.getNames(cCats, "username", ifs);
         Categoria tmp1;
         Utilizador tmp2;
 
 
-        for(String s : cats) {
+        for (String s : cats) {
             cont.adicionaCategoria(s, categorias.get(s));
         }
 
-        for(String s : owns) {
-            cont.adicionaDono(s, (Utilizador)cadastrados.get(s));
+        for (String s : owns) {
+            cont.adicionaDono(s, (Utilizador) cadastrados.get(s));
         }
 
         return cont;
@@ -67,7 +65,7 @@ public class ConteudoDAO {
         return ls;
     }
 
-    public void remove(int idContent){
+    public void remove(int idContent) {
         this.removeContentEntries(idContent);
         DBAcess.removeEntry(myt, idCont(idContent));
     }
@@ -76,20 +74,20 @@ public class ConteudoDAO {
         String params = "('" + idContent + "','" + c.getNome() + "','" + c.getTamanho() + "','" + c.getAutor() + "')";
         DBAcess.putQuery(myt, idCont(idContent), params);
         this.removeContentEntries(idContent);
-        Map<String,Categoria> cates = c.getCategorias();
-        Map<String,Utilizador> urs = c.getDonos();
+        Map<String, Categoria> cates = c.getCategorias();
+        Map<String, Utilizador> urs = c.getDonos();
 
         String cats = this.convertContStrSet(idContent, cates.keySet());
         String own = this.convertContStrSet(idContent, urs.keySet());
 
-        if(!cats.equals(""))
+        if (!cats.equals(""))
             DBAcess.putQuery(cCats, "", cats);
 
-        if(!own.equals(""))
+        if (!own.equals(""))
             DBAcess.putQuery(cOwns, "", own);
 
-        cates.forEach((k,v) -> categorias.put(k, v));
-        urs.forEach((k,v) -> cadastrados.put(k, v));
+        cates.forEach((k, v) -> categorias.put(k, v));
+        urs.forEach((k, v) -> cadastrados.put(k, v));
     }
 
     public List<Conteudo> getWithArtist(String artista) {
@@ -102,7 +100,7 @@ public class ConteudoDAO {
         return ls;
     }
 
-    public List<Conteudo> getWithCategoria(String categoria){
+    public List<Conteudo> getWithCategoria(String categoria) {
         String ifs = "Categoria_nome='" + categoria + "'";
         List<Conteudo> ls = new ArrayList<>();
         Set<Integer> allC = DBAcess.getIds(myt, "Conteudo_id", ifs);
@@ -112,15 +110,15 @@ public class ConteudoDAO {
         return ls;
     }
 
-    public Set<Integer> getAll(){
+    public Set<Integer> getAll() {
         return DBAcess.getIds(myt, "Conteudo_id");
     }
 
     private Conteudo getConteudo(ResultSet rs) {
         try {
             Conteudo al = null;
-            if(rs.next())
-                al = Conteudo.getInstance(rs.getInt(1),rs.getString(2),rs.getLong(3),rs.getDouble(4),rs.getString(5),rs.getString(6));
+            if (rs.next())
+                al = Conteudo.getInstance(rs.getInt(1), rs.getString(2), rs.getLong(3), rs.getDouble(4), rs.getString(5), rs.getString(6));
             return al;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
@@ -128,19 +126,19 @@ public class ConteudoDAO {
     }
 
     private String idCont(int idConteudo) {
-        return "Conteudo_id='"+idConteudo+"'";
+        return "Conteudo_id='" + idConteudo + "'";
     }
 
     private void removeContentEntries(int idConteudo) {
-        String ifs =idCont(idConteudo);
-        DBAcess.removeEntry(cCats,ifs);
-        DBAcess.removeEntry(cOwns,ifs);
+        String ifs = idCont(idConteudo);
+        DBAcess.removeEntry(cCats, ifs);
+        DBAcess.removeEntry(cOwns, ifs);
     }
 
     private String convertContStrSet(int idCont, Set<String> inters) {
         List<String> ls = new ArrayList<>();
 
-        for(String it : inters) {
+        for (String it : inters) {
             ls.add("('" + idCont + "','" + it + "')");
         }
 

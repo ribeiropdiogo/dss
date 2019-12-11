@@ -1,13 +1,10 @@
 package MediaCenterSystem.DataAccess;
 
 import MediaCenterSystem.BusinessLogic.Album;
-import MediaCenterSystem.BusinessLogic.Categoria;
 import MediaCenterSystem.DataAccess.DBTools.DBAcess;
 import MediaCenterSystem.DataAccess.DBTools.DBBaseQueries;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.Set;
 
 public class AlbumDAO {
@@ -20,12 +17,11 @@ public class AlbumDAO {
 
     private ConteudoDAO conteudos;
 
-    private AlbumDAO () {
+    private AlbumDAO() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conteudos = ConteudoDAO.getInstance();
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             throw new NullPointerException(e.getMessage());
         }
     }
@@ -39,30 +35,30 @@ public class AlbumDAO {
 
     public int size() {
         String sql = DBBaseQueries.count("Album");
-        return (Integer)DBAcess.excuteQuery(sql, DBAcess::getSize);
+        return (Integer) DBAcess.excuteQuery(sql, DBAcess::getSize);
     }
 
-    public Album get(int idAlbum){
-        Album al = (Album)DBAcess.getQuery(myt, "Album_id='"+idAlbum+"'", this::getAlbum);
-        Set<Integer> conts = DBAcess.getIds("Conteudo","Conteudo_id","Album_id='"+idAlbum+"'");
+    public Album get(int idAlbum) {
+        Album al = (Album) DBAcess.getQuery(myt, "Album_id='" + idAlbum + "'", this::getAlbum);
+        Set<Integer> conts = DBAcess.getIds("Conteudo", "Conteudo_id", "Album_id='" + idAlbum + "'");
 
         conts.forEach(x -> al.addContuedo(x, conteudos.get(x)));
 
         return al;
     }
 
-    public void put(int idAlbum, Album al){
+    public void put(int idAlbum, Album al) {
         String id = "Album_id='" + al.getID() + "'";
-        String params = "('"+al.getID()+"','"+al.getNome()+"')";
+        String params = "('" + al.getID() + "','" + al.getNome() + "')";
         DBAcess.putQuery(myt, id, params);
 
-        al.getMapContents().forEach((k,v) -> conteudos.put(k, v));
+        al.getMapContents().forEach((k, v) -> conteudos.put(k, v));
     }
 
     private Album getAlbum(ResultSet rs) {
         try {
             Album al = null;
-            if(rs.next())
+            if (rs.next())
                 al = Album.getInstance(rs.getInt(1), rs.getString(2));
             return al;
         } catch (Exception e) {

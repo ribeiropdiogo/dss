@@ -2,11 +2,7 @@ package Client;
 
 import MediaCenter_GUI.LoginForm;
 
-import java.io.*;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.Scanner;
+import java.io.IOException;
 
 public class Client {
     private static MediaCenterInterface mci;

@@ -18,12 +18,11 @@ public class PlaylistDAO {
 
     private ConteudoDAO conteudos;
 
-    private PlaylistDAO () {
+    private PlaylistDAO() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conteudos = ConteudoDAO.getInstance();
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             throw new NullPointerException(e.getMessage());
         }
     }
@@ -36,7 +35,7 @@ public class PlaylistDAO {
     }
 
     public Playlist get(int idPlaylist) {
-        String ifs = "Playlist_id='"+idPlaylist+"'";
+        String ifs = "Playlist_id='" + idPlaylist + "'";
         Playlist pl = (Playlist) DBAcess.getQuery(myt, ifs, this::getPlaylist);
         Set<Integer> conts = DBAcess.getIds(pConts, "Conteudo_id", ifs);
 
@@ -45,12 +44,12 @@ public class PlaylistDAO {
         return pl;
     }
 
-    public void put(int idPlaylist, Playlist pl){
-        String id = "Playlist_id='"+idPlaylist+"'";
+    public void put(int idPlaylist, Playlist pl) {
+        String id = "Playlist_id='" + idPlaylist + "'";
         String params = "('" + idPlaylist + "','" + pl.getNome() + "','" + pl.getDescricao() + "')";
         DBAcess.putQuery(myt, id, params);
 
-        pl.getContents().forEach((k,v) -> conteudos.put(k, v));
+        pl.getContents().forEach((k, v) -> conteudos.put(k, v));
 
     }
 
@@ -59,7 +58,7 @@ public class PlaylistDAO {
     }
 
     public List<Playlist> getAllWith(int idContent) {
-        Set<Integer> plays = DBAcess.getIds(myt,"Playlist_id","Conteudo_id='" + idContent + "'");
+        Set<Integer> plays = DBAcess.getIds(myt, "Playlist_id", "Conteudo_id='" + idContent + "'");
         List<Playlist> ls = new ArrayList<>();
 
         plays.forEach(x -> ls.add(this.get(x)));
@@ -70,8 +69,8 @@ public class PlaylistDAO {
     private Playlist getPlaylist(ResultSet rs) {
         try {
             Playlist al = null;
-            if(rs.next())
-                al = Playlist.getInstance(rs.getInt(1),rs.getString(2),rs.getString(3));
+            if (rs.next())
+                al = Playlist.getInstance(rs.getInt(1), rs.getString(2), rs.getString(3));
             return al;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
