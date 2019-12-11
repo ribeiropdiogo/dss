@@ -14,9 +14,9 @@ public class Server {
 
         try {
             //md.newConta("utilizador","test","test@test.xyz","test");
-            System.out.println("FLAG1");
-            md.newConta("utilizador", "brJN23oiuh2", "test@test.xyz", "test");
-            System.out.println("Conta criada com sucesso");
+            //System.out.println("FLAG1");
+            //md.newConta("utilizador", "chuck", "test@test.xyz", "chuck");
+            //System.out.println("Conta criada com sucesso");
         } catch (Exception exc) {
             System.out.println("Erro");
             System.out.println(exc.getMessage());

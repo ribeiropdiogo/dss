@@ -155,13 +155,53 @@ public class RemoteMediaCenter implements MediaCenterInterface {
     }
 
     public void download(long idContent) {
+        out.println("download " + idContent);
+        out.flush();
+
+        try {
+            String[] resposta = in.readLine().split(" ");
+            StringBuilder builder = new StringBuilder();
+            for (int i = 2; i < resposta.length; i++) {
+                builder.append(resposta[i]);
+                if (i < resposta.length - 1)
+                    builder.append(" ");
+
+            }
+            String filename = builder.toString();
+
+            try {
+                DataInputStream dis = new DataInputStream(socket.getInputStream());
+                FileOutputStream fos = new FileOutputStream("src/Client/media/" + filename);
+                int filesize = Integer.parseInt(resposta[1]);
+                byte[] buffer = new byte[filesize];
+
+                int read = 0;
+                int totalRead = 0;
+                int remaining = filesize;
+                while ((read = dis.read(buffer, 0, Math.min(buffer.length, remaining))) > 0) {
+                    totalRead += read;
+                    remaining -= read;
+                    //System.out.println("read " + totalRead + " bytes.");
+                    fos.write(buffer, 0, read);
+                }
+                fos.close();
+                //dis.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+
+
 
     }
 
 
     public void uploadFile(String idConta, String nome, String autor, String album, File ficheiro) {
 
-        out.println("upload " + ficheiro.length() + " " + ficheiro.getName());
+        out.println("uploadFile " + ficheiro.length() + " " + ficheiro.getName());
         out.flush();
         try {
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
@@ -179,11 +219,12 @@ public class RemoteMediaCenter implements MediaCenterInterface {
         }
 
 
-        //this.upload(idConta,nome,autor,album,"");
+        this.upload(idConta,nome,autor,album,"src/MediaCenter/Server/media");
     }
 
     public void upload(String idConta, String nome, String autor, String album, String path) {
-
+        out.println("upload "+idConta+" "+nome+" "+autor+" "+album+" "+path);
+        out.flush();
     }
 
     public void newConta(String tipo, String idConta, String email, String password) throws UtilizadorRepetidoException {

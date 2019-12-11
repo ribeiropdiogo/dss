@@ -11,9 +11,9 @@ public abstract class DBAcess {
         Object parseRs(ResultSet rs);
     }
 
-    private final static String url = "jdbc:mysql://localhost:3306/mydb";
+    private final static String url = "jdbc:mysql://localhost:3306/mediacenter";
     private final static String user = "root";
-    private final static String pass = "root";
+    private final static String pass = "";
 
     public static Connection makeConnection() throws SQLException {
         return DriverManager.getConnection(url, user, pass);

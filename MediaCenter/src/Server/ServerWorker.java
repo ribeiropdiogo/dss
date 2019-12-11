@@ -37,7 +37,6 @@ public class ServerWorker implements Runnable {
                         try {
                             this.md.login(ops[1], ops[2]);
                             out.println("ok");
-                            System.out.println("> Login");
                         } catch (PasswordIncorretaException p) {
                             out.println("wrongpassword");
                         } catch (UtilizadorInexistenteException u) {
@@ -46,7 +45,7 @@ public class ServerWorker implements Runnable {
                             out.flush();
                         }
 
-                        System.out.println("> Login");
+                        System.out.println("> Login from "+ops[1]);
                         break;
 
                     case "logout":
@@ -55,6 +54,35 @@ public class ServerWorker implements Runnable {
                         break;
 
                     case "upload":
+                        this.md.upload(ops[1],ops[2],ops[3],ops[4],ops[5]);
+                        System.out.println("> Uploaded file from "+ops[1]);
+                        break;
+
+                    case "download":
+                            this.md.download(Integer.parseInt(ops[1]));
+                            System.out.println("> Downloading file");
+                            //File ficheiro = new File(this.md.getPath(Integer.parseInt(ops[2])));
+                            File ficheiro = new File("src/Server/media/08 - All The Small Things.flac");
+                            out.println("download "+ficheiro.length()+" "+ficheiro.getName());
+                            out.flush();
+
+                            try {
+                                DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+                                FileInputStream fis = new FileInputStream(ficheiro);
+                                byte[] buffer = new byte[(int) ficheiro.length()];
+
+                                while (fis.read(buffer) > 0) {
+                                    dos.write(buffer);
+                                }
+
+                                fis.close();
+                                //dos.close();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        break;
+
+                    case "uploadFile":
                         StringBuilder builder = new StringBuilder();
                         for (int i = 2; i < ops.length; i++) {
                             builder.append(ops[i]);
