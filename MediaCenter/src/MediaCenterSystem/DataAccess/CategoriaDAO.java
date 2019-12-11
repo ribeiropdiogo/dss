@@ -4,6 +4,9 @@ import MediaCenterSystem.BusinessLogic.Categoria;
 import MediaCenterSystem.DataAccess.DBTools.DBAcess;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class CategoriaDAO {
 
@@ -38,6 +41,10 @@ public class CategoriaDAO {
         String id = "Categoria_nome='" + idCat + "'";
         String params = "('" + ca.getNome() + "')";
         DBAcess.putQuery(myt, id, params);
+    }
+
+    public List<String> getCategorias() {
+        return new ArrayList<>(DBAcess.getNames(myt,"Categoria_nome"));
     }
 
     private Categoria getCategoria(ResultSet rs) {
