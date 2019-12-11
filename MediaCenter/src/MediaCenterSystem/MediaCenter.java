@@ -303,21 +303,15 @@ public class MediaCenter {
     }
 
     public String[][] getListaMusicas(){
-        List<Conteudo> conts = conteudos.getAllConts();
-        String[][] arr = new String[conts.size()][];
-
-        for(int i = 0; i < conts.size(); i++)
-            arr[i] = content2arr(conts.get(i));
-
-        return arr;
+        return constructMat(conteudos.getAllConts());
     }
 
     public String[][] getListaMusicas(String idCat){
-        return null;
+        return constructMat(conteudos.getWithCategoria(idCat));
     }
 
     public String[][] getListaMusicas(int idPlaylist){
-        return null;
+        return constructMat(new ArrayList<>(playlists.get(idPlaylist).getContents().values()));
     }
 
     private String generatePassword() {
@@ -412,5 +406,14 @@ public class MediaCenter {
 
     private String[] content2arr(Conteudo c) {
         return new String[]{c.getNome(), c.getAutor(), Double.toString(c.getDuracao()), "+","...",Integer.toString(c.getId()),c.getPath()};
+    }
+
+    private String[][] constructMat(List<Conteudo> conts) {
+        String[][] arr = new String[conts.size()][];
+
+        for(int i = 0; i < conts.size(); i++)
+            arr[i] = content2arr(conts.get(i));
+
+        return arr;
     }
 }
