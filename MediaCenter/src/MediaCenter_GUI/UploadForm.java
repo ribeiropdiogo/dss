@@ -158,7 +158,7 @@ public class UploadForm extends JFrame
         btFileButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 FileFilter audioFilter = new FileNameExtensionFilter("Music file", "mp3", "mp4", "flac");
-                FileFilter videoFilter = new FileNameExtensionFilter("Video file", "webm", "mp4", "flv", "mkv", "gif", "avi", "mpg", "mpeg");
+                FileFilter videoFilter = new FileNameExtensionFilter("Video file", "webm", "mp4", "flv", "mkv", "gif", "avi", "mpg", "mpeg","ts");
                 JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
                 jfc.addChoosableFileFilter(videoFilter);
                 jfc.addChoosableFileFilter(audioFilter);
@@ -172,7 +172,7 @@ public class UploadForm extends JFrame
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
                     selectedFile = jfc.getSelectedFile();;
                     lbFileNameLabel.setText(selectedFile.getName());
-                    System.out.println(selectedFile.getAbsolutePath());
+                    //System.out.println(selectedFile.getAbsolutePath());
                 }
             }
         });
