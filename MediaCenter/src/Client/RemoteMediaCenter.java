@@ -6,6 +6,7 @@ import MediaCenter_GUI.LoginForm;
 import MediaCenter_GUI.MainView;
 import Utilities.Par;
 
+import javax.print.attribute.standard.Media;
 import java.io.*;
 import java.lang.SecurityException;
 import java.net.Socket;
@@ -100,14 +101,13 @@ public class RemoteMediaCenter implements MediaCenterInterface {
         String[] categorias = null;
 
         try {
-
             String answer = in.readLine();
-
-            String[] ops = answer.split(" ");
-           
-            categorias = new String[ops.length-1];
-            for (int i = 0; i < ops.length; i++){
-                categorias[i] = ops[i];
+            String[] ops = answer.split("_");
+            int c = ops.length;
+            c--;
+            categorias = new String[c];
+            for (int i = 0; i < c; i++){
+                categorias[i] = ops[i+1];
             }
         } catch (IOException e){
             e.printStackTrace();
@@ -270,6 +270,7 @@ public class RemoteMediaCenter implements MediaCenterInterface {
 
         out.println("uploadFile " + ficheiro.length() + " " + ficheiro.getName());
         out.flush();
+
         try {
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
             FileInputStream fis = new FileInputStream(ficheiro);
@@ -313,5 +314,24 @@ public class RemoteMediaCenter implements MediaCenterInterface {
 
     public void sendMail(String email, String password) {
 
+    }
+
+    public String[][] getListaMusicas() {
+        out.println("getListaMusicas");
+        out.flush();
+        String[][] r = null;
+        try {
+            int rows = Integer.parseInt(in.readLine());
+            System.out.println("> Fetched "+rows+" rows");
+            r = new String[rows][6];
+            for (int i = 0; i < rows; i++){
+                for (int j = 0; j < 6; j++){
+                    r[i][j] = in.readLine();
+                }
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return r;
     }
 }

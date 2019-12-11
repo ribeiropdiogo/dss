@@ -81,4 +81,6 @@ public interface MediaCenterInterface {
 
     void sendMail(String email, String password);
 
+    String[][] getListaMusicas();
+
 }

@@ -41,7 +41,7 @@ public class ConteudoDAO {
         String ifs = idCont(idConteudo);
         Conteudo cont = (Conteudo) DBAcess.getQuery(myt, ifs, this::getConteudo);
         Set<String> cats = DBAcess.getNames(cCats, "Categoria_nome", ifs);
-        Set<String> owns = DBAcess.getNames(cCats, "username", ifs);
+        Set<String> owns = DBAcess.getNames(cOwns, "username", ifs);
         Categoria tmp1;
         Utilizador tmp2;
 

@@ -130,7 +130,7 @@ public class GuestView extends JFrame {
         GridBagConstraints gbcRightPanel = new GridBagConstraints();
         pnRightPanel.setLayout(gbRightPanel);
 
-        String[] columnNames = new String[]{"Name", "Owner", "Duration"};
+        String[] columnNames = new String[]{"Name", "Author", "Duration"};
         data = new String[][]{new String[]{"musica1", "owner", "1:11", "1"},
                 new String[]{"musica2", "owner", "1:11", "1"},
                 new String[]{"musica3", "owner", "1:11",  "1"},

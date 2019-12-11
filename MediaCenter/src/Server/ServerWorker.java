@@ -152,6 +152,35 @@ public class ServerWorker implements Runnable {
 
                         break;
 
+                    case "categorias":
+                        if (ops.length==1){
+                        String[] cats = this.md.getCategorias();
+                            StringBuilder build = new StringBuilder();
+                            build.append("categorias_");
+                            for (int i = 0; i < cats.length; i++) {
+                                build.append(cats[i]);
+                                if (i < cats.length - 1)
+                                    build.append("_");
+
+                            }
+                            String answer = build.toString();
+                            System.out.println(answer);
+                            out.println(answer);
+                            out.flush();
+                        }
+                        break;
+
+                    case "getListaMusicas":
+                        String[][] a = this.md.getListaMusicas();
+                        out.println(a.length);
+                        out.flush();
+                        for (int i = 0; i < a.length; i++)
+                            for (int j = 0; j < 6; j++){
+                                out.println(a[i][j]);
+                                out.flush();
+                            }
+                        break;
+
                     default:
                         System.out.println("> Unrecognized operation");
                         break;

@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 
 public class MainView extends JFrame {
     static MainView theaaa;
@@ -109,7 +110,7 @@ public class MainView extends JFrame {
         pnLeftPanel.add(lbCategoriasLabel);
         sppSplitPane1.setLeftComponent(pnLeftPanel);
 
-        String[] dataCategorias = {"Rock", "Metal", "Pop", "Trance", "Action", "History", "asdas", "asdas", "adas", "qqqq", "test", "testa", "teste"};
+        String[] dataCategorias = mediacenter.getCategorias();
         lsCategorias = new JList(dataCategorias);
         lsCategorias.setName("Categorias");
         lsCategorias.setBackground(new Color(238, 238, 238));
@@ -234,14 +235,8 @@ public class MainView extends JFrame {
         GridBagConstraints gbcRightPanel = new GridBagConstraints();
         pnRightPanel.setLayout(gbRightPanel);
 
-        String[][] dataContentTable = new String[][]{new String[]{"musica1", "owner", "1:11", "+", "..."},
-                new String[]{"musica2", "owner", "1:11", "+", "...", "1"},
-                new String[]{"musica3", "owner", "1:11", "+", "...", "2"},
-                new String[]{"musica4", "owner", "1:11", "+", "...", "3"},
-                new String[]{"musica5", "owner", "1:11", "+", "...", "4"},
-                new String[]{"musica6", "owner", "1:11", "+", "...", "5"},
-                new String[]{"musica7", "owner", "1:11", "+", "...", "6"}};
-        String[] colsContentTable = new String[]{"Name", "Owner", "Duration", "Options", ""};
+        String[][] dataContentTable = mediacenter.getListaMusicas();
+        String[] colsContentTable = new String[]{"Name", "Author", "Duration", "Options", ""};
         DefaultTableModel model = new DefaultTableModel(dataContentTable, colsContentTable);
         tbContentTable = new JTable(dataContentTable, colsContentTable);
         tbContentTable.setAutoCreateRowSorter(true);
@@ -427,4 +422,6 @@ public class MainView extends JFrame {
             }
         });
     }
+
+
 }
