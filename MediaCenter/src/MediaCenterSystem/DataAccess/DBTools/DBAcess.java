@@ -108,6 +108,10 @@ public abstract class DBAcess {
         return DBAcess.getNames(table, proj, "");
     }
 
+    public static Integer maxIds(String table, String projo) {
+        return (Integer)DBAcess.excuteQuery(DBBaseQueries.max(table, projo), DBAcess::getSize);
+    }
+
     public static Integer getSize(ResultSet rs) {
         try {
             rs.next();

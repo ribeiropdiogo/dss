@@ -7,6 +7,8 @@ import java.util.Map;
 
 public class Conteudo {
 
+    private static int nextID = 0;
+
     private int id;
     private String nome;
     private Long tamanho;
@@ -15,6 +17,14 @@ public class Conteudo {
     private String path;
     private HashMap<String, Categoria> categorias;
     private HashMap<String, Utilizador> donos;
+
+    public static void setCurrentNextID(int nextID) {
+        Conteudo.nextID = nextID;
+    }
+
+    public static Conteudo getInstance(int id, String nome, Long tamanho, Double duracao, String autor, String path) {
+        return new Conteudo(id, nome, tamanho, duracao, autor, path);
+    }
 
     private Conteudo(int id, String nome, Long tamanho, Double duracao, String autor, String path) {
         this.id = id;
@@ -27,8 +37,8 @@ public class Conteudo {
         this.categorias = new HashMap<>();
     }
 
-    public static Conteudo getInstance(int id, String nome, Long tamanho, Double duracao, String autor, String path) {
-        return new Conteudo(id, nome, tamanho, duracao, autor, path);
+    public Conteudo(String nome, Long tamanho, Double duracao, String autor, String path) {
+        this(nextID++,nome,tamanho,duracao,autor,path);
     }
 
     public int getId() {

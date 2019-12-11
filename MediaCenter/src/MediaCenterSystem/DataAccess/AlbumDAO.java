@@ -21,6 +21,7 @@ public class AlbumDAO {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conteudos = ConteudoDAO.getInstance();
+            Album.setCurrentNextID(DBAcess.maxIds(myt,"Album_id") + 1);
         } catch (ClassNotFoundException e) {
             throw new NullPointerException(e.getMessage());
         }

@@ -20,12 +20,11 @@ public class Album {
     private Album(int id, String nome) {
         this.id = id;
         this.nome = nome;
+        conteudos = new HashMap<>();
     }
 
     public Album(String nome) {
-        this.id = ++nextID;
-        this.nome = nome;
-        conteudos = new HashMap<>();
+        this(nextID++,nome);
     }
 
     public static Album getInstance(int id, String nome) {

@@ -31,9 +31,7 @@ public class Playlist {
     }
 
     public Playlist(String nome, String descricao) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.conteudos = new HashMap<>();
+        this(nextID++,nome,descricao);
     }
 
     public int getId() {

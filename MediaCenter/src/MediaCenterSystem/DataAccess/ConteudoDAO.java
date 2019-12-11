@@ -25,6 +25,7 @@ public class ConteudoDAO {
             Class.forName("com.mysql.cj.jdbc.Driver");
             cadastrados = CadastradoDAO.getInstance();
             categorias = CategoriaDAO.getInstance();
+            Conteudo.setCurrentNextID(DBAcess.maxIds(myt,"Conteudo_id") + 1);
         } catch (ClassNotFoundException e) {
             throw new NullPointerException(e.getMessage());
         }
