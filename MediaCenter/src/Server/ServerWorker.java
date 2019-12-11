@@ -164,21 +164,35 @@ public class ServerWorker implements Runnable {
 
                             }
                             String answer = build.toString();
-                            System.out.println(answer);
+
                             out.println(answer);
                             out.flush();
                         }
                         break;
 
                     case "getListaMusicas":
-                        String[][] a = this.md.getListaMusicas();
-                        out.println(a.length);
-                        out.flush();
-                        for (int i = 0; i < a.length; i++)
-                            for (int j = 0; j < 6; j++){
-                                out.println(a[i][j]);
-                                out.flush();
-                            }
+                        String[] c = data.split("_");
+                        if (c.length == 1 || c[1].equals("All")) {
+                            System.out.println("> List all");
+                            String[][] a = this.md.getListaMusicas();
+                            out.println(a.length);
+                            out.flush();
+                            for (int i = 0; i < a.length; i++)
+                                for (int j = 0; j < 6; j++) {
+                                    out.println(a[i][j]);
+                                    out.flush();
+                                }
+                        } else if (c.length == 2){
+                            System.out.println("> List all that is "+c[1]);
+                            String[][] a = this.md.getListaMusicas(c[1]);
+                            out.println(a.length);
+                            out.flush();
+                            for (int i = 0; i < a.length; i++)
+                                for (int j = 0; j < 6; j++) {
+                                    out.println(a[i][j]);
+                                    out.flush();
+                                }
+                        }
                         break;
 
                     default:

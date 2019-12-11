@@ -42,7 +42,7 @@ public class ButtonColumn extends AbstractCellEditor
      *  @param action the Action to be invoked when the button is invoked
      *  @param column the column to which the button renderer/editor is added
      */
-    public ButtonColumn(JTable table, Action action, int column)
+    public ButtonColumn(JTable table, Action action, int column, JPopupMenu popup)
     {
         this.table = table;
         this.action = action;
@@ -50,7 +50,11 @@ public class ButtonColumn extends AbstractCellEditor
         renderButton = new JButton();
         editButton = new JButton();
         editButton.setFocusPainted( false );
-        editButton.addActionListener( this );
+        editButton.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                popup.show(e.getComponent(), e.getX(), e.getY());
+            }
+        });
         originalBorder = editButton.getBorder();
         setFocusBorder( new LineBorder(Color.BLUE) );
 

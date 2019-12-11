@@ -83,4 +83,6 @@ public interface MediaCenterInterface {
 
     String[][] getListaMusicas();
 
+    String[][] getListaMusicas(String idCat);
+
 }

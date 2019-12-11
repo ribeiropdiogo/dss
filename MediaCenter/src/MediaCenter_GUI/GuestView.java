@@ -6,10 +6,7 @@ import MediaPlayer.MediaPlayer;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 public class GuestView extends JFrame {
     static MainView theaaa;
@@ -131,16 +128,7 @@ public class GuestView extends JFrame {
         pnRightPanel.setLayout(gbRightPanel);
 
         String[] columnNames = new String[]{"Name", "Author", "Duration"};
-        data = new String[][]{new String[]{"musica1", "owner", "1:11", "1"},
-                new String[]{"musica2", "owner", "1:11", "1"},
-                new String[]{"musica3", "owner", "1:11",  "1"},
-                new String[]{"musica4", "owner", "1:11", "1"},
-                new String[]{"musica5", "owner", "1:11", "1"},
-                new String[]{"musica6", "owner", "1:11", "1"},
-                new String[]{"musica6", "owner", "1:11", "1"},
-                new String[]{"musica6", "owner", "1:11", "1"},
-                new String[]{"musica6", "owner", "1:11", "1"},
-                new String[]{"musica7", "owner", "1:11", "1"}};
+        data = mediacenter.getListaMusicas();
 
         tbContentTable = new JTable() {
             public boolean isCellEditable(int nRow, int nCol) {
@@ -263,6 +251,29 @@ public class GuestView extends JFrame {
         setSize(900, 666);
         setVisible(true);
 
+
+        MouseListener mouseListener = new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    String selectedItem = (String) lsCategorias.getSelectedValue();
+                    data = mediacenter.getListaMusicas(selectedItem);
+
+                    DefaultTableModel tableModel = (DefaultTableModel) tbContentTable.getModel();
+                    int rowCount = tableModel.getRowCount();
+                    for (int i = rowCount - 1; i >= 0; i--) {
+                        tableModel.removeRow(i);
+                    }
+                    for (int i = 0; i < data.length; i++) {
+                        tableModel.addRow(data[i]);
+                    }
+
+                    tbContentTable.setModel(tableModel);
+                    tableModel.fireTableDataChanged();
+                }
+            }
+        };
+
+        lsCategorias.addMouseListener(mouseListener);
 
         MediaPlayer mp = new MediaPlayer();
 

@@ -334,4 +334,23 @@ public class RemoteMediaCenter implements MediaCenterInterface {
         }
         return r;
     }
+
+    public String[][] getListaMusicas(String idCat){
+        out.println("getListaMusicas _"+idCat);
+        out.flush();
+        String[][] r = null;
+        try {
+            int rows = Integer.parseInt(in.readLine());
+            System.out.println("> Fetched "+rows+" rows");
+            r = new String[rows][6];
+            for (int i = 0; i < rows; i++){
+                for (int j = 0; j < 6; j++){
+                    r[i][j] = in.readLine();
+                }
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return r;
+    }
 }

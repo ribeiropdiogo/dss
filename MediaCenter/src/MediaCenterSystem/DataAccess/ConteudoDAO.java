@@ -108,7 +108,7 @@ public class ConteudoDAO {
     public List<Conteudo> getWithCategoria(String categoria) {
         String ifs = "Categoria_nome='" + categoria + "'";
         List<Conteudo> ls = new ArrayList<>();
-        Set<Integer> allC = DBAcess.getIds(myt, "Conteudo_id", ifs);
+        Set<Integer> allC = DBAcess.getIds(cCats, "Conteudo_id", ifs);
 
         allC.forEach(x -> ls.add(this.get(x)));
 

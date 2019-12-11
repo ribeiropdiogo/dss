@@ -24,6 +24,7 @@ public class MainView extends JFrame {
     JList lsPlaylists;
     JLabel lbAmigosLabel;
     JList lsAmigos;
+    private String[][] dataContentTable;
 
 
     JButton btAmigosButton;
@@ -235,10 +236,13 @@ public class MainView extends JFrame {
         GridBagConstraints gbcRightPanel = new GridBagConstraints();
         pnRightPanel.setLayout(gbRightPanel);
 
-        String[][] dataContentTable = mediacenter.getListaMusicas();
-        String[] colsContentTable = new String[]{"Name", "Author", "Duration", "Options", ""};
-        DefaultTableModel model = new DefaultTableModel(dataContentTable, colsContentTable);
-        tbContentTable = new JTable(dataContentTable, colsContentTable);
+        dataContentTable = mediacenter.getListaMusicas();
+        String[] columnNames = new String[]{"Name", "Author", "Duration", "Options", ""};
+        tbContentTable = new JTable() {
+            public boolean isCellEditable(int nRow, int nCol) {
+                return false;
+            }
+        };
         tbContentTable.setAutoCreateRowSorter(true);
         tbContentTable.setAutoscrolls(false);
         tbContentTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -256,7 +260,30 @@ public class MainView extends JFrame {
         gbRightPanel.setConstraints(scpContentTable, gbcRightPanel);
         pnRightPanel.add(scpContentTable);
 
+        DefaultTableModel musicTableModel = (DefaultTableModel) tbContentTable.getModel();
+        musicTableModel.setColumnIdentifiers(columnNames);
+
+        DefaultTableModel tableModel = (DefaultTableModel) tbContentTable.getModel();
+        for (int i = 0; i < dataContentTable.length; i++) {
+            tableModel.addRow(dataContentTable[i]);
+        }
+
+        tbContentTable.setModel(tableModel);
+
         //--- Coloca butões nas células
+
+        final JPopupMenu popup = new JPopupMenu();
+        final JPopupMenu popupinsignificante = new JPopupMenu();
+        popup.add(new JMenuItem(new AbstractAction("Change category") {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(theaaa, "Option 1 selected");
+            }
+        }));
+        popup.add(new JMenuItem(new AbstractAction("Download") {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(theaaa, "Option 2 selected");
+            }
+        }));
 
         Action download = new AbstractAction()
         {
@@ -274,10 +301,10 @@ public class MainView extends JFrame {
             }
         };
 
-        ButtonColumn buttonColumnDown = new ButtonColumn(tbContentTable, download, 3);
+        ButtonColumn buttonColumnDown = new ButtonColumn(tbContentTable, download, 3,popupinsignificante);
         buttonColumnDown.setMnemonic(KeyEvent.VK_D);
 
-        ButtonColumn buttonColumnOpt = new ButtonColumn(tbContentTable, altCategoria, 4);
+        ButtonColumn buttonColumnOpt = new ButtonColumn(tbContentTable, altCategoria, 4,popup);
         buttonColumnOpt.setMnemonic(KeyEvent.VK_D);
 
         //-----------------------------
@@ -383,6 +410,29 @@ public class MainView extends JFrame {
         setVisible(true);
 
         MediaPlayer mp = new MediaPlayer();
+
+        MouseListener mouseListener = new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    String selectedItem = (String) lsCategorias.getSelectedValue();
+                    dataContentTable = mediacenter.getListaMusicas(selectedItem);
+
+                    DefaultTableModel tableModel = (DefaultTableModel) tbContentTable.getModel();
+                    int rowCount = tableModel.getRowCount();
+                    for (int i = rowCount - 1; i >= 0; i--) {
+                        tableModel.removeRow(i);
+                    }
+                    for (int i = 0; i < dataContentTable.length; i++) {
+                        tableModel.addRow(dataContentTable[i]);
+                    }
+
+                    tbContentTable.setModel(tableModel);
+                    tableModel.fireTableDataChanged();
+                }
+            }
+        };
+
+        lsCategorias.addMouseListener(mouseListener);
 
         btLogoutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
