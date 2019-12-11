@@ -19,12 +19,14 @@ public class ConteudoDAO {
 
     private CadastradoDAO cadastrados = null;
     private CategoriaDAO categorias = null;
+    private AlbumDAO albuns;
 
     private ConteudoDAO() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             cadastrados = CadastradoDAO.getInstance();
             categorias = CategoriaDAO.getInstance();
+            albuns = AlbumDAO.getInstance();
             Conteudo.setCurrentNextID(DBAcess.maxIds(myt,"Conteudo_id") + 1);
         } catch (ClassNotFoundException e) {
             throw new NullPointerException(e.getMessage());
@@ -76,7 +78,13 @@ public class ConteudoDAO {
     }
 
     public void put(int idContent, Conteudo c) {
-        String params = "('" + idContent + "','" + c.getNome() + "','" + c.getTamanho() + "','" + c.getAutor() + "')";
+        String params = "('" + idContent + "','" + c.getNome() + "','" + c.getTamanho() + "','" + c.getAutor() + "','" + c.getPath() +"'";
+
+        if(c.getAlbum() == -1)
+            params += "')";
+        else
+            params += ",'" + c.getAlbum() + "')";
+
         DBAcess.putQuery(myt, idCont(idContent), params);
         this.removeContentEntries(idContent);
         Map<String, Categoria> cates = c.getCategorias();
@@ -122,9 +130,19 @@ public class ConteudoDAO {
     private Conteudo getConteudo(ResultSet rs) {
         try {
             Conteudo al = null;
-            if (rs.next())
-                al = Conteudo.getInstance(rs.getInt(1), rs.getString(2), rs.getLong(3), rs.getLong(4), rs.getString(5), rs.getString(6));
-            return al;
+            if(rs.next()) {
+                int id = rs.getInt(1);
+                String nome = rs.getString(2);
+                long tamanho = rs.getLong(3);
+                long duracao = rs.getLong(4);
+                String autor = rs.getString(5);
+                String path = rs.getString(6);
+                int album = rs.getInt(7);
+                if(rs.wasNull())
+                    album = -1;
+                al = Conteudo.getInstance(id,nome,tamanho,duracao,autor,path,album);
+            }
+                return al;
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
         }

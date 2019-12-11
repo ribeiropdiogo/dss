@@ -15,6 +15,7 @@ public class Conteudo {
     private Long duracao;
     private String autor;
     private String path;
+    private int album;
     private HashMap<String, Categoria> categorias;
     private HashMap<String, Utilizador> donos;
 
@@ -22,23 +23,24 @@ public class Conteudo {
         Conteudo.nextID = nextID;
     }
 
-    public static Conteudo getInstance(int id, String nome, Long tamanho, Long duracao, String autor, String path) {
-        return new Conteudo(id, nome, tamanho, duracao, autor, path);
+    public static Conteudo getInstance(int id, String nome, Long tamanho, Long duracao, String autor, String path, int album) {
+        return new Conteudo(id, nome, tamanho, duracao, autor, path, album);
     }
 
-    private Conteudo(int id, String nome, Long tamanho, Long duracao, String autor, String path) {
+    private Conteudo(int id, String nome, Long tamanho, Long duracao, String autor, String path, int album) {
         this.id = id;
         this.nome = nome;
         this.tamanho = tamanho;
         this.duracao = duracao;
         this.autor = autor;
         this.path = path;
+        this.album = album;
         this.donos = new HashMap<>();
         this.categorias = new HashMap<>();
     }
 
-    public Conteudo(String nome, Long tamanho, Long duracao, String autor, String path) {
-        this(nextID++,nome,tamanho,duracao,autor,path);
+    public Conteudo(String nome, Long tamanho, Long duracao, String autor, String path, int album) {
+        this(nextID++,nome,tamanho,duracao,autor,path,album);
     }
 
     public int getId() {
@@ -71,6 +73,8 @@ public class Conteudo {
     public String getPath() {
         return this.path;
     }
+
+    public int getAlbum() {return album;}
 
     public void adicionaCategoria(String idCat, Categoria ca) {
         categorias.put(idCat, ca);
