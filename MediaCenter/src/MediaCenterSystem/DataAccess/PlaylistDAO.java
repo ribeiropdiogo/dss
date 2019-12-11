@@ -22,6 +22,7 @@ public class PlaylistDAO {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conteudos = ConteudoDAO.getInstance();
+            Playlist.setCurrentNextID(DBAcess.maxIds(myt,"Playlist_id") + 1);
         } catch (ClassNotFoundException e) {
             throw new NullPointerException(e.getMessage());
         }
