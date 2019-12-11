@@ -131,16 +131,16 @@ public class GuestView extends JFrame {
         pnRightPanel.setLayout(gbRightPanel);
 
         String[] columnNames = new String[]{"Name", "Owner", "Duration"};
-        data = new String[][]{new String[]{"musica1", "owner", "1:11", "+ ..."},
-                new String[]{"musica2", "owner", "1:11", "+ ...", "1"},
-                new String[]{"musica3", "owner", "1:11", "+ ...", "1"},
-                new String[]{"musica4", "owner", "1:11", "+ ...", "1"},
-                new String[]{"musica5", "owner", "1:11", "+ ...", "1"},
-                new String[]{"musica6", "owner", "1:11", "+ ...", "1"},
-                new String[]{"musica6", "owner", "1:11", "+ ...", "1"},
-                new String[]{"musica6", "owner", "1:11", "+ ...", "1"},
-                new String[]{"musica6", "owner", "1:11", "+ ...", "1"},
-                new String[]{"musica7", "owner", "1:11", "+ ...", "1"}};
+        data = new String[][]{new String[]{"musica1", "owner", "1:11", "1"},
+                new String[]{"musica2", "owner", "1:11", "1"},
+                new String[]{"musica3", "owner", "1:11",  "1"},
+                new String[]{"musica4", "owner", "1:11", "1"},
+                new String[]{"musica5", "owner", "1:11", "1"},
+                new String[]{"musica6", "owner", "1:11", "1"},
+                new String[]{"musica6", "owner", "1:11", "1"},
+                new String[]{"musica6", "owner", "1:11", "1"},
+                new String[]{"musica6", "owner", "1:11", "1"},
+                new String[]{"musica7", "owner", "1:11", "1"}};
 
         tbContentTable = new JTable() {
             public boolean isCellEditable(int nRow, int nCol) {
@@ -277,9 +277,9 @@ public class GuestView extends JFrame {
 
         btPlay.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                tbContentTable.getValueAt(tbContentTable.getSelectedRow(), 3);
+                //tbContentTable.getValueAt(tbContentTable.getSelectedRow(), 3);
                 int row = tbContentTable.getSelectedRow();
-                System.out.println("Selected row " + row + " - id = " + data[row][4]);
+                System.out.println("Selected row " + row + " - id = " + data[row][3]);
                 tableModel.removeRow(row);
                 tableModel.fireTableDataChanged();
             }

@@ -4,11 +4,9 @@ import Client.MediaCenterInterface;
 import MediaPlayer.MediaPlayer;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 public class MainView extends JFrame {
     static MainView theaaa;
@@ -236,21 +234,15 @@ public class MainView extends JFrame {
         GridBagConstraints gbcRightPanel = new GridBagConstraints();
         pnRightPanel.setLayout(gbRightPanel);
 
-        String[][] dataContentTable = new String[][]{new String[]{"musica1", "owner",
-                "1:11", "+ ..."},
-                new String[]{"musica2", "owner",
-                        "1:11", "+ ..."},
-                new String[]{"musica3", "owner",
-                        "1:11", "+ ..."},
-                new String[]{"musica4", "owner",
-                        "1:11", "+ ..."},
-                new String[]{"musica5", "owner",
-                        "1:11", "+ ..."},
-                new String[]{"musica6", "owner",
-                        "1:11", "+ ..."},
-                new String[]{"musica7", "owner",
-                        "1:11", "+ ..."}};
-        String[] colsContentTable = new String[]{"Name", "Owner", "Duration", "Options"};
+        String[][] dataContentTable = new String[][]{new String[]{"musica1", "owner", "1:11", "+", "..."},
+                new String[]{"musica2", "owner", "1:11", "+", "...", "1"},
+                new String[]{"musica3", "owner", "1:11", "+", "...", "2"},
+                new String[]{"musica4", "owner", "1:11", "+", "...", "3"},
+                new String[]{"musica5", "owner", "1:11", "+", "...", "4"},
+                new String[]{"musica6", "owner", "1:11", "+", "...", "5"},
+                new String[]{"musica7", "owner", "1:11", "+", "...", "6"}};
+        String[] colsContentTable = new String[]{"Name", "Owner", "Duration", "Options", ""};
+        DefaultTableModel model = new DefaultTableModel(dataContentTable, colsContentTable);
         tbContentTable = new JTable(dataContentTable, colsContentTable);
         tbContentTable.setAutoCreateRowSorter(true);
         tbContentTable.setAutoscrolls(false);
@@ -268,6 +260,32 @@ public class MainView extends JFrame {
         gbcRightPanel.anchor = GridBagConstraints.CENTER;
         gbRightPanel.setConstraints(scpContentTable, gbcRightPanel);
         pnRightPanel.add(scpContentTable);
+
+        //--- Coloca butões nas células
+
+        Action download = new AbstractAction()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                System.out.println("> Download file "+tbContentTable.getSelectedRow());
+            }
+        };
+
+        Action altCategoria = new AbstractAction()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                System.out.println("> Alterar categoria do ficheiro "+tbContentTable.getSelectedRow());
+            }
+        };
+
+        ButtonColumn buttonColumnDown = new ButtonColumn(tbContentTable, download, 3);
+        buttonColumnDown.setMnemonic(KeyEvent.VK_D);
+
+        ButtonColumn buttonColumnOpt = new ButtonColumn(tbContentTable, altCategoria, 4);
+        buttonColumnOpt.setMnemonic(KeyEvent.VK_D);
+
+        //-----------------------------
 
         // Painel de Reprodução
         pnPanelReproducao = new JPanel();
