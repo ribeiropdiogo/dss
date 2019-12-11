@@ -1,11 +1,10 @@
 package MediaCenter_GUI;
 
-import java.io.*;
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.SwingUtilities;
-import javax.swing.filechooser.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 /*
  * FileChooserDemo.java uses these files:
@@ -23,8 +22,8 @@ public class FileChooser extends JPanel implements ActionListener {
 
         //Create the log first, because the action listeners
         //need to refer to it.
-        log = new JTextArea(5,20);
-        log.setMargin(new Insets(5,5,5,5));
+        log = new JTextArea(5, 20);
+        log.setMargin(new Insets(5, 5, 5, 5));
         log.setEditable(false);
         JScrollPane logScrollPane = new JScrollPane(log);
 
@@ -92,7 +91,9 @@ public class FileChooser extends JPanel implements ActionListener {
         }
     }
 
-    /** Returns an ImageIcon, or null if the path was invalid. */
+    /**
+     * Returns an ImageIcon, or null if the path was invalid.
+     */
     protected static ImageIcon createImageIcon(String path) {
         java.net.URL imgURL = FileChooser.class.getResource(path);
         if (imgURL != null) {

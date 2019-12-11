@@ -1,12 +1,9 @@
 package MediaCenter_GUI;
 
-import Exceptions.UtilizadorInexistenteException;
 import MediaCenterSystem.MediaCenter;
 
 import javax.swing.*;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -21,20 +18,19 @@ public class ResetPasswordForm extends JFrame {
     JTextField tfEmailField;
     JButton btSendButton;
 
-    public void CloseFrame(){
+    public void CloseFrame() {
         super.dispose();
     }
 
-    public ResetPasswordForm(MediaCenter mediacenter)
-    {
+    public ResetPasswordForm(MediaCenter mediacenter) {
         super("Reset Password");
 
         pnResetPasswordPanel = new JPanel();
         GridBagLayout gbResetPasswordPanel = new GridBagLayout();
         GridBagConstraints gbcResetPasswordPanel = new GridBagConstraints();
-        pnResetPasswordPanel.setLayout( gbResetPasswordPanel );
+        pnResetPasswordPanel.setLayout(gbResetPasswordPanel);
 
-        tfUsernameField = new JTextField( );
+        tfUsernameField = new JTextField();
         gbcResetPasswordPanel.gridx = 6;
         gbcResetPasswordPanel.gridy = 1;
         gbcResetPasswordPanel.gridwidth = 16;
@@ -43,11 +39,11 @@ public class ResetPasswordForm extends JFrame {
         gbcResetPasswordPanel.weightx = 1;
         gbcResetPasswordPanel.weighty = 0;
         gbcResetPasswordPanel.anchor = GridBagConstraints.WEST;
-        gbcResetPasswordPanel.insets = new Insets( 15,0,0,15 );
-        gbResetPasswordPanel.setConstraints( tfUsernameField, gbcResetPasswordPanel );
-        pnResetPasswordPanel.add( tfUsernameField );
+        gbcResetPasswordPanel.insets = new Insets(15, 0, 0, 15);
+        gbResetPasswordPanel.setConstraints(tfUsernameField, gbcResetPasswordPanel);
+        pnResetPasswordPanel.add(tfUsernameField);
 
-        lbUsernameLabel = new JLabel( "username:"  );
+        lbUsernameLabel = new JLabel("username:");
         gbcResetPasswordPanel.gridx = 1;
         gbcResetPasswordPanel.gridy = 1;
         gbcResetPasswordPanel.gridwidth = 4;
@@ -56,11 +52,11 @@ public class ResetPasswordForm extends JFrame {
         gbcResetPasswordPanel.weightx = 0;
         gbcResetPasswordPanel.weighty = 0;
         gbcResetPasswordPanel.anchor = GridBagConstraints.EAST;
-        gbcResetPasswordPanel.insets = new Insets( 15,15,0,0 );
-        gbResetPasswordPanel.setConstraints( lbUsernameLabel, gbcResetPasswordPanel );
-        pnResetPasswordPanel.add( lbUsernameLabel );
+        gbcResetPasswordPanel.insets = new Insets(15, 15, 0, 0);
+        gbResetPasswordPanel.setConstraints(lbUsernameLabel, gbcResetPasswordPanel);
+        pnResetPasswordPanel.add(lbUsernameLabel);
 
-        lbEmailLabel = new JLabel( "email:"  );
+        lbEmailLabel = new JLabel("email:");
         gbcResetPasswordPanel.gridx = 2;
         gbcResetPasswordPanel.gridy = 5;
         gbcResetPasswordPanel.gridwidth = 3;
@@ -69,11 +65,11 @@ public class ResetPasswordForm extends JFrame {
         gbcResetPasswordPanel.weightx = 0;
         gbcResetPasswordPanel.weighty = 0;
         gbcResetPasswordPanel.anchor = GridBagConstraints.EAST;
-        gbcResetPasswordPanel.insets = new Insets( 0,42,0,0 );
-        gbResetPasswordPanel.setConstraints( lbEmailLabel, gbcResetPasswordPanel );
-        pnResetPasswordPanel.add( lbEmailLabel );
+        gbcResetPasswordPanel.insets = new Insets(0, 42, 0, 0);
+        gbResetPasswordPanel.setConstraints(lbEmailLabel, gbcResetPasswordPanel);
+        pnResetPasswordPanel.add(lbEmailLabel);
 
-        tfEmailField = new JTextField( );
+        tfEmailField = new JTextField();
         gbcResetPasswordPanel.gridx = 6;
         gbcResetPasswordPanel.gridy = 5;
         gbcResetPasswordPanel.gridwidth = 16;
@@ -82,11 +78,11 @@ public class ResetPasswordForm extends JFrame {
         gbcResetPasswordPanel.weightx = 1;
         gbcResetPasswordPanel.weighty = 0;
         gbcResetPasswordPanel.anchor = GridBagConstraints.WEST;
-        gbcResetPasswordPanel.insets = new Insets( 0,0,0,15 );
-        gbResetPasswordPanel.setConstraints( tfEmailField, gbcResetPasswordPanel );
-        pnResetPasswordPanel.add( tfEmailField );
+        gbcResetPasswordPanel.insets = new Insets(0, 0, 0, 15);
+        gbResetPasswordPanel.setConstraints(tfEmailField, gbcResetPasswordPanel);
+        pnResetPasswordPanel.add(tfEmailField);
 
-        btSendButton = new JButton( "send"  );
+        btSendButton = new JButton("send");
         gbcResetPasswordPanel.gridx = 16;
         gbcResetPasswordPanel.gridy = 9;
         gbcResetPasswordPanel.gridwidth = 6;
@@ -95,35 +91,33 @@ public class ResetPasswordForm extends JFrame {
         gbcResetPasswordPanel.weightx = 0;
         gbcResetPasswordPanel.weighty = 0;
         gbcResetPasswordPanel.anchor = GridBagConstraints.EAST;
-        gbcResetPasswordPanel.insets = new Insets( 0,0,15,15 );
-        gbResetPasswordPanel.setConstraints( btSendButton, gbcResetPasswordPanel );
-        pnResetPasswordPanel.add( btSendButton );
+        gbcResetPasswordPanel.insets = new Insets(0, 0, 15, 15);
+        gbResetPasswordPanel.setConstraints(btSendButton, gbcResetPasswordPanel);
+        pnResetPasswordPanel.add(btSendButton);
 
 
-        setContentPane( pnResetPasswordPanel );
+        setContentPane(pnResetPasswordPanel);
         pack();
         setLocationRelativeTo(null);
-        setSize(220,120);
+        setSize(220, 120);
         setResizable(false);
-        setVisible( true );
+        setVisible(true);
 
-        btSendButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-               String username = tfUsernameField.getText();
-               String email = tfEmailField.getText();
+        btSendButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String username = tfUsernameField.getText();
+                String email = tfEmailField.getText();
 
-               if (username.isBlank() || email.isBlank()){
-                   MessageDialog md = new MessageDialog("Error","You need to type your username and email");
-               } else {
-                   try {
-                       mediacenter.forgottenPassword(username, email);
-                       CloseFrame();
-                   } catch (Exception u){
-                       MessageDialog md = new MessageDialog("Error",u.getMessage());
-                   }
-               }
+                if (username.isBlank() || email.isBlank()) {
+                    MessageDialog md = new MessageDialog("Error", "You need to type your username and email");
+                } else {
+                    try {
+                        mediacenter.forgottenPassword(username, email);
+                        CloseFrame();
+                    } catch (Exception u) {
+                        MessageDialog md = new MessageDialog("Error", u.getMessage());
+                    }
+                }
             }
         });
     }

@@ -6,9 +6,8 @@ import MediaCenterSystem.MediaCenter;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Arrays;
 
-public class ServerWorker implements Runnable{
+public class ServerWorker implements Runnable {
     private Socket socket;
     private MediaCenter md;
 
@@ -28,7 +27,7 @@ public class ServerWorker implements Runnable{
 
             while (data != null && !data.equals("exit")) {
                 String[] ops = data.split(" ");
-                switch (ops[0]){
+                switch (ops[0]) {
                     case "loginGuest":
                         this.md.loginGuest();
                         System.out.println("> Login as Guest");
@@ -36,12 +35,12 @@ public class ServerWorker implements Runnable{
 
                     case "login":
                         try {
-                            this.md.login(ops[1],ops[2]);
+                            this.md.login(ops[1], ops[2]);
                             out.println("ok");
                             System.out.println("> Login");
-                        } catch (PasswordIncorretaException p){
+                        } catch (PasswordIncorretaException p) {
                             out.println("wrongpassword");
-                        } catch (UtilizadorInexistenteException u){
+                        } catch (UtilizadorInexistenteException u) {
                             out.println("usernexists");
                         } finally {
                             out.flush();
@@ -57,26 +56,26 @@ public class ServerWorker implements Runnable{
 
                     case "upload":
                         StringBuilder builder = new StringBuilder();
-                        for (int i = 2; i < ops.length; i++){
+                        for (int i = 2; i < ops.length; i++) {
                             builder.append(ops[i]);
-                            if (i < ops.length-1)
+                            if (i < ops.length - 1)
                                 builder.append(" ");
 
                         }
                         String filename = builder.toString();
 
 
-                        System.out.println("> Uploading file "+filename);
+                        System.out.println("> Uploading file " + filename);
                         try {
                             DataInputStream dis = new DataInputStream(socket.getInputStream());
-                            FileOutputStream fos = new FileOutputStream("src/Server/media/"+filename);
+                            FileOutputStream fos = new FileOutputStream("src/Server/media/" + filename);
                             int filesize = Integer.parseInt(ops[1]);
                             byte[] buffer = new byte[filesize];
 
                             int read = 0;
                             int totalRead = 0;
                             int remaining = filesize;
-                            while((read = dis.read(buffer, 0, Math.min(buffer.length, remaining))) > 0) {
+                            while ((read = dis.read(buffer, 0, Math.min(buffer.length, remaining))) > 0) {
                                 totalRead += read;
                                 remaining -= read;
                                 //System.out.println("read " + totalRead + " bytes.");
@@ -84,7 +83,7 @@ public class ServerWorker implements Runnable{
                             }
                             fos.close();
                             //dis.close();
-                        } catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 
@@ -100,7 +99,7 @@ public class ServerWorker implements Runnable{
             socket.close();
             out.flush();
             System.out.println("> Connection ended");
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

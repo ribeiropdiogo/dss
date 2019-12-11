@@ -1,26 +1,16 @@
 package MediaCenter_GUI;
 
 import Client.MediaCenterInterface;
-import MediaCenterSystem.MediaCenter;
 import MediaPlayer.MediaPlayer;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
-import javax.swing.table.TableModel;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 
-public class MainView extends JFrame
-{
+public class MainView extends JFrame {
     static MainView theaaa;
 
     JPanel pnMainview;
@@ -54,34 +44,33 @@ public class MainView extends JFrame
 
     JPanel pnHead;
 
-    public void CloseFrame(){
+    public void CloseFrame() {
         super.dispose();
     }
 
-    public MainView(MediaCenterInterface mediacenter, String username)
-    {
-        super( "Media Center" );
+    public MainView(MediaCenterInterface mediacenter, String username) {
+        super("Media Center");
 
         //Painel Master
         pnMainview = new JPanel();
         GridBagLayout gbMainview = new GridBagLayout();
         GridBagConstraints gbcMainview = new GridBagConstraints();
-        pnMainview.setLayout( gbMainview );
+        pnMainview.setLayout(gbMainview);
 
         //Divisória do Painel
-        sppSplitPane1 = new JSplitPane( );
-        sppSplitPane1.setDividerLocation( 138 );
-        sppSplitPane1.setForeground( new Color( 0,0,0 ) );
-        sppSplitPane1.setLastDividerLocation( 211 );
+        sppSplitPane1 = new JSplitPane();
+        sppSplitPane1.setDividerLocation(138);
+        sppSplitPane1.setForeground(new Color(0, 0, 0));
+        sppSplitPane1.setLastDividerLocation(211);
 
         //Painel da Esquerda
 
         pnLeftPanel = new JPanel();
         GridBagLayout gbLeftPanel = new GridBagLayout();
         GridBagConstraints gbcLeftPanel = new GridBagConstraints();
-        pnLeftPanel.setLayout( gbLeftPanel );
+        pnLeftPanel.setLayout(gbLeftPanel);
 
-        lbUsernameLabel = new JLabel( username );
+        lbUsernameLabel = new JLabel(username);
         gbcLeftPanel.gridx = 0;
         gbcLeftPanel.gridy = 0;
         gbcLeftPanel.gridwidth = 1;
@@ -90,12 +79,12 @@ public class MainView extends JFrame
         gbcLeftPanel.weightx = 0;
         gbcLeftPanel.weighty = 0;
         gbcLeftPanel.anchor = GridBagConstraints.NORTH;
-        gbcLeftPanel.insets = new Insets( 5,0,0,0 );
-        gbLeftPanel.setConstraints( lbUsernameLabel, gbcLeftPanel );
-        pnLeftPanel.add( lbUsernameLabel );
+        gbcLeftPanel.insets = new Insets(5, 0, 0, 0);
+        gbLeftPanel.setConstraints(lbUsernameLabel, gbcLeftPanel);
+        pnLeftPanel.add(lbUsernameLabel);
 
 
-        btLogoutButton = new JButton( "Logout"  );
+        btLogoutButton = new JButton("Logout");
         gbcLeftPanel.gridx = 0;
         gbcLeftPanel.gridy = 1;
         gbcLeftPanel.gridwidth = 1;
@@ -104,11 +93,11 @@ public class MainView extends JFrame
         gbcLeftPanel.weightx = 0;
         gbcLeftPanel.weighty = 0;
         gbcLeftPanel.anchor = GridBagConstraints.NORTH;
-        gbLeftPanel.setConstraints( btLogoutButton, gbcLeftPanel );
-        pnLeftPanel.add( btLogoutButton );
+        gbLeftPanel.setConstraints(btLogoutButton, gbcLeftPanel);
+        pnLeftPanel.add(btLogoutButton);
 
         // Secção das Categorias
-        lbCategoriasLabel = new JLabel( "Categorias"  );
+        lbCategoriasLabel = new JLabel("Categorias");
         gbcLeftPanel.gridx = 0;
         gbcLeftPanel.gridy = 2;
         gbcLeftPanel.gridwidth = 1;
@@ -117,18 +106,18 @@ public class MainView extends JFrame
         gbcLeftPanel.weightx = 0;
         gbcLeftPanel.weighty = 0;
         gbcLeftPanel.anchor = GridBagConstraints.NORTH;
-        gbcLeftPanel.insets = new Insets( 5,5,0,0 );
-        gbLeftPanel.setConstraints( lbCategoriasLabel, gbcLeftPanel );
-        pnLeftPanel.add( lbCategoriasLabel );
+        gbcLeftPanel.insets = new Insets(5, 5, 0, 0);
+        gbLeftPanel.setConstraints(lbCategoriasLabel, gbcLeftPanel);
+        pnLeftPanel.add(lbCategoriasLabel);
         sppSplitPane1.setLeftComponent(pnLeftPanel);
 
-        String []dataCategorias = { "Rock", "Metal", "Pop", "Trance", "Action", "History", "asdas", "asdas","adas","qqqq","test","testa","teste" };
-        lsCategorias = new JList( dataCategorias );
-        lsCategorias.setName( "Categorias" );
-        lsCategorias.setBackground( new Color( 238,238,238 ) );
-        lsCategorias.setSelectionBackground( new Color( 212,212,212 ) );
+        String[] dataCategorias = {"Rock", "Metal", "Pop", "Trance", "Action", "History", "asdas", "asdas", "adas", "qqqq", "test", "testa", "teste"};
+        lsCategorias = new JList(dataCategorias);
+        lsCategorias.setName("Categorias");
+        lsCategorias.setBackground(new Color(238, 238, 238));
+        lsCategorias.setSelectionBackground(new Color(212, 212, 212));
         lsCategorias.setVisibleRowCount(10);
-        JScrollPane scpCategorias = new JScrollPane( lsCategorias );
+        JScrollPane scpCategorias = new JScrollPane(lsCategorias);
         gbcLeftPanel.gridx = 0;
         gbcLeftPanel.gridy = 3;
         gbcLeftPanel.gridwidth = 1;
@@ -137,13 +126,13 @@ public class MainView extends JFrame
         gbcLeftPanel.weightx = 1;
         gbcLeftPanel.weighty = 1;
         gbcLeftPanel.anchor = GridBagConstraints.NORTH;
-        gbcLeftPanel.insets = new Insets( 5,5,0,0 );
-        gbLeftPanel.setConstraints( scpCategorias, gbcLeftPanel );
-        pnLeftPanel.add( scpCategorias );
+        gbcLeftPanel.insets = new Insets(5, 5, 0, 0);
+        gbLeftPanel.setConstraints(scpCategorias, gbcLeftPanel);
+        pnLeftPanel.add(scpCategorias);
 
 
         // Secção das Playlists
-        lbPlaylistsLabel = new JLabel( "Playlists"  );
+        lbPlaylistsLabel = new JLabel("Playlists");
         gbcLeftPanel.gridx = 0;
         gbcLeftPanel.gridy = 4;
         gbcLeftPanel.gridwidth = 1;
@@ -152,18 +141,18 @@ public class MainView extends JFrame
         gbcLeftPanel.weightx = 0;
         gbcLeftPanel.weighty = 0;
         gbcLeftPanel.anchor = GridBagConstraints.NORTH;
-        gbcLeftPanel.insets = new Insets( 5,5,0,0 );
-        gbLeftPanel.setConstraints( lbPlaylistsLabel, gbcLeftPanel );
-        pnLeftPanel.add( lbPlaylistsLabel );
+        gbcLeftPanel.insets = new Insets(5, 5, 0, 0);
+        gbLeftPanel.setConstraints(lbPlaylistsLabel, gbcLeftPanel);
+        pnLeftPanel.add(lbPlaylistsLabel);
         sppSplitPane1.setLeftComponent(pnLeftPanel);
 
-        String []dataPlaylists = mediacenter.getCategorias();
-        lsPlaylists = new JList( dataPlaylists );
-        lsPlaylists.setName( "Playlists" );
-        lsPlaylists.setBackground( new Color( 238,238,238 ) );
-        lsPlaylists.setSelectionBackground( new Color( 212,212,212 ) );
+        String[] dataPlaylists = mediacenter.getCategorias();
+        lsPlaylists = new JList(dataPlaylists);
+        lsPlaylists.setName("Playlists");
+        lsPlaylists.setBackground(new Color(238, 238, 238));
+        lsPlaylists.setSelectionBackground(new Color(212, 212, 212));
         lsPlaylists.setVisibleRowCount(7);
-        JScrollPane scpPlaylists = new JScrollPane( lsPlaylists );
+        JScrollPane scpPlaylists = new JScrollPane(lsPlaylists);
         gbcLeftPanel.gridx = 0;
         gbcLeftPanel.gridy = 5;
         gbcLeftPanel.gridwidth = 1;
@@ -172,13 +161,13 @@ public class MainView extends JFrame
         gbcLeftPanel.weightx = 1;
         gbcLeftPanel.weighty = 1;
         gbcLeftPanel.anchor = GridBagConstraints.NORTH;
-        gbcLeftPanel.insets = new Insets( 5,5,0,0 );
-        gbLeftPanel.setConstraints( scpPlaylists, gbcLeftPanel );
-        pnLeftPanel.add( scpPlaylists );
+        gbcLeftPanel.insets = new Insets(5, 5, 0, 0);
+        gbLeftPanel.setConstraints(scpPlaylists, gbcLeftPanel);
+        pnLeftPanel.add(scpPlaylists);
 
 
         // Secção dos Amigos
-        lbAmigosLabel = new JLabel( "Amigos"  );
+        lbAmigosLabel = new JLabel("Amigos");
         gbcLeftPanel.gridx = 0;
         gbcLeftPanel.gridy = 6;
         gbcLeftPanel.gridwidth = 1;
@@ -187,21 +176,21 @@ public class MainView extends JFrame
         gbcLeftPanel.weightx = 0;
         gbcLeftPanel.weighty = 0;
         gbcLeftPanel.anchor = GridBagConstraints.NORTH;
-        gbcLeftPanel.insets = new Insets( 5,5,0,0 );
-        gbLeftPanel.setConstraints( lbAmigosLabel, gbcLeftPanel );
-        pnLeftPanel.add( lbAmigosLabel );
+        gbcLeftPanel.insets = new Insets(5, 5, 0, 0);
+        gbLeftPanel.setConstraints(lbAmigosLabel, gbcLeftPanel);
+        pnLeftPanel.add(lbAmigosLabel);
         sppSplitPane1.setLeftComponent(pnLeftPanel);
 
-        String []dataAmigos = { "Chuck", "Arnold", "Kevinho", "DJ Kaled","Poney","A","Tua","Prima" };
-        lsAmigos = new JList( dataAmigos );
-        lsAmigos.setName( "Amigos" );
-        lsAmigos.setBackground( new Color( 238,238,238 ) );
-        lsAmigos.setFocusable( false );
-        lsAmigos.setSelectionBackground( new Color( 238,238,238 ) );
-        lsAmigos.setSelectionForeground( new Color( 0,0,0 ) );
-        lsAmigos.setSelectionMode( 1 );
+        String[] dataAmigos = {"Chuck", "Arnold", "Kevinho", "DJ Kaled", "Poney", "A", "Tua", "Prima"};
+        lsAmigos = new JList(dataAmigos);
+        lsAmigos.setName("Amigos");
+        lsAmigos.setBackground(new Color(238, 238, 238));
+        lsAmigos.setFocusable(false);
+        lsAmigos.setSelectionBackground(new Color(238, 238, 238));
+        lsAmigos.setSelectionForeground(new Color(0, 0, 0));
+        lsAmigos.setSelectionMode(1);
         lsAmigos.setVisibleRowCount(7);
-        JScrollPane scpAmigos = new JScrollPane( lsAmigos );
+        JScrollPane scpAmigos = new JScrollPane(lsAmigos);
         gbcLeftPanel.gridx = 0;
         gbcLeftPanel.gridy = 7;
         gbcLeftPanel.gridwidth = 1;
@@ -210,12 +199,12 @@ public class MainView extends JFrame
         gbcLeftPanel.weightx = 1;
         gbcLeftPanel.weighty = 1;
         gbcLeftPanel.anchor = GridBagConstraints.NORTH;
-        gbcLeftPanel.insets = new Insets( 5,5,0,0 );
-        gbLeftPanel.setConstraints( scpAmigos, gbcLeftPanel );
-        pnLeftPanel.add( scpAmigos );
+        gbcLeftPanel.insets = new Insets(5, 5, 0, 0);
+        gbLeftPanel.setConstraints(scpAmigos, gbcLeftPanel);
+        pnLeftPanel.add(scpAmigos);
 
 
-        btAmigosButton = new JButton( "Menu Amigos"  );
+        btAmigosButton = new JButton("Menu Amigos");
         gbcLeftPanel.gridx = 0;
         gbcLeftPanel.gridy = 8;
         gbcLeftPanel.gridwidth = 1;
@@ -224,10 +213,10 @@ public class MainView extends JFrame
         gbcLeftPanel.weightx = 0;
         gbcLeftPanel.weighty = 0;
         gbcLeftPanel.anchor = GridBagConstraints.CENTER;
-        gbLeftPanel.setConstraints( btAmigosButton, gbcLeftPanel );
-        pnLeftPanel.add( btAmigosButton );
+        gbLeftPanel.setConstraints(btAmigosButton, gbcLeftPanel);
+        pnLeftPanel.add(btAmigosButton);
 
-        btNewPlaylistButton = new JButton( "Nova Playlist"  );
+        btNewPlaylistButton = new JButton("Nova Playlist");
         gbcLeftPanel.gridx = 0;
         gbcLeftPanel.gridy = 9;
         gbcLeftPanel.gridwidth = 1;
@@ -236,43 +225,39 @@ public class MainView extends JFrame
         gbcLeftPanel.weightx = 0;
         gbcLeftPanel.weighty = 0;
         gbcLeftPanel.anchor = GridBagConstraints.CENTER;
-        gbLeftPanel.setConstraints( btNewPlaylistButton, gbcLeftPanel );
-        pnLeftPanel.add( btNewPlaylistButton );
+        gbLeftPanel.setConstraints(btNewPlaylistButton, gbcLeftPanel);
+        pnLeftPanel.add(btNewPlaylistButton);
         sppSplitPane1.setLeftComponent(pnLeftPanel);
-
-
-
-
 
 
         //Painel da Direita
         pnRightPanel = new JPanel();
         GridBagLayout gbRightPanel = new GridBagLayout();
         GridBagConstraints gbcRightPanel = new GridBagConstraints();
-        pnRightPanel.setLayout( gbRightPanel );
+        pnRightPanel.setLayout(gbRightPanel);
 
-        String [][]dataContentTable = new String[][] { new String[] {"musica1", "owner",
+        String[][] dataContentTable = new String[][]{new String[]{"musica1", "owner",
                 "1:11", "+ ..."},
-                new String[] {"musica2", "owner",
+                new String[]{"musica2", "owner",
                         "1:11", "+ ..."},
-                new String[] {"musica3", "owner",
+                new String[]{"musica3", "owner",
                         "1:11", "+ ..."},
-                new String[] {"musica4", "owner",
+                new String[]{"musica4", "owner",
                         "1:11", "+ ..."},
-                new String[] {"musica5", "owner",
+                new String[]{"musica5", "owner",
                         "1:11", "+ ..."},
-                new String[] {"musica6", "owner",
+                new String[]{"musica6", "owner",
                         "1:11", "+ ..."},
-                new String[] {"musica7", "owner",
-                        "1:11", "+ ..."} };
-        String []colsContentTable = new String[] { "Name", "Owner", "Duration", "Options" };
-        tbContentTable = new JTable( dataContentTable, colsContentTable );
-        tbContentTable.setAutoCreateRowSorter( true );
-        tbContentTable.setAutoscrolls( false );
+                new String[]{"musica7", "owner",
+                        "1:11", "+ ..."}};
+        String[] colsContentTable = new String[]{"Name", "Owner", "Duration", "Options"};
+        tbContentTable = new JTable(dataContentTable, colsContentTable);
+        tbContentTable.setAutoCreateRowSorter(true);
+        tbContentTable.setAutoscrolls(false);
         tbContentTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tbContentTable.setEnabled( true );
-        tbContentTable.setName( "" );
-        JScrollPane scpContentTable = new JScrollPane( tbContentTable );
+        tbContentTable.setEnabled(true);
+        tbContentTable.setName("");
+        JScrollPane scpContentTable = new JScrollPane(tbContentTable);
         gbcRightPanel.gridx = 0;
         gbcRightPanel.gridy = 0;
         gbcRightPanel.gridwidth = 1;
@@ -281,14 +266,14 @@ public class MainView extends JFrame
         gbcRightPanel.weightx = 1;
         gbcRightPanel.weighty = 1;
         gbcRightPanel.anchor = GridBagConstraints.CENTER;
-        gbRightPanel.setConstraints( scpContentTable, gbcRightPanel );
-        pnRightPanel.add( scpContentTable );
+        gbRightPanel.setConstraints(scpContentTable, gbcRightPanel);
+        pnRightPanel.add(scpContentTable);
 
         // Painel de Reprodução
         pnPanelReproducao = new JPanel();
         GridBagLayout gbPanelReproducao = new GridBagLayout();
         GridBagConstraints gbcPanelReproducao = new GridBagConstraints();
-        pnPanelReproducao.setLayout( gbPanelReproducao );
+        pnPanelReproducao.setLayout(gbPanelReproducao);
         gbcRightPanel.gridx = 0;
         gbcRightPanel.gridy = 2;
         gbcRightPanel.gridwidth = 1;
@@ -297,11 +282,11 @@ public class MainView extends JFrame
         gbcRightPanel.weightx = 0;
         gbcRightPanel.weighty = 0;
         gbcRightPanel.anchor = GridBagConstraints.SOUTH;
-        gbRightPanel.setConstraints( pnPanelReproducao, gbcRightPanel );
-        pnRightPanel.add( pnPanelReproducao );
+        gbRightPanel.setConstraints(pnPanelReproducao, gbcRightPanel);
+        pnRightPanel.add(pnPanelReproducao);
 
         //Botões do Painel de Reprodução
-        btNext = new JButton( "next"  );
+        btNext = new JButton("next");
         gbcPanelReproducao.gridx = 3;
         gbcPanelReproducao.gridy = 0;
         gbcPanelReproducao.gridwidth = 1;
@@ -310,10 +295,10 @@ public class MainView extends JFrame
         gbcPanelReproducao.weightx = 0;
         gbcPanelReproducao.weighty = 0;
         gbcPanelReproducao.anchor = GridBagConstraints.CENTER;
-        gbPanelReproducao.setConstraints( btNext, gbcPanelReproducao );
-        pnPanelReproducao.add( btNext );
+        gbPanelReproducao.setConstraints(btNext, gbcPanelReproducao);
+        pnPanelReproducao.add(btNext);
 
-        btPlay = new JButton( "\u25B6"  );
+        btPlay = new JButton("\u25B6");
         gbcPanelReproducao.gridx = 2;
         gbcPanelReproducao.gridy = 0;
         gbcPanelReproducao.gridwidth = 1;
@@ -322,10 +307,10 @@ public class MainView extends JFrame
         gbcPanelReproducao.weightx = 0;
         gbcPanelReproducao.weighty = 0;
         gbcPanelReproducao.anchor = GridBagConstraints.CENTER;
-        gbPanelReproducao.setConstraints( btPlay, gbcPanelReproducao );
-        pnPanelReproducao.add( btPlay );
+        gbPanelReproducao.setConstraints(btPlay, gbcPanelReproducao);
+        pnPanelReproducao.add(btPlay);
 
-        btPrev = new JButton( "prev"  );
+        btPrev = new JButton("prev");
         gbcPanelReproducao.gridx = 1;
         gbcPanelReproducao.gridy = 0;
         gbcPanelReproducao.gridwidth = 1;
@@ -334,10 +319,10 @@ public class MainView extends JFrame
         gbcPanelReproducao.weightx = 0;
         gbcPanelReproducao.weighty = 0;
         gbcPanelReproducao.anchor = GridBagConstraints.CENTER;
-        gbPanelReproducao.setConstraints( btPrev, gbcPanelReproducao );
-        pnPanelReproducao.add( btPrev );
+        gbPanelReproducao.setConstraints(btPrev, gbcPanelReproducao);
+        pnPanelReproducao.add(btPrev);
 
-        btAddConteudo = new JButton( "add"  );
+        btAddConteudo = new JButton("add");
         gbcPanelReproducao.gridx = 5;
         gbcPanelReproducao.gridy = 0;
         gbcPanelReproducao.gridwidth = 1;
@@ -346,10 +331,10 @@ public class MainView extends JFrame
         gbcPanelReproducao.weightx = 1;
         gbcPanelReproducao.weighty = 0;
         gbcPanelReproducao.anchor = GridBagConstraints.EAST;
-        gbPanelReproducao.setConstraints( btAddConteudo, gbcPanelReproducao );
-        pnPanelReproducao.add( btAddConteudo );
+        gbPanelReproducao.setConstraints(btAddConteudo, gbcPanelReproducao);
+        pnPanelReproducao.add(btAddConteudo);
 
-        btShuffle = new JButton( "shuffle"  );
+        btShuffle = new JButton("shuffle");
         gbcPanelReproducao.gridx = 0;
         gbcPanelReproducao.gridy = 0;
         gbcPanelReproducao.gridwidth = 1;
@@ -358,9 +343,8 @@ public class MainView extends JFrame
         gbcPanelReproducao.weightx = 1;
         gbcPanelReproducao.weighty = 0;
         gbcPanelReproducao.anchor = GridBagConstraints.WEST;
-        gbPanelReproducao.setConstraints( btShuffle, gbcPanelReproducao );
-        pnPanelReproducao.add( btShuffle );
-
+        gbPanelReproducao.setConstraints(btShuffle, gbcPanelReproducao);
+        pnPanelReproducao.add(btShuffle);
 
 
         sppSplitPane1.setRightComponent(pnRightPanel);
@@ -372,59 +356,48 @@ public class MainView extends JFrame
         gbcMainview.weightx = 1;
         gbcMainview.weighty = 1;
         gbcMainview.anchor = GridBagConstraints.CENTER;
-        gbMainview.setConstraints( sppSplitPane1, gbcMainview );
-        pnMainview.add( sppSplitPane1 );
+        gbMainview.setConstraints(sppSplitPane1, gbcMainview);
+        pnMainview.add(sppSplitPane1);
 
 
-
-        setDefaultCloseOperation( EXIT_ON_CLOSE );
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         fc = new JFileChooser();
 
-        setContentPane( pnMainview );
+        setContentPane(pnMainview);
         pack();
         setLocationRelativeTo(null);
-        setSize(900,666);
-        setVisible( true );
+        setSize(900, 666);
+        setVisible(true);
 
         MediaPlayer mp = new MediaPlayer();
 
-        btLogoutButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
+        btLogoutButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 mediacenter.logout();
                 CloseFrame();
             }
         });
 
-        btPlay.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                System.out.println("> Item selecionado "+tbContentTable.getSelectedRow());
+        btPlay.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("> Item selecionado " + tbContentTable.getSelectedRow());
             }
         });
 
-        btNext.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
+        btNext.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 mp.nextContent();
             }
         });
 
-        btPrev.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
+        btPrev.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 mp.prevContent();
             }
         });
 
-        btAddConteudo.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
+        btAddConteudo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 UploadForm uf = new UploadForm(mediacenter, username);
             }
         });

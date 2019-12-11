@@ -2,7 +2,9 @@ package MediaCenterSystem.BusinessLogic;
 
 import Exceptions.ConteudoRepetidoException;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Playlist {
 
@@ -11,24 +13,24 @@ public class Playlist {
     private int id;
     private String nome;
     private String descricao;
-    private Map<Integer,Conteudo> conteudos;
+    private Map<Integer, Conteudo> conteudos;
 
     public static void setCurrentNextID(int nextID) {
         Playlist.nextID = nextID;
     }
 
-    public static Playlist getInstance(int id, String nome, String descricao, Map<Integer, Conteudo> conteudos) {
-        return new Playlist(id, nome, descricao, conteudos);
+    public static Playlist getInstance(int id, String nome, String descricao) {
+        return new Playlist(id, nome, descricao);
     }
 
-    private Playlist(int id, String nome, String descricao, Map<Integer, Conteudo> conteudos) {
+    private Playlist(int id, String nome, String descricao) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
-        this.conteudos = new HashMap<>(conteudos);
+        this.conteudos = new HashMap<>();
     }
 
-    public Playlist(String nome, String descricao){
+    public Playlist(String nome, String descricao) {
         this.nome = nome;
         this.descricao = descricao;
         this.conteudos = new HashMap<>();
@@ -54,7 +56,7 @@ public class Playlist {
         this.descricao = descricao;
     }
 
-    public void removeContent(int idContent){
+    public void removeContent(int idContent) {
         this.conteudos.remove(idContent);
     }
 
@@ -65,10 +67,18 @@ public class Playlist {
         } else throw new ConteudoRepetidoException("Conteudo Repetido");
     }
 
-    public void addContents(List<Conteudo> cVetor){
+    public void addDefContent(int idContent, Conteudo cn) {
+        conteudos.put(idContent, cn);
+    }
 
-        for(Conteudo c : cVetor){
-            this.conteudos.put(c.getId(),c);
+    public void addContents(List<Conteudo> cVetor) {
+
+        for (Conteudo c : cVetor) {
+            this.conteudos.put(c.getId(), c);
         }
+    }
+
+    public Map<Integer, Conteudo> getContents() {
+        return new HashMap<>(conteudos);
     }
 }

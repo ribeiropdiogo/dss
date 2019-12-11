@@ -4,25 +4,22 @@ import Exceptions.*;
 import MediaCenter_GUI.GuestView;
 import MediaCenter_GUI.LoginForm;
 import MediaCenter_GUI.MainView;
-import MediaCenter_GUI.MessageDialog;
 import Utilities.Par;
 
 import java.io.*;
 import java.lang.SecurityException;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class RemoteMediaCenter implements MediaCenterInterface{
+public class RemoteMediaCenter implements MediaCenterInterface {
     private Socket socket;
     private final BufferedReader in;
     private final PrintWriter out;
 
     public RemoteMediaCenter(String host, int port) throws IOException {
-        this.socket = new Socket(host,port);
-        System.out.println("> Connected to "+ socket.getRemoteSocketAddress());
+        this.socket = new Socket(host, port);
+        System.out.println("> Connected to " + socket.getRemoteSocketAddress());
         this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.out = new PrintWriter(socket.getOutputStream());
     }
@@ -40,21 +37,21 @@ public class RemoteMediaCenter implements MediaCenterInterface{
         LoginForm l = new LoginForm(this);
     }
 
-    public void login(String username, String password) throws PasswordIncorretaException, UtilizadorInexistenteException{
-        out.println("login "+username+" "+password);
+    public void login(String username, String password) throws PasswordIncorretaException, UtilizadorInexistenteException {
+        out.println("login " + username + " " + password);
         out.flush();
         try {
             String r = in.readLine();
-            if(r.equals("wrongpassword")){
+            if (r.equals("wrongpassword")) {
                 //MessageDialog md = new MessageDialog("Error", "Incorrect Password");
                 throw new PasswordIncorretaException("Incorrect Password");
-            } else if (r.equals("usernexists")){
+            } else if (r.equals("usernexists")) {
                 //MessageDialog md = new MessageDialog("Error", "Username does not exist");
                 throw new UtilizadorInexistenteException("User not found");
-            } else if (r.equals("ok")){
+            } else if (r.equals("ok")) {
                 MainView md = new MainView(this, username);
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -162,14 +159,14 @@ public class RemoteMediaCenter implements MediaCenterInterface{
     }
 
 
-    public void uploadFile(String idConta, String nome, String autor, String album, File ficheiro){
+    public void uploadFile(String idConta, String nome, String autor, String album, File ficheiro) {
 
-        out.println("upload "+ficheiro.length()+" "+ficheiro.getName());
+        out.println("upload " + ficheiro.length() + " " + ficheiro.getName());
         out.flush();
         try {
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
             FileInputStream fis = new FileInputStream(ficheiro);
-            byte[] buffer = new byte[(int)ficheiro.length()];
+            byte[] buffer = new byte[(int) ficheiro.length()];
 
             while (fis.read(buffer) > 0) {
                 dos.write(buffer);
@@ -177,7 +174,7 @@ public class RemoteMediaCenter implements MediaCenterInterface{
 
             fis.close();
             //dos.close();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -200,7 +197,6 @@ public class RemoteMediaCenter implements MediaCenterInterface{
     public void forgottenPassword(String username, String email) throws UtilizadorInexistenteException, SecurityException {
 
     }
-
 
 
     public String generatePassword() {

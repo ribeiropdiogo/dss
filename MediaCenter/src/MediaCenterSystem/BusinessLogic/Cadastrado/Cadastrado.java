@@ -2,10 +2,9 @@ package MediaCenterSystem.BusinessLogic.Cadastrado;
 
 import Exceptions.PasswordIncorretaException;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+
 abstract
 public class Cadastrado {
 
@@ -41,12 +40,12 @@ public class Cadastrado {
 
     public void alteraPass(String pOld, String pNew, String pNewC) throws PasswordIncorretaException {
 
-        if(this.password.equals(pOld)){
+        if (this.password.equals(pOld)) {
             this.password = pNew;
-        }else throw new PasswordIncorretaException("Password atual não igual");
+        } else throw new PasswordIncorretaException("Password atual não igual");
     }
 
-    public boolean checkPassword(String password){
+    public boolean checkPassword(String password) {
         return this.password.equals(password);
     }
 
@@ -54,7 +53,7 @@ public class Cadastrado {
         return new HashSet<>();
     }
 
-    public boolean checkMail(String email){
+    public boolean checkMail(String email) {
 
         return this.email.equals(email);
     }

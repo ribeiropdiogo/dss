@@ -2,9 +2,9 @@ package MediaCenterSystem.BusinessLogic;
 
 public class Categoria {
 
-    String nome;
+    private String nome;
 
-    public Categoria(String nome){
+    public Categoria(String nome) {
         this.nome = nome;
     }
 
@@ -15,7 +15,6 @@ public class Categoria {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
 
 
 }
