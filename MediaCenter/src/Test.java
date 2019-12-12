@@ -6,10 +6,9 @@ import java.io.IOException;
 
 public class Test {
     public static void main(String[] args) throws IOException {
-        MediaCenterInterface mci = new RemoteMediaCenter("localhost", 16899);
+       MediaCenterInterface mci = new RemoteMediaCenter("localhost", 16899);
 
-        mci.getListaMusicas();
-        //MainView m = new MainView(mci, "asdasdasd");
+        MainView m = new MainView(mci, "asdasdasd");
         //mci.downloadForReproduction(1);
 
         /* Testar permissoes

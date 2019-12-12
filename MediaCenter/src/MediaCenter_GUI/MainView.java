@@ -301,13 +301,11 @@ public class MainView extends JFrame {
             }
         };
 
-
         ButtonColumn buttonColumnDown = new ButtonColumn(tbContentTable, download, 3,popupinsignificante);
         buttonColumnDown.setMnemonic(KeyEvent.VK_D);
 
         ButtonColumn buttonColumnOpt = new ButtonColumn(tbContentTable, altCategoria, 4,popup);
         buttonColumnOpt.setMnemonic(KeyEvent.VK_D);
-
         //-----------------------------
 
         // Painel de Reprodução
