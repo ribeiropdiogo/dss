@@ -83,26 +83,33 @@ public class ConteudoDAO {
     }
 
     public void put(int idContent, Conteudo c) {
-        String params = "('" + idContent + "','" + c.getNome() + "','" + c.getTamanho() + "','" + c.getAutor() + "','" + c.getPath() +"'";
+        String ids = "(Conteudo_id,nome,tamanho,duracao,autor,path";
+        String params = "('" + idContent + "','" + c.getNome() + "','" + c.getTamanho() + "','" + c.getDuracao() + "','" + c.getAutor() + "','" + c.getPath() +"'";
 
-        if(c.getAlbum() == -1)
-            params += "')";
-        else
+
+        if(c.getAlbum() == -1) {
+            params += ")";
+            ids += ")";
+        } else {
             params += ",'" + c.getAlbum() + "')";
+            ids += ",Album_id)";
+        }
 
-        DBAcess.putQuery(myt, idCont(idContent), params);
+        DBAcess.putQuery(myt, idCont(idContent), params, ids);
         this.removeContentEntries(idContent);
         Map<String, Categoria> cates = c.getCategorias();
         Map<String, Utilizador> urs = c.getDonos();
 
         String cats = this.convertContStrSet(idContent, cates.keySet());
-        String own = this.convertContStrSet(idContent, urs.keySet());
+        String own = this.convertContStrSet2(idContent, urs.keySet());
 
         if (!cats.equals(""))
             DBAcess.putQuery(cCats, "", cats);
 
-        if (!own.equals(""))
+        if (!own.equals("")) {
+            System.out.println(own);
             DBAcess.putQuery(cOwns, "", own);
+        }
 
         cates.forEach((k, v) -> categorias.put(k, v));
         urs.forEach((k, v) -> cadastrados.put(k, v));
@@ -173,6 +180,16 @@ public class ConteudoDAO {
 
         for (String it : inters) {
             ls.add("('" + idCont + "','" + it + "')");
+        }
+
+        return DBAcess.makeVarStr(ls);
+    }
+
+    private String convertContStrSet2(int idCont, Set<String> inters) {
+        List<String> ls = new ArrayList<>();
+
+        for (String it : inters) {
+            ls.add("('" + it + "','" + idCont + "')");
         }
 
         return DBAcess.makeVarStr(ls);

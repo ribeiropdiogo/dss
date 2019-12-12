@@ -67,7 +67,13 @@ public class CadastradoDAO {
 
     public void put(String idConta, Cadastrado conta) {
         String params = "('" + conta.getUsername() + "','" + conta.getEmail() + "','" + conta.getPassword() + "')";
-        DBAcess.putQuery(mytC, idUser(idConta), params);
+        System.out.println(idUser(idConta) + "/"+params);
+        if(this.contains(idConta)) {
+            String sql = "UPDATE Cadastrado SET email='" +  conta.getEmail() + "', password='"+conta.getPassword()+"'";
+            DBAcess.runUpdate(sql);
+        }
+        else
+            DBAcess.putQuery(mytC, idUser(idConta), params);
     }
 
     public void put(String idConta, Utilizador conta) {

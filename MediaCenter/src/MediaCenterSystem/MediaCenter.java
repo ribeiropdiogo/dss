@@ -251,9 +251,10 @@ public class MediaCenter {
         int cid, r = conteudos.checkDup(nome, autor);
         int aid = -1;
         Conteudo c;
-        Album a;
+        Album a = null;
         Utilizador u;
 
+        album = "";
         if(!album.equals("")) {
             if (albuns.contains(album))
                 a = albuns.get(album);
@@ -262,17 +263,26 @@ public class MediaCenter {
             aid = a.getID();
         }
 
+
         if(r == -1) {
+            System.out.println("FUCKING PATH + " + path);
             c = new Conteudo(nome,tamanho,duracao,autor,path,aid);
         } else {
             c = conteudos.get(r);
         }
 
+        if(!album.equals("")) {
+            a.addContuedo(c.getId(), c);
+            albuns.put(aid, a);
+        }
+
+        System.out.println(c.getPath());
+
         u = (Utilizador)membros.get(idConta);
         c.adicionaDono(u.getUsername(), u);
         u.addContent(c.getId());
-        conteudos.put(c.getId(), c);
         membros.put(u.getUsername(), u);
+        conteudos.put(c.getId(), c);
     }
 
     public void newConta(String tipo, String idConta, String email, String password) throws UtilizadorRepetidoException {

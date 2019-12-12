@@ -37,15 +37,44 @@ public abstract class DBAcess {
         }
     }
 
+    public static void runUpdate(String sql) {
+        try (Connection conn = DBAcess.makeConnection()) {
+            Statement stm = conn.createStatement();
+            stm.executeUpdate("SET FOREIGN_KEY_CHECKS=0");
+            stm.executeUpdate(sql);
+            stm.executeUpdate("SET FOREIGN_KEY_CHECKS=1");
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
     public static void putQuery(String table, String id, String newParams) {
         try (Connection conn = DBAcess.makeConnection()) {
             Statement stm = conn.createStatement();
+            stm.executeUpdate("SET FOREIGN_KEY_CHECKS=0");
 
             if (!id.equals(""))
                 stm.executeUpdate("DELETE FROM " + table + " WHERE " + id);
 
             String sql = "INSERT INTO " + table + " VALUES " + newParams;
             stm.executeUpdate(sql);
+            stm.executeUpdate("SET FOREIGN_KEY_CHECKS=1");
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
+    public static void putQuery(String table, String id, String newParams, String idVals) {
+        try (Connection conn = DBAcess.makeConnection()) {
+            Statement stm = conn.createStatement();
+            stm.executeUpdate("SET FOREIGN_KEY_CHECKS=0");
+
+            if (!id.equals(""))
+                stm.executeUpdate("DELETE FROM " + table + " WHERE " + id);
+
+            String sql = "INSERT INTO " + table + " " + idVals + " "+ " VALUES " + newParams;
+            stm.executeUpdate(sql);
+            stm.executeUpdate("SET FOREIGN_KEY_CHECKS=1");
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
         }

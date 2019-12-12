@@ -54,6 +54,7 @@ public class ServerWorker implements Runnable {
                         break;
 
                     case "upload":
+                        System.out.println(ops[5]);
                         this.md.upload(ops[1],ops[2],1,1,ops[3],ops[4],ops[5]);
                         System.out.println("> Uploaded file from "+ops[1]);
                         break;

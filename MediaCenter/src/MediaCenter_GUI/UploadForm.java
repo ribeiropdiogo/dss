@@ -208,7 +208,8 @@ public class UploadForm extends JFrame {
                         categoria = tfCategorias.getText();
                     }
                     //dialog = new MessageDialog("aaa",nome+", "+autor+", "+album+", "+categoria);
-                    mediacenter.upload(username, nome, autor, album, selectedFile.getPath());
+                    //mediacenter.upload(username, nome, autor, album, selectedFile.getPath());
+                    mediacenter.uploadFile(username, nome, autor, album, selectedFile);
                     CloseFrame();
                 } else {
                     dialog = new MessageDialog("Error", "Please select a file");
