@@ -54,8 +54,8 @@ public class ServerWorker implements Runnable {
                         break;
 
                     case "upload":
-                        System.out.println(ops[5]);
-                        this.md.upload(ops[1],ops[2],1,1,ops[3],ops[4],ops[5]);
+                        String[] parametros = data.split("_");
+                        this.md.upload(parametros[1],parametros[2],1,1,parametros[3],parametros[4],parametros[5]);
                         System.out.println("> Uploaded file from "+ops[1]);
                         break;
 

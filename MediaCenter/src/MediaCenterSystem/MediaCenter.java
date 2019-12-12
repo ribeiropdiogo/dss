@@ -254,7 +254,6 @@ public class MediaCenter {
         Album a = null;
         Utilizador u;
 
-        album = "";
         if(!album.equals("")) {
             if (albuns.contains(album))
                 a = albuns.get(album);

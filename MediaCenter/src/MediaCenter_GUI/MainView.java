@@ -301,6 +301,7 @@ public class MainView extends JFrame {
             }
         };
 
+
         ButtonColumn buttonColumnDown = new ButtonColumn(tbContentTable, download, 3,popupinsignificante);
         buttonColumnDown.setMnemonic(KeyEvent.VK_D);
 

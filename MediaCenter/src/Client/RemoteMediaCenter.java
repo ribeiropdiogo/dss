@@ -291,7 +291,7 @@ public class RemoteMediaCenter implements MediaCenterInterface {
     }
 
     public void upload(String idConta, String nome, String autor, String album, String path) {
-        out.println("upload "+idConta+" "+nome+" "+autor+" "+path+" "+album);
+        out.println("upload _"+idConta+"_"+nome+"_"+autor+"_"+path+"_"+album);
         out.flush();
     }
 

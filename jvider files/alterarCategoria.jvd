@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<jpanel name="Panel0" title="t" class="0" bordered="0" scrollbars="0" x="0" y="0" dx="0" dy="0" wx="0" wy="0" fill="0" anchor="0" insets="0,0,0,0" maxx="20" maxy="20">
+   <jlabel name="Label0" title="Categorias" scrollbars="0" x="1" y="1" dx="11" dy="2" wx="1" wy="1" fill="1" anchor="11" insets="0,15,0,0">
+   </jlabel>
+   <jlist name="List0" scrollbars="0" x="1" y="4" dx="11" dy="7" wx="1" wy="1" fill="1" anchor="11" insets="0,15,15,15">
+      <complists>
+         <complist>
+            <complistitem>Chocolate</complistitem>
+            <complistitem>Ice Cream</complistitem>
+            <complistitem>Apple Pie</complistitem>
+         </complist>
+      </complists>
+   </jlist>
+   <jbutton name="But0" title="Alterar" x="14" y="6" dx="1" dy="1" wx="0" wy="0" fill="1" anchor="10" insets="0,0,0,15">
+   </jbutton>
+   <jbutton name="But1" title="Adicionar" x="14" y="7" dx="1" dy="1" wx="0" wy="0" fill="1" anchor="10" insets="0,0,0,15">
+   </jbutton>
+   <jbutton name="But2" title="Remover" x="14" y="8" dx="1" dy="1" wx="0" wy="0" fill="1" anchor="10" insets="0,0,0,15">
+   </jbutton>
+</jpanel>

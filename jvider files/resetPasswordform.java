@@ -27,31 +27,7 @@ JLabel lbUsernameLabel;
 JLabel lbEmailLabel;
 JTextField tfEmailField;
 JButton btSendButton;
-/**
- */
-public static void main( String args[] ) 
-{
-   try 
-   {
-      UIManager.setLookAndFeel("javax.swing.plaf.mac.MacLookAndFeel");
-   }
-   catch ( ClassNotFoundException e ) 
-   {
-   }
-   catch ( InstantiationException e ) 
-   {
-   }
-   catch ( IllegalAccessException e ) 
-   {
-   }
-   catch ( UnsupportedLookAndFeelException e ) 
-   {
-   }
-   theresetPasswordform = new resetPasswordform();
-} 
 
-/**
- */
 public resetPasswordform() 
 {
    super( "TITLE" );
