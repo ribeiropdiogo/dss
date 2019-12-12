@@ -24,7 +24,6 @@ public class MainView extends JFrame {
     JList lsPlaylists;
     JLabel lbAmigosLabel;
     JList lsAmigos;
-    private String[][] dataContentTable;
 
 
     JButton btAmigosButton;
@@ -236,13 +235,10 @@ public class MainView extends JFrame {
         GridBagConstraints gbcRightPanel = new GridBagConstraints();
         pnRightPanel.setLayout(gbRightPanel);
 
-        dataContentTable = mediacenter.getListaMusicas();
-        String[] columnNames = new String[]{"Name", "Author", "Duration", "Options", ""};
-        tbContentTable = new JTable() {
-            public boolean isCellEditable(int nRow, int nCol) {
-                return false;
-            }
-        };
+        String[][] dataContentTable = mediacenter.getListaMusicas();
+        String[] colsContentTable = new String[]{"Name", "Author", "Duration", "Options", ""};
+        DefaultTableModel model = new DefaultTableModel(dataContentTable, colsContentTable);
+        tbContentTable = new JTable(dataContentTable, colsContentTable);
         tbContentTable.setAutoCreateRowSorter(true);
         tbContentTable.setAutoscrolls(false);
         tbContentTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -260,30 +256,15 @@ public class MainView extends JFrame {
         gbRightPanel.setConstraints(scpContentTable, gbcRightPanel);
         pnRightPanel.add(scpContentTable);
 
-        DefaultTableModel musicTableModel = (DefaultTableModel) tbContentTable.getModel();
-        musicTableModel.setColumnIdentifiers(columnNames);
-
-        DefaultTableModel tableModel = (DefaultTableModel) tbContentTable.getModel();
-        for (int i = 0; i < dataContentTable.length; i++) {
-            tableModel.addRow(dataContentTable[i]);
-        }
-
-        tbContentTable.setModel(tableModel);
 
         //--- Coloca butões nas células
+        final JPopupMenu popupmenu = new JPopupMenu("Edit");
+        JMenuItem cut = new JMenuItem("Download");
+        JMenuItem copy = new JMenuItem("Change Category");
+        JMenuItem paste = new JMenuItem("Delete");
+        popupmenu.add(cut); popupmenu.add(copy); popupmenu.add(paste);
 
-        final JPopupMenu popup = new JPopupMenu();
-        final JPopupMenu popupinsignificante = new JPopupMenu();
-        popup.add(new JMenuItem(new AbstractAction("Change category") {
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(theaaa, "Option 1 selected");
-            }
-        }));
-        popup.add(new JMenuItem(new AbstractAction("Download") {
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(theaaa, "Option 2 selected");
-            }
-        }));
+        final JPopupMenu uselesspopupmenu = new JPopupMenu("Useless");
 
         Action download = new AbstractAction()
         {
@@ -301,11 +282,12 @@ public class MainView extends JFrame {
             }
         };
 
-        ButtonColumn buttonColumnDown = new ButtonColumn(tbContentTable, download, 3,popupinsignificante);
+        ButtonColumn buttonColumnDown = new ButtonColumn(tbContentTable, download, 3, uselesspopupmenu);
         buttonColumnDown.setMnemonic(KeyEvent.VK_D);
 
-        ButtonColumn buttonColumnOpt = new ButtonColumn(tbContentTable, altCategoria, 4,popup);
+        ButtonColumn buttonColumnOpt = new ButtonColumn(tbContentTable, altCategoria, 4, popupmenu);
         buttonColumnOpt.setMnemonic(KeyEvent.VK_D);
+
         //-----------------------------
 
         // Painel de Reprodução
@@ -409,7 +391,7 @@ public class MainView extends JFrame {
         setVisible(true);
 
         MediaPlayer mp = new MediaPlayer();
-
+        /*
         MouseListener mouseListener = new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 1) {
@@ -431,7 +413,7 @@ public class MainView extends JFrame {
             }
         };
 
-        lsCategorias.addMouseListener(mouseListener);
+        lsCategorias.addMouseListener(mouseListener);*/
 
         btLogoutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
