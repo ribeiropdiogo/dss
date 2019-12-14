@@ -63,7 +63,7 @@ public interface MediaCenterInterface {
 
     void download(long idContent);
 
-    public void downloadForReproduction(long idContent);
+    public String downloadForReproduction(long idContent);
 
     void uploadFile(String idConta, String nome, String autor, String album, File file);
 

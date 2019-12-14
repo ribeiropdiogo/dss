@@ -14,7 +14,6 @@ public class ButtonColumn extends AbstractCellEditor
     private int mnemonic;
     private Border originalBorder;
     private Border focusBorder;
-    private JPopupMenu popup;
 
     private JButton renderButton;
     private JButton editButton;
@@ -30,11 +29,15 @@ public class ButtonColumn extends AbstractCellEditor
         renderButton = new JButton();
         editButton = new JButton();
         editButton.setFocusPainted( false );
-        editButton.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-                popup.show(e.getComponent(), e.getX(), e.getY());
-            }
-        });
+        if (column==4) {
+            editButton.addMouseListener(new MouseAdapter() {
+                public void mousePressed(MouseEvent e) {
+                    popup.show(e.getComponent(), e.getX(), e.getY());
+                }
+            });
+        } else {
+            editButton.addActionListener( this );
+        }
         originalBorder = editButton.getBorder();
         setFocusBorder( new LineBorder(Color.BLUE) );
 
@@ -59,7 +62,6 @@ public class ButtonColumn extends AbstractCellEditor
     {
         return mnemonic;
     }
-
 
     public void setMnemonic(int mnemonic)
     {
@@ -121,6 +123,7 @@ public class ButtonColumn extends AbstractCellEditor
             renderButton.setBorder( originalBorder );
         }
 
+//		renderButton.setText( (value == null) ? "" : value.toString() );
         if (value == null)
         {
             renderButton.setText( "" );
@@ -145,6 +148,8 @@ public class ButtonColumn extends AbstractCellEditor
         int row = table.convertRowIndexToModel( table.getEditingRow() );
         fireEditingStopped();
 
+        //  Invoke the Action
+
         ActionEvent event = new ActionEvent(
                 table,
                 ActionEvent.ACTION_PERFORMED,
@@ -154,7 +159,8 @@ public class ButtonColumn extends AbstractCellEditor
 
     public void mousePressed(MouseEvent e)
     {
-        if (table.isEditing() &&  table.getCellEditor() == this)
+        if (table.isEditing()
+                &&  table.getCellEditor() == this)
             isButtonColumnEditor = true;
     }
 

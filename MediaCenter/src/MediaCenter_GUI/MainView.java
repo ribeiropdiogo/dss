@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.io.IOException;
 
 public class MainView extends JFrame {
     static MainView theaaa;
@@ -38,10 +39,13 @@ public class MainView extends JFrame {
     JButton btNext;
     JButton btAddConteudo;
     final JFileChooser fc;
+    String[][] dataContentTable;
     JButton btShuffle;
 
 
     JPanel pnHead;
+
+    private boolean playing;
 
     public void CloseFrame() {
         super.dispose();
@@ -50,6 +54,7 @@ public class MainView extends JFrame {
     public MainView(MediaCenterInterface mediacenter, String username) {
         super("Media Center");
 
+        playing = false;
         //Painel Master
         pnMainview = new JPanel();
         GridBagLayout gbMainview = new GridBagLayout();
@@ -235,10 +240,11 @@ public class MainView extends JFrame {
         GridBagConstraints gbcRightPanel = new GridBagConstraints();
         pnRightPanel.setLayout(gbRightPanel);
 
-        String[][] dataContentTable = mediacenter.getListaMusicas();
+        dataContentTable = mediacenter.getListaMusicas();
         String[] colsContentTable = new String[]{"Name", "Author", "Duration", "Options", ""};
         DefaultTableModel model = new DefaultTableModel(dataContentTable, colsContentTable);
         tbContentTable = new JTable(dataContentTable, colsContentTable);
+        tbContentTable.setModel(model);
         tbContentTable.setAutoCreateRowSorter(true);
         tbContentTable.setAutoscrolls(false);
         tbContentTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -257,6 +263,9 @@ public class MainView extends JFrame {
         pnRightPanel.add(scpContentTable);
 
 
+        // Inicializar o MediaPlayer
+        MediaPlayer mp = new MediaPlayer();
+
         //--- Coloca butões nas células
         final JPopupMenu popupmenu = new JPopupMenu("Edit");
         JMenuItem cut = new JMenuItem("Download");
@@ -266,11 +275,13 @@ public class MainView extends JFrame {
 
         final JPopupMenu uselesspopupmenu = new JPopupMenu("Useless");
 
-        Action download = new AbstractAction()
+        Action addToQueue = new AbstractAction()
         {
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("> Download file "+tbContentTable.getSelectedRow());
+                System.out.println("> Add file "+dataContentTable[tbContentTable.getSelectedRow()][5]+" to Queue");
+                String filename = mediacenter.downloadForReproduction(Integer.parseInt(dataContentTable[tbContentTable.getSelectedRow()][5]));
+                mp.addToQueue(System.getProperty("user.dir")+"/src/Client/.reproduction/"+filename);
             }
         };
 
@@ -282,7 +293,7 @@ public class MainView extends JFrame {
             }
         };
 
-        ButtonColumn buttonColumnDown = new ButtonColumn(tbContentTable, download, 3, uselesspopupmenu);
+        ButtonColumn buttonColumnDown = new ButtonColumn(tbContentTable, addToQueue, 3, uselesspopupmenu);
         buttonColumnDown.setMnemonic(KeyEvent.VK_D);
 
         ButtonColumn buttonColumnOpt = new ButtonColumn(tbContentTable, altCategoria, 4, popupmenu);
@@ -390,8 +401,6 @@ public class MainView extends JFrame {
         setSize(900, 666);
         setVisible(true);
 
-        MediaPlayer mp = new MediaPlayer();
-        /*
         MouseListener mouseListener = new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 1) {
@@ -413,10 +422,11 @@ public class MainView extends JFrame {
             }
         };
 
-        lsCategorias.addMouseListener(mouseListener);*/
+        lsCategorias.addMouseListener(mouseListener);
 
         btLogoutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                mp.pause();
                 mediacenter.logout();
                 CloseFrame();
             }
@@ -424,7 +434,13 @@ public class MainView extends JFrame {
 
         btPlay.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("> Item selecionado " + tbContentTable.getSelectedRow());
+                if (!playing){
+                    mp.play();
+                    playing=true;
+                }else {
+                    mp.pause();
+                    playing=false;
+                }
             }
         });
 

@@ -24,7 +24,7 @@ public class MediaPlayer {
 
     public void addToQueue(String path) {
         // "write" the parms into stdin
-        line = "add " + path + "\n";
+        line = "enqueue " + path + "\n";
         try {
             stdin.write(line.getBytes());
             stdin.flush();

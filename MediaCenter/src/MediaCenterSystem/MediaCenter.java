@@ -264,7 +264,7 @@ public class MediaCenter {
 
 
         if(r == -1) {
-            System.out.println("FUCKING PATH + " + path);
+            //System.out.println("FUCKING PATH + " + path);
             c = new Conteudo(nome,tamanho,duracao,autor,path,aid);
         } else {
             c = conteudos.get(r);
@@ -275,7 +275,7 @@ public class MediaCenter {
             albuns.put(aid, a);
         }
 
-        System.out.println(c.getPath());
+        //System.out.println(c.getPath());
 
         u = (Utilizador)membros.get(idConta);
         c.adicionaDono(u.getUsername(), u);

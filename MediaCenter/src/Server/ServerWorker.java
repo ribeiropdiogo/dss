@@ -56,7 +56,7 @@ public class ServerWorker implements Runnable {
                     case "upload":
                         String[] parametros = data.split("_");
                         this.md.upload(parametros[1],parametros[2],1,1,parametros[3],parametros[4],parametros[5]);
-                        System.out.println("> Uploaded file from "+ops[1]);
+                        //System.out.println("> Uploaded file from "+ops[1]);
                         break;
 
                     case "download":
@@ -85,8 +85,9 @@ public class ServerWorker implements Runnable {
 
                     case "rep_download":
                         System.out.println("> Downloading file for local reproduction");
-                        //File ficheiro = new File(this.md.getPath(Integer.parseInt(ops[2])));
-                        File ficheirolocal = new File("src/Server/media/08 - All The Small Things.flac");
+                        File ficheirolocal = new File(this.md.getPath(Integer.parseInt(ops[1])));
+                        //System.out.println(this.md.getPath(Integer.parseInt(ops[1])));
+                        //File ficheirolocal = new File("src/Server/media/08 - All The Small Things.flac");
                         out.println("local_download "+ficheirolocal.length()+" "+ficheirolocal.getName());
                         out.flush();
 

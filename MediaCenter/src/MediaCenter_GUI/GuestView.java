@@ -32,6 +32,7 @@ public class GuestView extends JFrame {
 
 
     JPanel pnHead;
+    private boolean playing;
 
     public void CloseFrame() {
         super.dispose();
@@ -39,6 +40,8 @@ public class GuestView extends JFrame {
 
     public GuestView(MediaCenterInterface mediacenter) {
         super("Media Center");
+
+        playing = false;
 
         //Painel Master
         pnMainview = new JPanel();
@@ -127,25 +130,31 @@ public class GuestView extends JFrame {
         GridBagConstraints gbcRightPanel = new GridBagConstraints();
         pnRightPanel.setLayout(gbRightPanel);
 
-        String[] columnNames = new String[]{"Name", "Author", "Duration"};
+        String[] columnNames = new String[]{"Name", "Author", "Duration","Options"};
         data = mediacenter.getListaMusicas();
 
-        tbContentTable = new JTable() {
-            public boolean isCellEditable(int nRow, int nCol) {
-                return false;
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        tbContentTable = new JTable(data, columnNames);
+        tbContentTable.setModel(model);
+
+        // Inicializar o MediaPlayer
+        MediaPlayer mp = new MediaPlayer();
+
+        final JPopupMenu uselesspopupmenu = new JPopupMenu("Useless");
+
+        Action addToQueue = new AbstractAction()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                System.out.println("> Add file "+data[tbContentTable.getSelectedRow()][5]+" to Queue");
+                String filename = mediacenter.downloadForReproduction(Integer.parseInt(data[tbContentTable.getSelectedRow()][5]));
+                mp.addToQueue(System.getProperty("user.dir")+"/src/Client/.reproduction/"+filename);
+                //System.out.println(filename);
             }
         };
 
-        DefaultTableModel musicTableModel = (DefaultTableModel) tbContentTable.getModel();
-        musicTableModel.setColumnIdentifiers(columnNames);
-
-        DefaultTableModel tableModel = (DefaultTableModel) tbContentTable.getModel();
-        for (int i = 0; i < data.length; i++) {
-            tableModel.addRow(data[i]);
-        }
-
-        tbContentTable.setModel(tableModel);
-
+        ButtonColumn buttonColumnDown = new ButtonColumn(tbContentTable, addToQueue, 3, uselesspopupmenu);
+        buttonColumnDown.setMnemonic(KeyEvent.VK_D);
 
         tbContentTable.setAutoCreateRowSorter(true);
         tbContentTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -275,8 +284,6 @@ public class GuestView extends JFrame {
 
         lsCategorias.addMouseListener(mouseListener);
 
-        MediaPlayer mp = new MediaPlayer();
-
 
         btLogoutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -288,11 +295,13 @@ public class GuestView extends JFrame {
 
         btPlay.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //tbContentTable.getValueAt(tbContentTable.getSelectedRow(), 3);
-                int row = tbContentTable.getSelectedRow();
-                System.out.println("Selected row " + row + " - id = " + data[row][3]);
-                tableModel.removeRow(row);
-                tableModel.fireTableDataChanged();
+                    if (!playing){
+                        mp.play();
+                        playing=true;
+                    }else {
+                        mp.pause();
+                        playing=false;
+                    }
             }
         });
 

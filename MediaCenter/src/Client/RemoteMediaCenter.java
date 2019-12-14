@@ -225,9 +225,11 @@ public class RemoteMediaCenter implements MediaCenterInterface {
 
     }
 
-    public void downloadForReproduction(long idContent) {
+    public String downloadForReproduction(long idContent) {
         out.println("rep_download " + idContent);
         out.flush();
+
+        String filename = null;
 
         try {
             String[] resposta = in.readLine().split(" ");
@@ -238,7 +240,7 @@ public class RemoteMediaCenter implements MediaCenterInterface {
                     builder.append(" ");
 
             }
-            String filename = builder.toString();
+            filename = builder.toString();
 
             try {
                 DataInputStream dis = new DataInputStream(socket.getInputStream());
@@ -263,6 +265,8 @@ public class RemoteMediaCenter implements MediaCenterInterface {
         } catch (IOException e){
             e.printStackTrace();
         }
+
+        return filename;
     }
 
 
@@ -287,7 +291,7 @@ public class RemoteMediaCenter implements MediaCenterInterface {
         }
 
 
-        this.upload(idConta,nome,autor,album,"src/MediaCenter/Server/media/"+ficheiro.getName());
+        this.upload(idConta,nome,autor,album,"src/Server/media/"+ficheiro.getName());
     }
 
     public void upload(String idConta, String nome, String autor, String album, String path) {
