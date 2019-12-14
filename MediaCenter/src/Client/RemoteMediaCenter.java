@@ -91,8 +91,25 @@ public class RemoteMediaCenter implements MediaCenterInterface {
 
     }
 
-    public Set<String> getCategorias(long idContent) {
-        return null;
+    public String[] getCategorias(long idContent) {
+        out.println("categorias "+idContent);
+        out.flush();
+        String[] categorias = null;
+
+        try {
+            String answer = in.readLine();
+            String[] ops = answer.split("_");
+            int c = ops.length;
+            c--;
+            categorias = new String[c];
+            for (int i = 0; i < c; i++){
+                categorias[i] = ops[i+1];
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return categorias;
     }
 
     public String[] getCategorias() {

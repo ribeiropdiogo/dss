@@ -50,16 +50,10 @@ public class ChangeCategory extends JFrame {
         gbPanel0.setConstraints( lbLabel0, gbcPanel0 );
         pnPanel0.add( lbLabel0 );
 
-        //Ir buscar as categorias de um conteúdo para uma lista
-        try{
+        String []categorias = mediacenter.getCategorias(idConteudo);
 
-            Set<String> aux = mediacenter.getCategorias(idConteudo);
-            String []categorias = Arrays.copyOf(aux.toArray(), aux.size(), String[].class);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
 
-        lsList0 = new JList(  );
+        lsList0 = new JList( categorias );
         lsList0.setSelectionBackground( new Color( 212,212,212 ) );
         lsList0.setSelectionForeground( new Color( 0,0,0 ) );
         gbcPanel0.gridx = 1;
@@ -115,8 +109,8 @@ public class ChangeCategory extends JFrame {
 
         setContentPane( pnPanel0 );
         setLocationRelativeTo(null);
+        setSize(275, 220);
         setResizable(false);
-        pack();
         setVisible( true );
     }
 }

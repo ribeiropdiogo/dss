@@ -6,6 +6,8 @@ import MediaCenterSystem.MediaCenter;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Arrays;
+import java.util.Set;
 
 public class ServerWorker implements Runnable {
     private Socket socket;
@@ -156,7 +158,22 @@ public class ServerWorker implements Runnable {
 
                     case "categorias":
                         if (ops.length==1){
-                        String[] cats = this.md.getCategorias();
+                            String[] cats = this.md.getCategorias();
+                            StringBuilder build = new StringBuilder();
+                            build.append("categorias_");
+                            for (int i = 0; i < cats.length; i++) {
+                                build.append(cats[i]);
+                                if (i < cats.length - 1)
+                                    build.append("_");
+
+                            }
+                            String answer = build.toString();
+
+                            out.println(answer);
+                            out.flush();
+                        } else if (ops.length == 2 ){
+                            Set<String> s = this.md.getCategorias(Integer.parseInt(ops[1]));
+                            String[] cats = Arrays.copyOf(s.toArray(), s.size(), String[].class);
                             StringBuilder build = new StringBuilder();
                             build.append("categorias_");
                             for (int i = 0; i < cats.length; i++) {
