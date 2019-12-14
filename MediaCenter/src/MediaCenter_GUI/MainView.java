@@ -268,10 +268,28 @@ public class MainView extends JFrame {
 
         //--- Coloca butões nas células
         final JPopupMenu popupmenu = new JPopupMenu("Edit");
-        JMenuItem cut = new JMenuItem("Download");
-        JMenuItem copy = new JMenuItem("Change Category");
-        JMenuItem paste = new JMenuItem("Delete");
-        popupmenu.add(cut); popupmenu.add(copy); popupmenu.add(paste);
+        JMenuItem download = new JMenuItem("Download");
+        JMenuItem changecat = new JMenuItem("Change Category");
+        JMenuItem delete = new JMenuItem("Delete");
+        popupmenu.add(download); popupmenu.add(changecat); popupmenu.add(delete);
+
+        download.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                MessageDialog md = new MessageDialog("HEY!","HELLO MOTHERFUCKER!");
+            }
+        });
+
+        changecat.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                ChangeCategory ct = new ChangeCategory(mediacenter,Integer.parseInt(dataContentTable[tbContentTable.getSelectedRow()][5]));
+            }
+        });
+
+        delete.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                MessageDialog md = new MessageDialog("HEY!","BITCH ASS NIGGER");
+            }
+        });
 
         final JPopupMenu uselesspopupmenu = new JPopupMenu("Useless");
 
@@ -289,7 +307,7 @@ public class MainView extends JFrame {
         {
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("> Alterar categoria do ficheiro "+tbContentTable.getSelectedRow());
+                //System.out.println("> Alterar categoria do ficheiro "+tbContentTable.getSelectedRow());
             }
         };
 
