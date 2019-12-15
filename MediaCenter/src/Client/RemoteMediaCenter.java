@@ -355,6 +355,24 @@ public class RemoteMediaCenter implements MediaCenterInterface {
         return this.getOp(6);
     }
 
+    public String[][] getListaMusicas(int idPlaylist) {
+        out.println("getListaMusicasPlay _"+idPlaylist);
+        out.flush();
+        return this.getOp(6);
+    }
+
+    public String[][] getAllConteudoBasic(int idPlaylist) {
+        out.println("getBasicPlCont _" +  idPlaylist);
+        out.flush();
+        return this.getOp(4);
+    }
+
+    public String[][] getAllAlbuns() {
+        out.println("getAllAlbuns");
+        out.flush();
+        return this.getOp(2);
+    }
+
     private String[][] getOp(int ncol) {
         String[][] r = null;
         try {

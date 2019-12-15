@@ -6,6 +6,8 @@ import MediaCenterSystem.DataAccess.DBTools.DBAcess;
 import MediaCenterSystem.DataAccess.DBTools.DBBaseQueries;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class AlbumDAO {
@@ -64,6 +66,14 @@ public class AlbumDAO {
         conts.forEach(x -> al.addContuedo(x, conteudos.get(x)));
 
         return al;
+    }
+
+    public List<Album> getAll() {
+        List<Album> ls = new ArrayList<>();
+
+        DBAcess.getIds(myt,"Album_id").forEach(x -> ls.add(this.get(x)));
+
+        return ls;
     }
 
     public void put(int idAlbum, Album al) {

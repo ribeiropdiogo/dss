@@ -20,7 +20,7 @@ public class ServerWorker implements Runnable {
 
     public void run() {
         System.out.println("> New client has established connection from " + socket.getRemoteSocketAddress());
-
+        String[][] a;
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -196,22 +196,45 @@ public class ServerWorker implements Runnable {
                         String[] c = data.split("_");
                         if (c.length == 1 || c[1].equals("All")) {
                             System.out.println("> List all");
-                            String[][] a = this.md.getListaMusicas();
+                            a = this.md.getListaMusicas();
                             out.println(a.length);
                             this.pushMatrix(out, a, a.length, 6);
                         } else if (c.length == 2){
                             System.out.println("> List all that is "+c[1]);
-                            String[][] a = this.md.getListaMusicas(c[1]);
+                            a = this.md.getListaMusicas(c[1]);
                             out.println(a.length);
                             this.pushMatrix(out, a, a.length, 6);
                         }
                         break;
                     case "getListUsers":
-                        String[] d = data.split("_");
                         System.out.println("> List all users");
-                        String[][] a = this.md.getAccounts();
+                        a = this.md.getAccounts();
                         out.println(a.length);
                         this.pushMatrix(out, a, a.length, 3);
+                        break;
+                    case "getListaMusicasPlay":
+                        String[] d = data.split("_");
+                        if(d.length == 2) {
+                            System.out.println("> List all content from " + d[1]);
+                            a = this.md.getListaMusicas(Integer.parseInt(d[1]));
+                            out.println(a.length);
+                            this.pushMatrix(out, a, a.length, 6);
+                        }
+                        break;
+                    case "getBasicPlCont":
+                        String[] ee = data.split("_");
+                        if(ee.length == 2) {
+                            System.out.println("> List all basic content from " + ee[1]);
+                            a = this.md.getAllConteudoBasic(Integer.parseInt(ee[1]));
+                            out.println(a.length);
+                            this.pushMatrix(out, a, a.length, 4);
+                        }
+                        break;
+                    case "getAllAlbuns":
+                        System.out.println("> List all albuns");
+                        a = this.md.getAllAlbuns();
+                        out.println(a.length);
+                        this.pushMatrix(out, a, a.length, 2);
                         break;
                     default:
                         System.out.println("> Unrecognized operation");
