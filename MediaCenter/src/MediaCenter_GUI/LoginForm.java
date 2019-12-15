@@ -168,7 +168,7 @@ public class LoginForm extends JFrame {
 
         btForgotButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //ResetPasswordForm rpf = new ResetPasswordForm(mediacenter);
+                resetPassword rpf = new resetPassword(mediacenter);
             }
         });
 

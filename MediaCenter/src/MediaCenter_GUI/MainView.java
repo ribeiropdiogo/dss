@@ -480,6 +480,13 @@ public class MainView extends JFrame {
             }
         });
 
+        btNewPlaylistButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                newPlaylist np = new newPlaylist();
+            }
+        });
+
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 mp.exit();
