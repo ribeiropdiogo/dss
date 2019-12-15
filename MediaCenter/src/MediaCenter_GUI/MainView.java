@@ -243,7 +243,13 @@ public class MainView extends JFrame {
 
         dataContentTable = mediacenter.getListaMusicas();
         String[] colsContentTable = new String[]{"Name", "Author", "Duration", "Options", ""};
-        DefaultTableModel model = new DefaultTableModel(dataContentTable, colsContentTable);
+        DefaultTableModel model = new DefaultTableModel(dataContentTable, colsContentTable){
+            public boolean isCellEditable(int row, int column){
+                if (column <= 3)
+                    return false;
+                else return true;
+            }
+        };
         tbContentTable = new JTable(dataContentTable, colsContentTable);
         tbContentTable.setModel(model);
         tbContentTable.setAutoCreateRowSorter(true);
