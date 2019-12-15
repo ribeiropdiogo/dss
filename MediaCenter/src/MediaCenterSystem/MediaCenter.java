@@ -22,6 +22,11 @@ import java.util.Set;
 import static java.util.Collections.shuffle;
 
 public class MediaCenter {
+
+    public interface ArrMaker {
+        String[] toArr(Object o);
+    }
+
     private static final int MAX_RAND_SONGS = 25;
 
     private CategoriaDAO categorias;
@@ -339,18 +344,27 @@ public class MediaCenter {
         return arr;
     }
 
-    public String[][] getAccounts() {return this.constructCadMat(membros.getAll());}
+    public String[][] getAccounts() {return this.constructMat(membros.getAll(), this::cadast2arr);}
 
     public String[][] getListaMusicas(){
-        return constructMat(conteudos.getAllConts());
+        return constructMat(conteudos.getAllConts(), this::content2arr);
     }
 
     public String[][] getListaMusicas(String idCat){
-        return constructMat(conteudos.getWithCategoria(idCat));
+        return constructMat(conteudos.getWithCategoria(idCat), this::content2arr);
     }
 
     public String[][] getListaMusicas(int idPlaylist){
-        return constructMat(new ArrayList<>(playlists.get(idPlaylist).getContents().values()));
+        return constructMat(new ArrayList<>(playlists.get(idPlaylist).getContents().values()), this::content2arr);
+    }
+
+    public String[][] getAllConteudoBasic(int idPlaylist) {
+        List<Conteudo> playContent = new ArrayList<>(playlists.get(idPlaylist).getContents().values());
+        return this.constructMat(playContent, this::basic_content2arr);
+    }
+
+    public String[][] getAllAlbuns() {
+        return this.constructMat(albuns.getAll(), this::album2arr);
     }
 
     private String generatePassword() {
@@ -443,29 +457,33 @@ public class MediaCenter {
         membros.put(idConta, u);
     }
 
-    private String[] content2arr(Conteudo c) {
+    private String[] content2arr(Object o) {
+        Conteudo c = (Conteudo)o;
         return new String[]{c.getNome(), c.getAutor(), Util.convertDuration(c.getDuracao()), "+","...",Integer.toString(c.getId()),c.getPath()};
     }
 
-    private String[] cadast2arr(Cadastrado c) {
+    private String[] cadast2arr(Object o) {
+        Cadastrado c = (Cadastrado)o;
         return new String[]{c.getUsername(), c.getEmail(), "Remove"};
     }
 
-    private String[][] constructMat(List<Conteudo> conts) {
-        String[][] arr = new String[conts.size()][];
+    private String[] basic_content2arr(Object o) {
+        Conteudo c = (Conteudo)o;
+        return new String[]{c.getNome(), c.getAutor(), "Remove", Integer.toString(c.getId())};
+    }
 
-        for(int i = 0; i < conts.size(); i++)
-            arr[i] = content2arr(conts.get(i));
+    private String[] album2arr(Object o) {
+        Album al = (Album)o;
+        return new String[]{al.getNome(), Integer.toString(al.getID())};
+    }
+
+    private String[][] constructMat(List<? extends Object> objs, ArrMaker am) {
+        String[][] arr = new String[objs.size()][];
+
+        for(int i = 0; i < objs.size(); i++)
+            arr[i] = am.toArr(objs.get(i));
 
         return arr;
     }
 
-    private String[][] constructCadMat(List<Cadastrado> conts) {
-        String[][] arr = new String[conts.size()][];
-
-        for(int i = 0; i < conts.size(); i++)
-            arr[i] = cadast2arr(conts.get(i));
-
-        return arr;
-    }
 }
