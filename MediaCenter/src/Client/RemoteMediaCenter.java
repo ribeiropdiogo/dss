@@ -1,10 +1,7 @@
 package Client;
 
 import Exceptions.*;
-import MediaCenter_GUI.GuestView;
-import MediaCenter_GUI.LoginForm;
-import MediaCenter_GUI.MainView;
-import MediaCenter_GUI.MessageDialog;
+import MediaCenter_GUI.*;
 import Utilities.Par;
 
 import javax.print.attribute.standard.Media;
@@ -54,7 +51,7 @@ public class RemoteMediaCenter implements MediaCenterInterface {
             } else if (r.equals("okuser")) {
                 MainView md = new MainView(this, username);
             } else if (r.equals("okadmin")) {
-                MessageDialog md = new MessageDialog("jkjk","kjfdksfjk");
+                AdminViewForm md = new AdminViewForm(this);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -340,35 +337,32 @@ public class RemoteMediaCenter implements MediaCenterInterface {
 
     }
 
+    public String[][] getAccounts() {
+        out.println("getListUsers");
+        out.flush();
+        return this.getOp(3);
+    }
+
     public String[][] getListaMusicas() {
         out.println("getListaMusicas");
         out.flush();
-        String[][] r = null;
-        try {
-            int rows = Integer.parseInt(in.readLine());
-            System.out.println("> Fetched "+rows+" rows");
-            r = new String[rows][6];
-            for (int i = 0; i < rows; i++){
-                for (int j = 0; j < 6; j++){
-                    r[i][j] = in.readLine();
-                }
-            }
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-        return r;
+        return this.getOp(6);
     }
 
     public String[][] getListaMusicas(String idCat){
         out.println("getListaMusicas _"+idCat);
         out.flush();
+        return this.getOp(6);
+    }
+
+    private String[][] getOp(int ncol) {
         String[][] r = null;
         try {
             int rows = Integer.parseInt(in.readLine());
             System.out.println("> Fetched "+rows+" rows");
-            r = new String[rows][6];
+            r = new String[rows][ncol];
             for (int i = 0; i < rows; i++){
-                for (int j = 0; j < 6; j++){
+                for (int j = 0; j < ncol; j++){
                     r[i][j] = in.readLine();
                 }
             }

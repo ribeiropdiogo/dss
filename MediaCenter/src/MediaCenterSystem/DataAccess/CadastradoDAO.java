@@ -38,6 +38,18 @@ public class CadastradoDAO {
         return inst;
     }
 
+    public List<Cadastrado> getAll() {
+        List<Cadastrado> ls = new ArrayList<>();
+
+        this.getAllNames().forEach(x -> ls.add(this.get(x)));
+
+        return ls;
+    }
+
+    public Set<String> getAllNames() {
+        return DBAcess.getNames(mytC, "username");
+    }
+
     public Cadastrado get(String idConta) {
         Cadastrado al = null;
 

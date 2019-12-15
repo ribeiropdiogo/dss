@@ -114,8 +114,8 @@ public class ServerWorker implements Runnable {
 
                     case "permission":
                         System.out.println("> Checking permissions of "+ops[2]+" for "+ops[1]);
-                        boolean r;// = this.md.checkPermissions(ops[1],Integer.parseInt(ops[2]));
-                        r = true;
+                        boolean r = this.md.checkPermissions(ops[1],Integer.parseInt(ops[2]));
+                        //r = true;
                         if (r)
                             out.println("true");
                         else
@@ -198,25 +198,21 @@ public class ServerWorker implements Runnable {
                             System.out.println("> List all");
                             String[][] a = this.md.getListaMusicas();
                             out.println(a.length);
-                            out.flush();
-                            for (int i = 0; i < a.length; i++)
-                                for (int j = 0; j < 6; j++) {
-                                    out.println(a[i][j]);
-                                    out.flush();
-                                }
+                            this.pushMatrix(out, a, a.length, 6);
                         } else if (c.length == 2){
                             System.out.println("> List all that is "+c[1]);
                             String[][] a = this.md.getListaMusicas(c[1]);
                             out.println(a.length);
-                            out.flush();
-                            for (int i = 0; i < a.length; i++)
-                                for (int j = 0; j < 6; j++) {
-                                    out.println(a[i][j]);
-                                    out.flush();
-                                }
+                            this.pushMatrix(out, a, a.length, 6);
                         }
                         break;
-
+                    case "getListUsers":
+                        String[] d = data.split("_");
+                        System.out.println("> List all users");
+                        String[][] a = this.md.getAccounts();
+                        out.println(a.length);
+                        this.pushMatrix(out, a, a.length, 3);
+                        break;
                     default:
                         System.out.println("> Unrecognized operation");
                         break;
@@ -230,5 +226,14 @@ public class ServerWorker implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void pushMatrix(PrintWriter out, String[][] a, int nrow, int ncol) {
+        out.flush();
+        for (int i = 0; i < nrow; i++)
+            for (int j = 0; j < ncol; j++) {
+                out.println(a[i][j]);
+                out.flush();
+            }
     }
 }

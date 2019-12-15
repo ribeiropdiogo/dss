@@ -29,6 +29,8 @@ public interface MediaCenterInterface {
 
     void alteraEmail(String idConta, String newMl);
 
+    public String[][] getAccounts();
+
     String[] getCategorias(long idContent);
 
     String[] getCategorias();

@@ -339,6 +339,8 @@ public class MediaCenter {
         return arr;
     }
 
+    public String[][] getAccounts() {return this.constructCadMat(membros.getAll());}
+
     public String[][] getListaMusicas(){
         return constructMat(conteudos.getAllConts());
     }
@@ -445,11 +447,24 @@ public class MediaCenter {
         return new String[]{c.getNome(), c.getAutor(), Util.convertDuration(c.getDuracao()), "+","...",Integer.toString(c.getId()),c.getPath()};
     }
 
+    private String[] cadast2arr(Cadastrado c) {
+        return new String[]{c.getUsername(), c.getEmail(), "Remove"};
+    }
+
     private String[][] constructMat(List<Conteudo> conts) {
         String[][] arr = new String[conts.size()][];
 
         for(int i = 0; i < conts.size(); i++)
             arr[i] = content2arr(conts.get(i));
+
+        return arr;
+    }
+
+    private String[][] constructCadMat(List<Cadastrado> conts) {
+        String[][] arr = new String[conts.size()][];
+
+        for(int i = 0; i < conts.size(); i++)
+            arr[i] = cadast2arr(conts.get(i));
 
         return arr;
     }
