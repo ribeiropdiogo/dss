@@ -33,6 +33,7 @@ public class GuestView extends JFrame {
 
     JPanel pnHead;
     private boolean playing;
+    private boolean shuffle;
 
     public void CloseFrame() {
         super.dispose();
@@ -226,7 +227,7 @@ public class GuestView extends JFrame {
         gbPanelReproducao.setConstraints(btPrev, gbcPanelReproducao);
         pnPanelReproducao.add(btPrev);
 
-        btShuffle = new JButton("shuffle");
+        btShuffle = new JButton("shuffle \u25CB");
         gbcPanelReproducao.gridx = 0;
         gbcPanelReproducao.gridy = 0;
         gbcPanelReproducao.gridwidth = 1;
@@ -237,6 +238,7 @@ public class GuestView extends JFrame {
         gbcPanelReproducao.anchor = GridBagConstraints.WEST;
         gbPanelReproducao.setConstraints(btShuffle, gbcPanelReproducao);
         pnPanelReproducao.add(btShuffle);
+        shuffle = false;
 
 
         sppSplitPane1.setRightComponent(pnRightPanel);
@@ -296,9 +298,11 @@ public class GuestView extends JFrame {
         btPlay.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                     if (!playing){
+                        btPlay.setText("\u007C\u007C");
                         mp.play();
                         playing=true;
                     }else {
+                        btPlay.setText("\u25B6");
                         mp.pause();
                         playing=false;
                     }
@@ -314,6 +318,21 @@ public class GuestView extends JFrame {
         btPrev.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mp.prevContent();
+            }
+        });
+
+        btShuffle.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(shuffle) {
+                    btShuffle.setText("shuffle \u25CB");
+                    mp.shuffleOFF();
+                    shuffle = false;
+                } else {
+                    btShuffle.setText("shuffle \u25CF");
+                    mp.shuffleON();
+                    shuffle = true;
+                }
             }
         });
 

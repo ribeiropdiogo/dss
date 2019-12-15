@@ -4,6 +4,7 @@ import Exceptions.*;
 import MediaCenter_GUI.GuestView;
 import MediaCenter_GUI.LoginForm;
 import MediaCenter_GUI.MainView;
+import MediaCenter_GUI.MessageDialog;
 import Utilities.Par;
 
 import javax.print.attribute.standard.Media;
@@ -50,8 +51,10 @@ public class RemoteMediaCenter implements MediaCenterInterface {
             } else if (r.equals("usernexists")) {
                 //MessageDialog md = new MessageDialog("Error", "Username does not exist");
                 throw new UtilizadorInexistenteException("User not found");
-            } else if (r.equals("ok")) {
+            } else if (r.equals("okuser")) {
                 MainView md = new MainView(this, username);
+            } else if (r.equals("okadmin")) {
+                MessageDialog md = new MessageDialog("jkjk","kjfdksfjk");
             }
         } catch (IOException e) {
             e.printStackTrace();

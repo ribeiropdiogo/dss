@@ -37,8 +37,11 @@ public class ServerWorker implements Runnable {
 
                     case "login":
                         try {
-                            this.md.login(ops[1], ops[2]);
-                            out.println("ok");
+                            boolean isu = this.md.login(ops[1], ops[2]);
+                            if(isu)
+                                out.println("okuser");
+                            else
+                                out.println("okadmin");
                         } catch (PasswordIncorretaException p) {
                             out.println("wrongpassword");
                         } catch (UtilizadorInexistenteException u) {

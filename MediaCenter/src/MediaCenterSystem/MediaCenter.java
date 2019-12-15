@@ -320,11 +320,13 @@ public class MediaCenter {
         membros.put(username, c);
     }
 
-    public void login(String username, String password) throws UtilizadorInexistenteException, PasswordIncorretaException {
+    public boolean login(String username, String password) throws UtilizadorInexistenteException, PasswordIncorretaException {
         Cadastrado c = this.getUser(username);
 
         if (!c.checkPassword(password))
             throw new PasswordIncorretaException("A password indica está incorreta!");
+
+        return c instanceof Utilizador;
     }
 
     public String[] getCategorias() {

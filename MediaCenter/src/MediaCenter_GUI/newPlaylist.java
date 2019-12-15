@@ -8,6 +8,8 @@ import javax.swing.BorderFactory;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
@@ -28,16 +30,20 @@ public class newPlaylist extends JFrame
     JButton btConfirm;
     JTextField tfText1;
 
+    public void closeWindow() {
+        thenewPlaylist.dispose();
+    }
+
     public newPlaylist()
     {
-        super( "TITLE" );
-
+        super( "New Playlist" );
+        thenewPlaylist=this;
         pnnewPlaylist = new JPanel();
         GridBagLayout gbnewPlaylist = new GridBagLayout();
         GridBagConstraints gbcnewPlaylist = new GridBagConstraints();
         pnnewPlaylist.setLayout( gbnewPlaylist );
 
-        tfNome = new JTextField( );
+        tfNome = new JTextField( "Name");
         gbcnewPlaylist.gridx = 2;
         gbcnewPlaylist.gridy = 1;
         gbcnewPlaylist.gridwidth = 14;
@@ -50,7 +56,7 @@ public class newPlaylist extends JFrame
         gbnewPlaylist.setConstraints( tfNome, gbcnewPlaylist );
         pnnewPlaylist.add( tfNome );
 
-        taDescricao = new JTextArea(2,10);
+        taDescricao = new JTextArea("Description",2,10);
         gbcnewPlaylist.gridx = 2;
         gbcnewPlaylist.gridy = 5;
         gbcnewPlaylist.gridwidth = 14;
@@ -63,7 +69,7 @@ public class newPlaylist extends JFrame
         gbnewPlaylist.setConstraints( taDescricao, gbcnewPlaylist );
         pnnewPlaylist.add( taDescricao );
 
-        String []dataCombo = { "Chocolate", "Ice Cream", "Apple Pie" };
+        String []dataCombo = { "Random", "By Category", "By Artist", "Simple" };
         cmbCombo = new JComboBox( dataCombo );
         gbcnewPlaylist.gridx = 2;
         gbcnewPlaylist.gridy = 12;
@@ -115,12 +121,48 @@ public class newPlaylist extends JFrame
         gbcnewPlaylist.insets = new Insets( 15,15,15,15 );
         gbnewPlaylist.setConstraints( tfText1, gbcnewPlaylist );
         pnnewPlaylist.add( tfText1 );
-
+        tfText1.setEditable(false);
         setDefaultCloseOperation( EXIT_ON_CLOSE );
 
         setContentPane( pnnewPlaylist );
         pack();
         setLocationRelativeTo(null);
         setVisible( true );
+
+        btCancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                thenewPlaylist.closeWindow();
+            }
+        });
+
+        cmbCombo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JComboBox<String> combo = (JComboBox<String>) e.getSource();
+                int index = combo.getSelectedIndex();
+
+                switch(index) {
+                    case 1:
+                        tfText1.setEditable(true);
+                        tfText1.setText("Category");
+                        break;
+                    case 2:
+                        tfText1.setEditable(true);
+                        tfText1.setText("Artist");
+                        break;
+                    default:
+                        tfText1.setEditable(false);
+                        tfText1.setText("");
+                }
+            }
+        });
+
+        btConfirm.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                thenewPlaylist.closeWindow();
+            }
+        });
     }
 }
