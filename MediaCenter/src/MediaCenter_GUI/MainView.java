@@ -13,34 +13,29 @@ import java.io.IOException;
 public class MainView extends JFrame {
     static MainView theaaa;
 
-    JPanel pnMainview;
-    JSplitPane sppSplitPane1;
-
-    JPanel pnLeftPanel;
-    JLabel lbUsernameLabel;
-    JList lsCategorias;
-    JButton btLogoutButton;
-    JLabel lbCategoriasLabel;
-    JLabel lbPlaylistsLabel;
-    JList lsPlaylists;
-    JLabel lbAmigosLabel;
-    JList lsAmigos;
-
-
-    JButton btAmigosButton;
-    JButton btNewPlaylistButton;
-
-
-    JPanel pnRightPanel;
-    JTable tbContentTable;
-    JPanel pnPanelReproducao;
-    JButton btPrev;
-    JButton btPlay;
-    JButton btNext;
-    JButton btAddConteudo;
-    final JFileChooser fc;
-    String[][] dataContentTable;
-    JButton btShuffle;
+    private final JFileChooser fc;
+    private JPanel pnMainview;
+    private JSplitPane sppSplitPane1;
+    private JPanel pnLeftPanel;
+    private JLabel lbUsernameLabel;
+    private JList lsCategorias;
+    private JButton btLogoutButton;
+    private JLabel lbCategoriasLabel;
+    private JLabel lbPlaylistsLabel;
+    private JList lsPlaylists;
+    private JLabel lbAmigosLabel;
+    private JList lsAmigos;
+    private JButton btAmigosButton;
+    private JButton btNewPlaylistButton;
+    private JPanel pnRightPanel;
+    private JTable tbContentTable;
+    private JPanel pnPanelReproducao;
+    private JButton btPrev;
+    private JButton btPlay;
+    private JButton btNext;
+    private JButton btAddConteudo;
+    private String[][] dataContentTable;
+    private JButton btShuffle;
 
 
     JPanel pnHead;
@@ -282,7 +277,12 @@ public class MainView extends JFrame {
 
         download.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                MessageDialog md = new MessageDialog("HEY!","HELLO MOTHERFUCKER!");
+                int cont = Integer.parseInt(dataContentTable[tbContentTable.getSelectedRow()][5]);
+                if (mediacenter.checkPermissions(username,cont))
+                    mediacenter.download(cont);
+                else {
+                    MessageDialog md = new MessageDialog("Wait!","You don't have permissions for that!");
+                }
             }
         });
 

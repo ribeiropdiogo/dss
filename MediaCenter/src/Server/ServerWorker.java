@@ -67,8 +67,8 @@ public class ServerWorker implements Runnable {
                     case "download":
                             this.md.download(Integer.parseInt(ops[1]));
                             System.out.println("> Downloading file");
-                            //File ficheiro = new File(this.md.getPath(Integer.parseInt(ops[2])));
-                            File ficheiro = new File("src/Server/media/08 - All The Small Things.flac");
+                            File ficheiro = new File(this.md.getPath(Integer.parseInt(ops[1])));
+                            //File ficheiro = new File("src/Server/media/08 - All The Small Things.flac");
                             out.println("download "+ficheiro.length()+" "+ficheiro.getName());
                             out.flush();
 
