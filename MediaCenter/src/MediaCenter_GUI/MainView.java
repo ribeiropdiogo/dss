@@ -506,6 +506,13 @@ public class MainView extends JFrame {
             }
         });
 
+        btAmigosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FriendsMenu fm = new FriendsMenu(mediacenter,username);
+            }
+        });
+
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 mp.exit();
