@@ -254,7 +254,15 @@ public class MainView extends JFrame {
         JMenuItem download = new JMenuItem("Download");
         JMenuItem changecat = new JMenuItem("Change Category");
         JMenuItem delete = new JMenuItem("Delete");
-        popupmenu.add(download); popupmenu.add(changecat); popupmenu.add(delete);
+        JMenuItem addpl = new JMenuItem("Add to Playlist");
+        popupmenu.add(download); popupmenu.add(changecat); popupmenu.add(delete); popupmenu.add(addpl);
+
+        addpl.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new MessageDialog("HELLO PETROVSKI","I SEE YOU AND COMRADE DIMITR WANT TO ADD TO PLAYLIST CUKA");
+            }
+        });
 
         download.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
