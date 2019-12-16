@@ -70,15 +70,28 @@ public class RemoteMediaCenter implements MediaCenterInterface {
     }
 
     public void removerAmigo(String idConta, String idAmigo) {
-
+        out.println("removerAmigo " + idConta + " " + idAmigo);
+        out.flush();
     }
 
     public void respondePedido(String idConta, String idAmigo, boolean resp) {
-
+        out.println("respondePedido " + idConta + " " + idAmigo + " " + resp);
+        out.flush();
     }
 
     public void formConvite(String idConta, String idAmigo) throws UtilizadorInexistenteException, AmizadeException {
-
+        out.println("formConvite " + idConta + " " + idAmigo);
+        out.flush();
+        try {
+            String r = in.readLine();
+            if (r.equals("usernexists")) {
+                throw new UtilizadorInexistenteException("The user " + idAmigo + " doesn't exist!");
+            } else if (r.equals("existrequest")) {
+                throw new AmizadeException("The user " + idAmigo + " is already your friend, or has been invited!");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void removeContent(String idConta, int idContent) {

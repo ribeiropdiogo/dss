@@ -66,7 +66,7 @@ public class Utilizador extends Cadastrado {
 
 
     public void removePedido(String idAmigo) {
-        amigos.remove(idAmigo);
+        pedidos.remove(idAmigo);
     }
 
     public void addContent(int cid) {
@@ -97,6 +97,10 @@ public class Utilizador extends Cadastrado {
 
     public void removeAmigo(String idAmigo) {
         this.amigos.remove(idAmigo);
+    }
+
+    public void addAmigo(String amigo) {
+        amigos.add(amigo);
     }
 
     public void respondePedido(String idAmigo, boolean resp) {

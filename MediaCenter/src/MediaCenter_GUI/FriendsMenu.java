@@ -14,7 +14,10 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JList;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 public class FriendsMenu extends JFrame{
 
@@ -38,7 +41,7 @@ public class FriendsMenu extends JFrame{
         GridBagConstraints gbcMenuAmigos = new GridBagConstraints();
         pnMenuAmigos.setLayout( gbMenuAmigos );
 
-        String []dataCombo0 = { "Chocolate", "Ice Cream", "Apple Pie" };
+        String []dataCombo0 = mediacenter.getPedidos(username);
         cmbCombo0 = new JList( dataCombo0 );
         gbcMenuAmigos.gridx = 1;
         gbcMenuAmigos.gridy = 1;
@@ -78,7 +81,7 @@ public class FriendsMenu extends JFrame{
         gbMenuAmigos.setConstraints( btRefuseButton, gbcMenuAmigos );
         pnMenuAmigos.add( btRefuseButton );
 
-        String []dataList0 = { "Chocolate", "Ice Cream", "Apple Pie" };
+        String []dataList0 = mediacenter.getAmigos(username);
         lsList0 = new JList( dataList0 );
         lsList0.setSelectionBackground( new Color( 212,212,212 ) );
         lsList0.setSelectionForeground( new Color( 0,0,0 ) );
@@ -138,5 +141,82 @@ public class FriendsMenu extends JFrame{
         setLocationRelativeTo(null);
         setSize(400, 200);
         setVisible( true );
+
+        btAcceptButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int index = cmbCombo0.getSelectedIndex();
+
+                if(index == -1)
+                    new MessageDialog("Error", "You must select one friend request!");
+                else {
+                    String user = (String)cmbCombo0.getSelectedValue();
+
+                    mediacenter.respondePedido(username, user, true);
+
+                    new MessageDialog("Accepted", user + "'s friend request has been accepted!");
+
+                    //((DefaultTableModel) (cmbCombo0.getModel())).removeRow(index);
+
+                    //((DefaultTableModel) (cmbCombo0.getModel())).addRow(new Object[]{user});
+                }
+            }
+        });
+
+        btRefuseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int index = cmbCombo0.getSelectedIndex();
+
+                if(index == -1)
+                    new MessageDialog("Error", "You must select one friend request!");
+                else {
+                    String user = (String)cmbCombo0.getSelectedValue();
+
+                    mediacenter.respondePedido(username, user, false);
+
+                    new MessageDialog("Remove", user + "'s friend request has been declined!");
+
+                    //((DefaultTableModel)cmbCombo0.getModel()).removeRow(index);
+                }
+            }
+        });
+
+        btSendButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String dest = tfText0.getText();
+
+                if(dest.isBlank())
+                    new MessageDialog("Error", "You indicate whom you want to add");
+                else {
+                    try {
+                        mediacenter.formConvite(username, dest);
+                        new MessageDialog("Sucess", "A friend request has been made!");
+                    } catch (Exception exc) {
+                        new MessageDialog("Error", exc.getMessage());
+                    }
+                }
+            }
+        });
+
+        btRemoveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int index = lsList0.getSelectedIndex();
+
+                if(index == -1)
+                    new MessageDialog("Error", "You must select one friend!");
+                else {
+                    String user = (String)lsList0.getSelectedValue();
+
+                    mediacenter.removerAmigo(username, user);
+
+                    new MessageDialog("Remove", user + "'s friendship with you has been terminated!");
+
+                    //((DefaultTableModel)cmbCombo0.getModel()).removeRow(index);
+                }
+            }
+        });
     }
 }

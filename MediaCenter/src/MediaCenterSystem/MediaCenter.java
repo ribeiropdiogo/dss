@@ -85,6 +85,8 @@ public class MediaCenter {
         conta.respondePedido(idAmigo, resp);
 
         amigo.removePedido(idAmigo);
+        if(resp)
+            amigo.addAmigo(idConta);
 
         membros.put(idConta, conta);
         membros.put(idAmigo, amigo);

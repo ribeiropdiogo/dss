@@ -1,12 +1,10 @@
 package Server;
 
-import Exceptions.EmailException;
-import Exceptions.PasswordIncorretaException;
-import Exceptions.UtilizadorInexistenteException;
-import Exceptions.UtilizadorRepetidoException;
+import Exceptions.*;
 import MediaCenterSystem.MediaCenter;
 
 import java.io.*;
+import java.lang.SecurityException;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.Set;
@@ -145,6 +143,24 @@ public class ServerWorker implements Runnable {
                             } finally {
                                 out.flush();
                             }
+                        }
+                        break;
+                    case "removerAmigo":
+                        this.md.removerAmigo(ops[1], ops[2]);
+                        break;
+                    case "respondePedido":
+                        this.md.respondePedido(ops[1], ops[2], Boolean.parseBoolean(ops[3]));
+                        break;
+                    case "formConvite":
+                        try {
+                            this.md.formConvite(ops[1],ops[2]);
+                            out.println("allok");
+                        } catch(UtilizadorInexistenteException e) {
+                            out.println("usernexists");
+                        } catch (AmizadeException e) {
+                            out.println("existrequest");
+                        } finally {
+                            out.flush();
                         }
                         break;
                     case "permission":
