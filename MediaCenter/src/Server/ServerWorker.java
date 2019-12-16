@@ -224,12 +224,14 @@ public class ServerWorker implements Runnable {
                             this.pushMatrix(out, a, a.length, 6);
                         }
                         break;
+
                     case "getListUsers":
                         System.out.println("> List all users");
                         a = this.md.getAccounts();
                         out.println(a.length);
                         this.pushMatrix(out, a, a.length, 3);
                         break;
+
                     case "getListaMusicasPlay":
                         String[] d = data.split("_");
                         if(d.length == 2) {
@@ -239,6 +241,7 @@ public class ServerWorker implements Runnable {
                             this.pushMatrix(out, a, a.length, 6);
                         }
                         break;
+
                     case "getBasicPlCont":
                         String[] ee = data.split("_");
                         if(ee.length == 2) {
@@ -248,6 +251,7 @@ public class ServerWorker implements Runnable {
                             this.pushMatrix(out, a, a.length, 4);
                         }
                         break;
+
                     case "getAllAlbuns":
                         System.out.println("> List all albuns");
                         a = this.md.getAllAlbuns();
@@ -256,6 +260,21 @@ public class ServerWorker implements Runnable {
                         break;
                     default:
                         System.out.println("> Unrecognized operation");
+                        break;
+
+                    case "addCategoria":
+                        System.out.println("> Adding new category to file");
+                        md.adicionarCategoria(Integer.parseInt(ops[1]),ops[2]);
+                        break;
+
+                    case "removeCategoria":
+                        System.out.println("> Removing category from file");
+                        md.removerCategoria(Integer.parseInt(ops[1]),ops[2]);
+                        break;
+
+                    case "alterarCategoria":
+                        System.out.println("> Changing category from file");
+                        md.alterarCategoria(Integer.parseInt(ops[1]),ops[2],ops[3]);
                         break;
                 }
                 data = in.readLine();

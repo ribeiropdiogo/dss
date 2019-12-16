@@ -134,15 +134,21 @@ public class RemoteMediaCenter implements MediaCenterInterface {
     }
 
     public void adicionarCategoria(long idContent, String idCat) {
-
+        out.println("addCategoria "+idContent+" "+idCat);
+        out.flush();
+        System.out.println("> Add category "+idCat+" to content "+idContent);
     }
 
     public void alterarCategoria(long idContent, String oldCat, String newCat) {
-
+        out.println("alterarCategoria "+idContent+" "+oldCat+" "+newCat);
+        out.flush();
+        System.out.println("> Updating category from content "+idContent);
     }
 
     public void removerCategoria(long idContent, String idCat) {
-
+        out.println("removeCategoria "+idContent+" "+idCat);
+        out.flush();
+        System.out.println("> Remove category "+idCat+" from content "+idContent);
     }
 
     public String getPath(long idContent) {
