@@ -13,27 +13,10 @@ import java.io.IOException;
 public class MainView extends JFrame {
     static MainView theaaa;
 
-    private final JFileChooser fc;
     private JPanel pnMainview;
-    private JSplitPane sppSplitPane1;
-    private JPanel pnLeftPanel;
-    private JLabel lbUsernameLabel;
     private JList lsCategorias;
-    private JButton btLogoutButton;
-    private JLabel lbCategoriasLabel;
-    private JLabel lbPlaylistsLabel;
-    private JList lsPlaylists;
-    private JLabel lbAmigosLabel;
-    private JList lsAmigos;
-    private JButton btAmigosButton;
-    private JButton btNewPlaylistButton;
-    private JPanel pnRightPanel;
     private JTable tbContentTable;
-    private JPanel pnPanelReproducao;
-    private JButton btPrev;
     private JButton btPlay;
-    private JButton btNext;
-    private JButton btAddConteudo;
     private String[][] dataContentTable;
     private JButton btShuffle;
 
@@ -58,19 +41,19 @@ public class MainView extends JFrame {
         pnMainview.setLayout(gbMainview);
 
         //Divisória do Painel
-        sppSplitPane1 = new JSplitPane();
+        JSplitPane sppSplitPane1 = new JSplitPane();
         sppSplitPane1.setDividerLocation(138);
         sppSplitPane1.setForeground(new Color(0, 0, 0));
         sppSplitPane1.setLastDividerLocation(211);
 
         //Painel da Esquerda
 
-        pnLeftPanel = new JPanel();
+        JPanel pnLeftPanel = new JPanel();
         GridBagLayout gbLeftPanel = new GridBagLayout();
         GridBagConstraints gbcLeftPanel = new GridBagConstraints();
         pnLeftPanel.setLayout(gbLeftPanel);
 
-        lbUsernameLabel = new JLabel(username);
+        JLabel lbUsernameLabel = new JLabel(username);
         gbcLeftPanel.gridx = 0;
         gbcLeftPanel.gridy = 0;
         gbcLeftPanel.gridwidth = 1;
@@ -84,7 +67,7 @@ public class MainView extends JFrame {
         pnLeftPanel.add(lbUsernameLabel);
 
 
-        btLogoutButton = new JButton("Logout");
+        JButton btLogoutButton = new JButton("Logout");
         gbcLeftPanel.gridx = 0;
         gbcLeftPanel.gridy = 1;
         gbcLeftPanel.gridwidth = 1;
@@ -97,7 +80,7 @@ public class MainView extends JFrame {
         pnLeftPanel.add(btLogoutButton);
 
         // Secção das Categorias
-        lbCategoriasLabel = new JLabel("Categorias");
+        JLabel lbCategoriasLabel = new JLabel("Categorias");
         gbcLeftPanel.gridx = 0;
         gbcLeftPanel.gridy = 2;
         gbcLeftPanel.gridwidth = 1;
@@ -132,7 +115,7 @@ public class MainView extends JFrame {
 
 
         // Secção das Playlists
-        lbPlaylistsLabel = new JLabel("Playlists");
+        JLabel lbPlaylistsLabel = new JLabel("Playlists");
         gbcLeftPanel.gridx = 0;
         gbcLeftPanel.gridy = 4;
         gbcLeftPanel.gridwidth = 1;
@@ -147,7 +130,7 @@ public class MainView extends JFrame {
         sppSplitPane1.setLeftComponent(pnLeftPanel);
 
         String[] dataPlaylists = mediacenter.getCategorias();
-        lsPlaylists = new JList(dataPlaylists);
+        JList lsPlaylists = new JList(dataPlaylists);
         lsPlaylists.setName("Playlists");
         lsPlaylists.setBackground(new Color(238, 238, 238));
         lsPlaylists.setSelectionBackground(new Color(212, 212, 212));
@@ -167,7 +150,7 @@ public class MainView extends JFrame {
 
 
         // Secção dos Amigos
-        lbAmigosLabel = new JLabel("Amigos");
+        JLabel lbAmigosLabel = new JLabel("Amigos");
         gbcLeftPanel.gridx = 0;
         gbcLeftPanel.gridy = 6;
         gbcLeftPanel.gridwidth = 1;
@@ -182,7 +165,7 @@ public class MainView extends JFrame {
         sppSplitPane1.setLeftComponent(pnLeftPanel);
 
         String[] dataAmigos = {"Chuck", "Arnold", "Kevinho", "DJ Kaled", "Poney", "A", "Tua", "Prima"};
-        lsAmigos = new JList(dataAmigos);
+        JList lsAmigos = new JList(dataAmigos);
         lsAmigos.setName("Amigos");
         lsAmigos.setBackground(new Color(238, 238, 238));
         lsAmigos.setFocusable(false);
@@ -204,7 +187,7 @@ public class MainView extends JFrame {
         pnLeftPanel.add(scpAmigos);
 
 
-        btAmigosButton = new JButton("Menu Amigos");
+        JButton btAmigosButton = new JButton("Menu Amigos");
         gbcLeftPanel.gridx = 0;
         gbcLeftPanel.gridy = 8;
         gbcLeftPanel.gridwidth = 1;
@@ -216,7 +199,7 @@ public class MainView extends JFrame {
         gbLeftPanel.setConstraints(btAmigosButton, gbcLeftPanel);
         pnLeftPanel.add(btAmigosButton);
 
-        btNewPlaylistButton = new JButton("Nova Playlist");
+        JButton btNewPlaylistButton = new JButton("Nova Playlist");
         gbcLeftPanel.gridx = 0;
         gbcLeftPanel.gridy = 9;
         gbcLeftPanel.gridwidth = 1;
@@ -231,7 +214,7 @@ public class MainView extends JFrame {
 
 
         //Painel da Direita
-        pnRightPanel = new JPanel();
+        JPanel pnRightPanel = new JPanel();
         GridBagLayout gbRightPanel = new GridBagLayout();
         GridBagConstraints gbcRightPanel = new GridBagConstraints();
         pnRightPanel.setLayout(gbRightPanel);
@@ -240,9 +223,7 @@ public class MainView extends JFrame {
         String[] colsContentTable = new String[]{"Name", "Author", "Duration", "Options", ""};
         DefaultTableModel model = new DefaultTableModel(dataContentTable, colsContentTable){
             public boolean isCellEditable(int row, int column){
-                if (column <= 3)
-                    return false;
-                else return true;
+                return column > 3;
             }
         };
         tbContentTable = new JTable(dataContentTable, colsContentTable);
@@ -327,7 +308,7 @@ public class MainView extends JFrame {
         //-----------------------------
 
         // Painel de Reprodução
-        pnPanelReproducao = new JPanel();
+        JPanel pnPanelReproducao = new JPanel();
         GridBagLayout gbPanelReproducao = new GridBagLayout();
         GridBagConstraints gbcPanelReproducao = new GridBagConstraints();
         pnPanelReproducao.setLayout(gbPanelReproducao);
@@ -343,7 +324,7 @@ public class MainView extends JFrame {
         pnRightPanel.add(pnPanelReproducao);
 
         //Botões do Painel de Reprodução
-        btNext = new JButton("next");
+        JButton btNext = new JButton("next");
         gbcPanelReproducao.gridx = 3;
         gbcPanelReproducao.gridy = 0;
         gbcPanelReproducao.gridwidth = 1;
@@ -367,7 +348,7 @@ public class MainView extends JFrame {
         gbPanelReproducao.setConstraints(btPlay, gbcPanelReproducao);
         pnPanelReproducao.add(btPlay);
 
-        btPrev = new JButton("prev");
+        JButton btPrev = new JButton("prev");
         gbcPanelReproducao.gridx = 1;
         gbcPanelReproducao.gridy = 0;
         gbcPanelReproducao.gridwidth = 1;
@@ -379,7 +360,7 @@ public class MainView extends JFrame {
         gbPanelReproducao.setConstraints(btPrev, gbcPanelReproducao);
         pnPanelReproducao.add(btPrev);
 
-        btAddConteudo = new JButton("add");
+        JButton btAddConteudo = new JButton("add");
         gbcPanelReproducao.gridx = 5;
         gbcPanelReproducao.gridy = 0;
         gbcPanelReproducao.gridwidth = 1;
@@ -419,7 +400,7 @@ public class MainView extends JFrame {
 
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        fc = new JFileChooser();
+        JFileChooser fc = new JFileChooser();
 
         setContentPane(pnMainview);
         pack();
@@ -447,6 +428,15 @@ public class MainView extends JFrame {
                 }
             }
         };
+
+        lsPlaylists.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                JList list = (JList)evt.getSource();
+                if (evt.getClickCount() == 2) {
+                    EditPlaylist ep = new EditPlaylist(mediacenter,username);
+                }
+            }
+        });
 
         lsCategorias.addMouseListener(mouseListener);
 
