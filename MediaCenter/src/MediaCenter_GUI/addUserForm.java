@@ -1,6 +1,7 @@
 package MediaCenter_GUI;
 
 import Client.MediaCenterInterface;
+import Exceptions.UtilizadorRepetidoException;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -10,15 +11,23 @@ import javax.swing.BorderFactory;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class addUserForm extends JFrame {
 
-    public addUserForm(MediaCenterInterface mediacenter)
+    public void closeFrame() {
+        super.dispose();
+    }
+
+    public addUserForm(MediaCenterInterface mediacenter, DefaultTableModel tm)
     {
         super( "Add User" );
 
@@ -67,6 +76,7 @@ public class addUserForm extends JFrame {
         gbPanel0.setConstraints(lbPasswordLabel, gbcPanel0 );
         pnPanel0.add(lbPasswordLabel);
 
+        // user
         JTextField tfText0 = new JTextField();
         gbcPanel0.gridx = 8;
         gbcPanel0.gridy = 1;
@@ -80,6 +90,7 @@ public class addUserForm extends JFrame {
         gbPanel0.setConstraints(tfText0, gbcPanel0 );
         pnPanel0.add(tfText0);
 
+        // email
         JTextField tfText1 = new JTextField();
         gbcPanel0.gridx = 8;
         gbcPanel0.gridy = 4;
@@ -93,6 +104,7 @@ public class addUserForm extends JFrame {
         gbPanel0.setConstraints(tfText1, gbcPanel0 );
         pnPanel0.add(tfText1);
 
+        // pass
         JTextField tfText2 = new JTextField();
         gbcPanel0.gridx = 8;
         gbcPanel0.gridy = 7;
@@ -151,6 +163,34 @@ public class addUserForm extends JFrame {
         setLocationRelativeTo(null);
         setSize(250, 200);
         setVisible( true );
+
+
+        btBut1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String type = "utilizador";
+                String user = tfText0.getText();
+                String email = tfText1.getText();
+                String pass = tfText2.getText();
+
+                if(!user.isBlank() && !email.isBlank() && !pass.isBlank()) {
+                    try {
+                        if(rbRdBut1.isSelected())
+                            type = "admin";
+
+                        mediacenter.newConta(type, user, email, pass);
+
+                        tm.addRow(new Object[]{user, email, "Remove"});
+
+                        closeFrame();
+                    } catch (Exception exc) {
+                        new MessageDialog("Error", exc.getMessage());
+                    }
+                }
+                else
+                    new MessageDialog("Error", "You must fill in all the fields!");
+            }
+        });
     }
 
 }

@@ -163,7 +163,7 @@ public class AdminViewForm extends JFrame {
 
         btNext.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                addUserForm auf = new addUserForm(mediacenter);
+                addUserForm auf = new addUserForm(mediacenter, (DefaultTableModel)tbContentTable.getModel());
             }
         });
 

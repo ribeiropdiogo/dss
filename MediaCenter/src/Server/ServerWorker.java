@@ -3,6 +3,7 @@ package Server;
 import Exceptions.EmailException;
 import Exceptions.PasswordIncorretaException;
 import Exceptions.UtilizadorInexistenteException;
+import Exceptions.UtilizadorRepetidoException;
 import MediaCenterSystem.MediaCenter;
 
 import java.io.*;
@@ -134,7 +135,18 @@ public class ServerWorker implements Runnable {
                             e.printStackTrace();
                         }
                         break;
-
+                    case "newConta":
+                        if(ops.length == 5) {
+                            try {
+                                this.md.newConta(ops[1],ops[2],ops[3],ops[4]);
+                                out.println("allok");
+                            } catch (UtilizadorRepetidoException ex) {
+                                out.println("userrep");
+                            } finally {
+                                out.flush();
+                            }
+                        }
+                        break;
                     case "permission":
                         System.out.println("> Checking permissions of "+ops[2]+" for "+ops[1]);
                         boolean r = this.md.checkPermissions(ops[1],Integer.parseInt(ops[2]));

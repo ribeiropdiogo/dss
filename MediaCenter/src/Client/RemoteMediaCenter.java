@@ -327,7 +327,16 @@ public class RemoteMediaCenter implements MediaCenterInterface {
     }
 
     public void newConta(String tipo, String idConta, String email, String password) throws UtilizadorRepetidoException {
-
+        out.println("newConta " + tipo + " " + idConta + " " + email + " " + password);
+        out.flush();
+        MessageDialog md;
+        try {
+            String r = in.readLine();
+            if(r.equals("userrep"))
+                throw new UtilizadorRepetidoException("There is already a user with that username!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void removeAccount(String idConta) {
