@@ -123,7 +123,6 @@ public class Utilizador extends Cadastrado {
     }
 
     public boolean checkOwnership(int idContent) {
-
         return (this.contents.contains(idContent));
         //EXCEPITON AQUI? OU NO MEDIA CENTER?
     }

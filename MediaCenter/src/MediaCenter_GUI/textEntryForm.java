@@ -25,6 +25,7 @@ public class textEntryForm extends JFrame
 
     JPanel pnPanel1;
     JButton btButExecute;
+    JButton btButCancel;
     JTextField tfTextEntry;
 
     public void closeWindow() {
@@ -48,7 +49,7 @@ public class textEntryForm extends JFrame
         btButExecute = new JButton( buttonName );
         gbcPanel1.gridx = 8;
         gbcPanel1.gridy = 7;
-        gbcPanel1.gridwidth = 8;
+        gbcPanel1.gridwidth = 4;
         gbcPanel1.gridheight = 3;
         gbcPanel1.fill = GridBagConstraints.BOTH;
         gbcPanel1.weightx = 1;
@@ -57,6 +58,19 @@ public class textEntryForm extends JFrame
         gbcPanel1.insets = new Insets( 5,10,5,10 );
         gbPanel1.setConstraints( btButExecute, gbcPanel1 );
         pnPanel1.add( btButExecute );
+
+        btButCancel = new JButton( "Cancel" );
+        gbcPanel1.gridx = 3;
+        gbcPanel1.gridy = 7;
+        gbcPanel1.gridwidth = 4;
+        gbcPanel1.gridheight = 3;
+        gbcPanel1.fill = GridBagConstraints.BOTH;
+        gbcPanel1.weightx = 1;
+        gbcPanel1.weighty = 0;
+        gbcPanel1.anchor = GridBagConstraints.CENTER;
+        gbcPanel1.insets = new Insets( 5,10,5,10 );
+        gbPanel1.setConstraints( btButCancel, gbcPanel1 );
+        pnPanel1.add( btButCancel );
 
         tfTextEntry = new JTextField(baseString);
         gbcPanel1.gridx = 2;
@@ -89,6 +103,13 @@ public class textEntryForm extends JFrame
                     ci.update(mi, dlm, idConteudo, idCat, tfTextEntry.getText());
                     thekjlkj.closeWindow();
                 }
+            }
+        });
+
+        btButCancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                closeWindow();
             }
         });
 

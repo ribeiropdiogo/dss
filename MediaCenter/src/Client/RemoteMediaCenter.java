@@ -190,7 +190,7 @@ public class RemoteMediaCenter implements MediaCenterInterface {
         out.flush();
 
         try {
-            if (in.readLine().equals("true"));
+            if (in.readLine().equals("true"))
                 return true;
         } catch (IOException e){
             e.printStackTrace();

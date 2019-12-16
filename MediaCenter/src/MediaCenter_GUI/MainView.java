@@ -259,10 +259,11 @@ public class MainView extends JFrame {
         download.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 int cont = Integer.parseInt(dataContentTable[tbContentTable.getSelectedRow()][5]);
-                if (mediacenter.checkPermissions(username,cont))
+                if (mediacenter.checkPermissions(username,cont)) {
                     mediacenter.download(cont);
-                else {
-                    MessageDialog md = new MessageDialog("Wait!","You don't have permissions for that!");
+                    new MessageDialog("Success", "The file has been downloaded.");
+                } else {
+                    new MessageDialog("Wait!","You don't have permissions for that!");
                 }
             }
         });
