@@ -11,11 +11,12 @@ import java.awt.Color;
 public class EditPlaylist extends JFrame{
 
     JPanel pnPanel0;
-    JLabel lbLabel0;
-    JList lsList0;
-    JButton btBut0;
-    JButton btBut1;
-    JButton btBut2;
+    JLabel lbPlaylistName;
+    JTextArea taDescription;
+    JTable tbTable0;
+    JButton btConfirmButton;
+    JButton btAddButton;
+    JButton btRemoveButton;
     public EditPlaylist(MediaCenterInterface mediacenter, String username)
     {
         super( "Edit Playlist" );
@@ -25,78 +26,94 @@ public class EditPlaylist extends JFrame{
         GridBagConstraints gbcPanel0 = new GridBagConstraints();
         pnPanel0.setLayout( gbPanel0 );
 
-        lbLabel0 = new JLabel( "Categorias"  );
+        lbPlaylistName = new JLabel( "Nome da Playlist"  );
         gbcPanel0.gridx = 1;
         gbcPanel0.gridy = 1;
-        gbcPanel0.gridwidth = 11;
-        gbcPanel0.gridheight = 2;
+        gbcPanel0.gridwidth = 13;
+        gbcPanel0.gridheight = 3;
         gbcPanel0.fill = GridBagConstraints.BOTH;
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbcPanel0.insets = new Insets( 0,15,0,0 );
-        gbPanel0.setConstraints( lbLabel0, gbcPanel0 );
-        pnPanel0.add( lbLabel0 );
+        gbcPanel0.anchor = GridBagConstraints.WEST;
+        gbcPanel0.insets = new Insets( 0,15,0,15 );
+        gbPanel0.setConstraints( lbPlaylistName, gbcPanel0 );
+        pnPanel0.add( lbPlaylistName );
 
-        String []dataList0 = { "Chocolate", "Ice Cream", "Apple Pie" };
-        lsList0 = new JList( dataList0 );
-        lsList0.setSelectionBackground( new Color( 212,212,212 ) );
-        lsList0.setSelectionForeground( new Color( 0,0,0 ) );
+        taDescription = new JTextArea(2,10);
         gbcPanel0.gridx = 1;
-        gbcPanel0.gridy = 4;
-        gbcPanel0.gridwidth = 11;
-        gbcPanel0.gridheight = 7;
+        gbcPanel0.gridy = 5;
+        gbcPanel0.gridwidth = 19;
+        gbcPanel0.gridheight = 5;
+        gbcPanel0.fill = GridBagConstraints.BOTH;
+        gbcPanel0.weightx = 1;
+        gbcPanel0.weighty = 1;
+        gbcPanel0.anchor = GridBagConstraints.CENTER;
+        gbcPanel0.insets = new Insets( 0,15,15,15 );
+        gbPanel0.setConstraints( taDescription, gbcPanel0 );
+        pnPanel0.add( taDescription );
+
+        String [][]dataTable0 = new String[][] { new String[] {"11", "21"},
+                new String[] {"12", "22"},
+                new String[] {"13", "23"} };
+        String []colsTable0 = new String[] { "", "" };
+        tbTable0 = new JTable( dataTable0, colsTable0 );
+        tbTable0.setSelectionBackground( new Color( 212,212,212 ) );
+        tbTable0.setSelectionForeground( new Color( 0,0,0 ) );
+        gbcPanel0.gridx = 1;
+        gbcPanel0.gridy = 11;
+        gbcPanel0.gridwidth = 13;
+        gbcPanel0.gridheight = 10;
         gbcPanel0.fill = GridBagConstraints.BOTH;
         gbcPanel0.weightx = 1;
         gbcPanel0.weighty = 1;
         gbcPanel0.anchor = GridBagConstraints.NORTH;
         gbcPanel0.insets = new Insets( 0,15,15,15 );
-        gbPanel0.setConstraints( lsList0, gbcPanel0 );
-        pnPanel0.add( lsList0 );
+        gbPanel0.setConstraints( tbTable0, gbcPanel0 );
+        pnPanel0.add( tbTable0 );
 
-        btBut0 = new JButton( "Alterar"  );
-        gbcPanel0.gridx = 14;
-        gbcPanel0.gridy = 6;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
+        btConfirmButton = new JButton( "Confirm"  );
+        gbcPanel0.gridx = 16;
+        gbcPanel0.gridy = 18;
+        gbcPanel0.gridwidth = 4;
+        gbcPanel0.gridheight = 3;
+        gbcPanel0.fill = GridBagConstraints.NONE;
+        gbcPanel0.weightx = 0;
+        gbcPanel0.weighty = 0;
+        gbcPanel0.anchor = GridBagConstraints.SOUTH;
+        gbcPanel0.insets = new Insets( 0,0,15,0 );
+        gbPanel0.setConstraints( btConfirmButton, gbcPanel0 );
+        pnPanel0.add( btConfirmButton );
+
+        btAddButton = new JButton( "Adicionar Conteudo"  );
+        gbcPanel0.gridx = 16;
+        gbcPanel0.gridy = 11;
+        gbcPanel0.gridwidth = 4;
+        gbcPanel0.gridheight = 2;
+        gbcPanel0.fill = GridBagConstraints.NONE;
         gbcPanel0.weightx = 0;
         gbcPanel0.weighty = 0;
         gbcPanel0.anchor = GridBagConstraints.CENTER;
         gbcPanel0.insets = new Insets( 0,0,0,15 );
-        gbPanel0.setConstraints( btBut0, gbcPanel0 );
-        pnPanel0.add( btBut0 );
+        gbPanel0.setConstraints( btAddButton, gbcPanel0 );
+        pnPanel0.add( btAddButton );
 
-        btBut1 = new JButton( "Adicionar"  );
-        gbcPanel0.gridx = 14;
-        gbcPanel0.gridy = 7;
-        gbcPanel0.gridwidth = 1;
+        btRemoveButton = new JButton( "Remover Conteudo"  );
+        gbcPanel0.gridx = 16;
+        gbcPanel0.gridy = 14;
+        gbcPanel0.gridwidth = 4;
         gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
+        gbcPanel0.fill = GridBagConstraints.NONE;
         gbcPanel0.weightx = 0;
         gbcPanel0.weighty = 0;
         gbcPanel0.anchor = GridBagConstraints.CENTER;
         gbcPanel0.insets = new Insets( 0,0,0,15 );
-        gbPanel0.setConstraints( btBut1, gbcPanel0 );
-        pnPanel0.add( btBut1 );
-
-        btBut2 = new JButton( "Remover"  );
-        gbcPanel0.gridx = 14;
-        gbcPanel0.gridy = 8;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 0;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.CENTER;
-        gbcPanel0.insets = new Insets( 0,0,0,15 );
-        gbPanel0.setConstraints( btBut2, gbcPanel0 );
-        pnPanel0.add( btBut2 );
+        gbPanel0.setConstraints( btRemoveButton, gbcPanel0 );
+        pnPanel0.add( btRemoveButton );
 
         setContentPane( pnPanel0 );
         pack();
         setLocationRelativeTo(null);
-        setSize(300, 220);
+        setSize(350, 250);
         setResizable(false);
         setVisible( true );
     }
