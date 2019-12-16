@@ -136,9 +136,7 @@ public class GuestView extends JFrame {
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames){
             public boolean isCellEditable(int row, int column){
-                if (column <= 3)
-                    return false;
-                else return true;
+                return column >= 3;
             }
         };
         tbContentTable = new JTable(data, columnNames);

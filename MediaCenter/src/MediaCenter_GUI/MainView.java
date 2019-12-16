@@ -223,7 +223,7 @@ public class MainView extends JFrame {
         String[] colsContentTable = new String[]{"Name", "Author", "Duration", "Options", ""};
         DefaultTableModel model = new DefaultTableModel(dataContentTable, colsContentTable){
             public boolean isCellEditable(int row, int column){
-                return column > 3;
+                return column >= 3;
             }
         };
         tbContentTable = new JTable(dataContentTable, colsContentTable);
@@ -451,7 +451,7 @@ public class MainView extends JFrame {
 
         btLogoutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mp.pause();
+                mp.exit();
                 mediacenter.logout();
                 CloseFrame();
             }

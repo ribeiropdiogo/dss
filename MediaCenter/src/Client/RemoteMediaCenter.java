@@ -322,7 +322,8 @@ public class RemoteMediaCenter implements MediaCenterInterface {
     }
 
     public void removeAccount(String idConta) {
-
+        out.println("removeAccount " + idConta);
+        out.flush();
     }
 
     public void forgottenPassword(String username, String email) throws UtilizadorInexistenteException, SecurityException, EmailException {

@@ -59,7 +59,7 @@ public class PlaylistDAO {
     }
 
     public List<Playlist> getAllWith(int idContent) {
-        Set<Integer> plays = DBAcess.getIds(myt, "Playlist_id", "Conteudo_id='" + idContent + "'");
+        Set<Integer> plays = DBAcess.getIds(pConts, "Playlist_id", "Conteudo_id='" + idContent + "'");
         List<Playlist> ls = new ArrayList<>();
 
         plays.forEach(x -> ls.add(this.get(x)));

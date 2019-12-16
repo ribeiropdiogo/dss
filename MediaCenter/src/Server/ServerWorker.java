@@ -35,6 +35,10 @@ public class ServerWorker implements Runnable {
                         this.md.loginGuest();
                         System.out.println("> Login as Guest");
                         break;
+                    case "removeAccount":
+                        this.md.removeAccount(ops[1]);
+                        System.out.println("> Account " + ops[1] + " removed");
+                        break;
                     case "forgotPass":
                         try {
                             this.md.forgottenPassword(ops[1],ops[2]);

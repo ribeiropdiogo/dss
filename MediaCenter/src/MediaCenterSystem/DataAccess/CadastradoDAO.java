@@ -129,7 +129,7 @@ public class CadastradoDAO {
             DBAcess.removeEntry(mytA, id);
         } else {
             // e um utilizador
-            this.removeUserEntries(id);
+            this.removeUserEntries(idConta);
             DBAcess.removeEntry(mytU, id);
         }
 

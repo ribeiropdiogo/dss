@@ -58,9 +58,7 @@ public class AdminViewForm extends JFrame {
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames){
             public boolean isCellEditable(int row, int column){
-                if (column <= 2)
-                    return false;
-                else return true;
+                return column >= 2;
             }
         };
         tbContentTable = new JTable(data, columnNames);
@@ -71,15 +69,18 @@ public class AdminViewForm extends JFrame {
 
         final JPopupMenu uselesspopupmenu = new JPopupMenu("Useless");
 
-        Action addToQueue = new AbstractAction()
+        Action removeElem = new AbstractAction()
         {
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("> Remove user " +  data[tbContentTable.getSelectedRow()][0]);
+                int row = tbContentTable.getSelectedRow();
+                System.out.println("> Remove user " +  tbContentTable.getValueAt(row,0));
+                mediacenter.removeAccount((String)tbContentTable.getValueAt(row,0));
+                ((DefaultTableModel)tbContentTable.getModel()).removeRow(row);
             }
         };
 
-        ButtonColumn buttonColumnDown = new ButtonColumn(tbContentTable, addToQueue, 2, uselesspopupmenu);
+        ButtonColumn buttonColumnDown = new ButtonColumn(tbContentTable, removeElem, 2, uselesspopupmenu);
         buttonColumnDown.setMnemonic(KeyEvent.VK_D);
 
         tbContentTable.setAutoCreateRowSorter(true);
@@ -166,12 +167,12 @@ public class AdminViewForm extends JFrame {
             }
         });
 
-        /*this.addWindowListener(new WindowAdapter() {
+        this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 mp.exit();
                 super.windowClosing(e);
             }
-        });*/
+        });
     }
 
 
