@@ -22,6 +22,7 @@ public class ServerWorker implements Runnable {
     public void run() {
         System.out.println("> New client has established connection from " + socket.getRemoteSocketAddress());
         String[][] a;
+        String[] vec;
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -30,6 +31,7 @@ public class ServerWorker implements Runnable {
 
             while (data != null && !data.equals("exit")) {
                 String[] ops = data.split(" ");
+
                 switch (ops[0]) {
                     case "loginGuest":
                         this.md.loginGuest();
@@ -227,7 +229,24 @@ public class ServerWorker implements Runnable {
                             this.pushMatrix(out, a, a.length, 6);
                         }
                         break;
-
+                    case "getAmigosUser":
+                        System.out.print("> List friends of " + ops[1]);
+                        vec = this.md.getAmigos(ops[1]);
+                        out.println(vec.length);
+                        this.pushVec(out, vec);
+                        break;
+                    case "getPedidosUser":
+                        System.out.print("> List requests of " + ops[1]);
+                        vec = this.md.getPedidos(ops[1]);
+                        out.println(vec.length);
+                        this.pushVec(out, vec);
+                        break;
+                    case "getPlaylistUser":
+                        System.out.println("> List playslists of "+ ops[1]);
+                        a = this.md.getPlaylist(ops[1]);
+                        out.println(a.length);
+                        this.pushMatrix(out, a, a.length, 2);
+                        break;
                     case "getListUsers":
                         System.out.println("> List all users");
                         a = this.md.getAccounts();
@@ -298,5 +317,12 @@ public class ServerWorker implements Runnable {
                 out.println(a[i][j]);
                 out.flush();
             }
+    }
+
+    private void pushVec(PrintWriter out, String[] a) {
+        out.flush();
+        String[][] tmp = new String[1][];
+        tmp[0] = a;
+        this.pushMatrix(out, tmp, 1, a.length);
     }
 }

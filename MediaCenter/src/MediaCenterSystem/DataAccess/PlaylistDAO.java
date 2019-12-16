@@ -13,7 +13,7 @@ public class PlaylistDAO {
     private static final String myt = "Playlist";
 
     private static final String pConts = "Conteudo_in_Playlist";
-
+    private static final String pUsers = "Utilizador_has_Playlist";
     private static PlaylistDAO inst = null;
 
     private ConteudoDAO conteudos;
@@ -60,6 +60,15 @@ public class PlaylistDAO {
 
     public List<Playlist> getAllWith(int idContent) {
         Set<Integer> plays = DBAcess.getIds(pConts, "Playlist_id", "Conteudo_id='" + idContent + "'");
+        List<Playlist> ls = new ArrayList<>();
+
+        plays.forEach(x -> ls.add(this.get(x)));
+
+        return ls;
+    }
+
+    public List<Playlist> getAllFrom(String user) {
+        Set<Integer> plays = DBAcess.getIds(pUsers, "Playlist_id", "username='" + user + "'");
         List<Playlist> ls = new ArrayList<>();
 
         plays.forEach(x -> ls.add(this.get(x)));

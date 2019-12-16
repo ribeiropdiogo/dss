@@ -396,6 +396,24 @@ public class RemoteMediaCenter implements MediaCenterInterface {
         return this.getOp(2);
     }
 
+    public String[] getAmigos(String idConta) {
+        out.println("getAmigosUser " + idConta);
+        out.flush();
+        return getVector();
+    }
+
+    public String[] getPedidos(String idConta) {
+        out.println("getPedidosUser " +  idConta);
+        out.flush();
+        return getVector();
+    }
+
+    public String[][] getPlaylist(String idConta) {
+        out.println("getPlaylistUser " + idConta);
+        out.flush();
+        return getOp(2);
+    }
+
     private String[][] getOp(int ncol) {
         String[][] r = null;
         try {
@@ -412,4 +430,23 @@ public class RemoteMediaCenter implements MediaCenterInterface {
         }
         return r;
     }
+
+    private String[] getVector() {
+        String[] r = null;
+        try {
+            int size = Integer.parseInt(in.readLine());
+            System.out.println("> Fetched " + size + " elements!");
+            r = new String[size];
+
+            for(int i = 0; i < size; i++) {
+                r[i] = in.readLine();
+            }
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return r;
+    }
+
+
 }

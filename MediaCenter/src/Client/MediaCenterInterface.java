@@ -89,4 +89,10 @@ public interface MediaCenterInterface {
 
     String[][] getAllAlbuns();
 
+    String[] getAmigos(String idConta);
+
+    String[] getPedidos(String idConta);
+
+    String[][] getPlaylist(String idConta);
+
 }

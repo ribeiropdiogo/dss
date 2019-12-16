@@ -65,6 +65,7 @@ public class CadastradoDAO {
             Set<Integer> conts = DBAcess.getIds(uContents, "Conteudo_id", ifs);
             Set<Integer> pls = DBAcess.getIds(uPlays, "Playlist_id", ifs);
             Set<String> amigos = DBAcess.getNames(uAmigos, "username1", ifs);
+            amigos.addAll(DBAcess.getNames(uAmigos, "username","username1='" + idConta + "'"));
             Set<String> pedidos = DBAcess.getNames(uPedidos, "username1", ifs);
 
             ul.setContents(conts);

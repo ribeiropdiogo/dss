@@ -137,8 +137,12 @@ public class MainView extends JFrame {
         pnLeftPanel.add(lbPlaylistsLabel);
         sppSplitPane1.setLeftComponent(pnLeftPanel);
 
-        String[] dataPlaylists = mediacenter.getCategorias();
-        JList lsPlaylists = new JList(dataPlaylists);
+        String[][] dataPlaylists = mediacenter.getPlaylist(username);
+        String[] namesPlays = new String[dataPlaylists.length];
+        for(int i = 0; i < dataPlaylists.length; i++)
+            namesPlays[i] = dataPlaylists[i][0];
+
+        JList lsPlaylists = new JList(namesPlays);
         lsPlaylists.setName("Playlists");
         lsPlaylists.setBackground(new Color(238, 238, 238));
         lsPlaylists.setSelectionBackground(new Color(212, 212, 212));
@@ -172,7 +176,7 @@ public class MainView extends JFrame {
         pnLeftPanel.add(lbAmigosLabel);
         sppSplitPane1.setLeftComponent(pnLeftPanel);
 
-        String[] dataAmigos = {"Chuck", "Arnold", "Kevinho", "DJ Kaled", "Poney", "A", "Tua", "Prima"};
+        String[] dataAmigos = mediacenter.getAmigos(username);
         JList lsAmigos = new JList(dataAmigos);
         lsAmigos.setName("Amigos");
         lsAmigos.setBackground(new Color(238, 238, 238));
@@ -458,7 +462,24 @@ public class MainView extends JFrame {
         lsPlaylists.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 JList list = (JList)evt.getSource();
-                if (evt.getClickCount() == 2) {
+                if (evt.getClickCount() == 1) {
+                    int index = lsPlaylists.getSelectedIndex();
+                    int selectedItem = Integer.parseInt(dataPlaylists[index][1]);
+                    dataContentTable = mediacenter.getListaMusicas(selectedItem);
+
+                    DefaultTableModel tableModel = (DefaultTableModel) tbContentTable.getModel();
+                    int rowCount = tableModel.getRowCount();
+                    for (int i = rowCount - 1; i >= 0; i--) {
+                        tableModel.removeRow(i);
+                    }
+                    for (int i = 0; i < dataContentTable.length; i++) {
+                        tableModel.addRow(dataContentTable[i]);
+                    }
+
+                    tbContentTable.setModel(tableModel);
+                    tableModel.fireTableDataChanged();
+                }
+                else if (evt.getClickCount() == 2) {
                     EditPlaylist ep = new EditPlaylist(mediacenter,username);
                 }
             }

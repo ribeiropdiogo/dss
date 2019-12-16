@@ -367,6 +367,21 @@ public class MediaCenter {
         return this.constructMat(albuns.getAll(), this::album2arr);
     }
 
+    public String[] getAmigos(String idConta) {
+        Utilizador u = (Utilizador)membros.get(idConta);
+        return this.colltoarr(new ArrayList<>(u.getAmigos()));
+    }
+
+    public String[] getPedidos(String idConta) {
+        Utilizador u = (Utilizador)membros.get(idConta);
+        return this.colltoarr(new ArrayList<>(u.getPedidos()));
+    }
+
+    public String[][] getPlaylist(String idConta) {
+        List<Playlist> plays = playlists.getAllFrom(idConta);
+        return this.constructMat(plays, this::playlist2arr);
+    }
+
     private void sendMail(String email, String password) throws EmailException {
         String subject = "[MediaCenter] Nova password.";
         String msg = "A sua nova password é " + password;
@@ -453,6 +468,11 @@ public class MediaCenter {
         membros.put(idConta, u);
     }
 
+    private String[] playlist2arr(Object o) {
+        Playlist l = (Playlist)o;
+        return new String[]{l.getNome(), Integer.toString(l.getId())};
+    }
+
     private String[] content2arr(Object o) {
         Conteudo c = (Conteudo)o;
         return new String[]{c.getNome(), c.getAutor(), Util.convertDuration(c.getDuracao()), "+","...",Integer.toString(c.getId()),c.getPath()};
@@ -480,6 +500,16 @@ public class MediaCenter {
             arr[i] = am.toArr(objs.get(i));
 
         return arr;
+    }
+
+    private String[] colltoarr(List<String> l) {
+        String[] s = new String[l.size()];
+
+        for(int i = 0; i < l.size(); i++) {
+            s[i] = l.get(i);
+        }
+
+        return s;
     }
 
 }
