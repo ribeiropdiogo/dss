@@ -316,7 +316,7 @@ public class MediaCenter {
         if (!c.checkMail(email))
             throw new SecurityException("O email indicado não corresponde à conta indicada.");
 
-        password = this.generatePassword();
+        password = Util.generatePassword();
 
         c.setPassword(password);
 
@@ -365,10 +365,6 @@ public class MediaCenter {
 
     public String[][] getAllAlbuns() {
         return this.constructMat(albuns.getAll(), this::album2arr);
-    }
-
-    private String generatePassword() {
-        return "";
     }
 
     private void sendMail(String email, String password) throws EmailException {

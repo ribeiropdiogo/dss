@@ -29,7 +29,7 @@ public interface MediaCenterInterface {
 
     void alteraEmail(String idConta, String newMl);
 
-    public String[][] getAccounts();
+    String[][] getAccounts();
 
     String[] getCategorias(long idContent);
 
@@ -75,13 +75,9 @@ public interface MediaCenterInterface {
 
     void removeAccount(String idConta);
 
-    void forgottenPassword(String username, String email) throws UtilizadorInexistenteException, SecurityException;
+    void forgottenPassword(String username, String email) throws UtilizadorInexistenteException, SecurityException, EmailException;
 
     void login(String username, String password) throws PasswordIncorretaException, UtilizadorInexistenteException;
-
-    String generatePassword();
-
-    void sendMail(String email, String password);
 
     String[][] getListaMusicas();
 

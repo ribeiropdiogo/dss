@@ -23,11 +23,12 @@ public class resetPassword extends JFrame
     JPanel pnAlterarPassword;
     JLabel lbUsernameLabel;
     JLabel lbEmailLabel;
-    JTextField tfOldPassword;
-    JTextField tfNewPassword;
+    JTextField user;
+    JTextField email;
     JButton btOkButton;
+    JButton btCancelButton;
 
-    public void closeWindow() {
+    public void CloseFrame() {
         super.dispose();
     }
 
@@ -66,7 +67,7 @@ public class resetPassword extends JFrame
         gbAlterarPassword.setConstraints( lbEmailLabel, gbcAlterarPassword );
         pnAlterarPassword.add( lbEmailLabel );
 
-        tfOldPassword = new JTextField( );
+        user = new JTextField( );
         gbcAlterarPassword.gridx = 9;
         gbcAlterarPassword.gridy = 1;
         gbcAlterarPassword.gridwidth = 17;
@@ -76,10 +77,10 @@ public class resetPassword extends JFrame
         gbcAlterarPassword.weighty = 0;
         gbcAlterarPassword.anchor = GridBagConstraints.WEST;
         gbcAlterarPassword.insets = new Insets( 0,0,0,15 );
-        gbAlterarPassword.setConstraints( tfOldPassword, gbcAlterarPassword );
-        pnAlterarPassword.add( tfOldPassword );
+        gbAlterarPassword.setConstraints( user, gbcAlterarPassword );
+        pnAlterarPassword.add( user );
 
-        tfNewPassword = new JTextField( );
+        email = new JTextField( );
         gbcAlterarPassword.gridx = 9;
         gbcAlterarPassword.gridy = 5;
         gbcAlterarPassword.gridwidth = 17;
@@ -89,8 +90,8 @@ public class resetPassword extends JFrame
         gbcAlterarPassword.weighty = 0;
         gbcAlterarPassword.anchor = GridBagConstraints.WEST;
         gbcAlterarPassword.insets = new Insets( 0,0,0,15 );
-        gbAlterarPassword.setConstraints( tfNewPassword, gbcAlterarPassword );
-        pnAlterarPassword.add( tfNewPassword );
+        gbAlterarPassword.setConstraints( email, gbcAlterarPassword );
+        pnAlterarPassword.add( email );
 
         btOkButton = new JButton( "Send"  );
         gbcAlterarPassword.gridx = 21;
@@ -105,10 +106,47 @@ public class resetPassword extends JFrame
         gbAlterarPassword.setConstraints( btOkButton, gbcAlterarPassword );
         pnAlterarPassword.add( btOkButton );
 
+        btCancelButton = new JButton( "Cancel"  );
+        gbcAlterarPassword.gridx = 15;
+        gbcAlterarPassword.gridy = 9;
+        gbcAlterarPassword.gridwidth = 5;
+        gbcAlterarPassword.gridheight = 3;
+        gbcAlterarPassword.fill = GridBagConstraints.NONE;
+        gbcAlterarPassword.weightx = 1;
+        gbcAlterarPassword.weighty = 0;
+        gbcAlterarPassword.anchor = GridBagConstraints.EAST;
+        gbcAlterarPassword.insets = new Insets( 0,0,0,15 );
+        gbAlterarPassword.setConstraints( btCancelButton, gbcAlterarPassword );
+        pnAlterarPassword.add( btCancelButton );
+
+
+        btCancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theresetPassword.CloseFrame();
+            }
+        });
+
         btOkButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                theresetPassword.closeWindow();
+                String username = user.getText();
+                String em = email.getText();
+                MessageDialog md;
+
+                if(!username.isBlank() && !em.isBlank()) {
+                    try {
+                        mediacenter.forgottenPassword(username, em);
+                        md = new MessageDialog("Success", "A new password has been sent to your email sucessfully!");
+                        CloseFrame();
+                    } catch (Exception exc) {
+                        md = new MessageDialog("Error", exc.getMessage());
+                    }
+                } else if (username.isBlank()) {
+                    md = new MessageDialog("Error", "You must type your username!");
+                } else if (em.isBlank()) {
+                    md = new MessageDialog("Error", "You must type your email!");
+                }
             }
         });
 

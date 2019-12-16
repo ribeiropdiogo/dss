@@ -81,7 +81,7 @@ public class CadastradoDAO {
         String params = "('" + conta.getUsername() + "','" + conta.getEmail() + "','" + conta.getPassword() + "')";
         System.out.println(idUser(idConta) + "/"+params);
         if(this.contains(idConta)) {
-            String sql = "UPDATE Cadastrado SET email='" +  conta.getEmail() + "', password='"+conta.getPassword()+"'";
+            String sql = "UPDATE Cadastrado SET email='" +  conta.getEmail() + "', password='"+conta.getPassword()+"' WHERE username='"+idConta+"'";
             DBAcess.runUpdate(sql);
         }
         else

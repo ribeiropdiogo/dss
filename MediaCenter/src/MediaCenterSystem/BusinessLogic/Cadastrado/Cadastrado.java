@@ -54,7 +54,6 @@ public class Cadastrado {
     }
 
     public boolean checkMail(String email) {
-
         return this.email.equals(email);
     }
 

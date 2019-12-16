@@ -1,6 +1,19 @@
 package Utilities;
 
+import java.util.Random;
+
 public class Util {
+
+    private static final String CHAR_LOWER = "abcdefghijklmnopqrstuvwxyz";
+    private static final String CHAR_UPPER = CHAR_LOWER.toUpperCase();
+    private static final String NUMBER = "0123456789";
+    private static final String SPECIAL_CHARACTERS = "!#$%&()*+-_:<=>?@[]{|}";
+
+    private static final String DATA_FOR_RANDOM_STRING = CHAR_LOWER + CHAR_UPPER + NUMBER + SPECIAL_CHARACTERS;
+
+    private static final int PASS_SIZE = 20;
+
+    private static Random rand = new Random();
 
     public static String convertDuration(long duration) {
         String out = null;
@@ -31,6 +44,18 @@ public class Util {
         }
 
         return out;
+    }
+
+    public static String generatePassword() {
+        StringBuilder sb = new StringBuilder(PASS_SIZE);
+        for (int i = 0; i < PASS_SIZE; i++) {
+            int rndCharAt = rand.nextInt(DATA_FOR_RANDOM_STRING.length());
+            char rndChar = DATA_FOR_RANDOM_STRING.charAt(rndCharAt);
+            sb.append(rndChar);
+        }
+
+        return sb.toString();
+
     }
 
 }

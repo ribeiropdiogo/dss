@@ -324,17 +324,30 @@ public class RemoteMediaCenter implements MediaCenterInterface {
 
     }
 
-    public void forgottenPassword(String username, String email) throws UtilizadorInexistenteException, SecurityException {
-
-    }
-
-
-    public String generatePassword() {
-        return null;
-    }
-
-    public void sendMail(String email, String password) {
-
+    public void forgottenPassword(String username, String email) throws UtilizadorInexistenteException, SecurityException, EmailException {
+        String code = "forgotPass "+username+" "+email;
+        out.println(code);
+        out.flush();
+        MessageDialog md;
+        try {
+            String r = in.readLine();
+            switch(r) {
+                case "emailsent":
+                    //md = new MessageDialog("Success", "A new password has been sent to your email sucessfully!");
+                    break;
+                case "usernexists":
+                    //md = new MessageDialog("Error", "User doesn't exist in our system!");
+                    throw new UtilizadorInexistenteException("User doesn't exist in our system!");
+                case "wrongmail":
+                    //md = new MessageDialog("Error", "Email doesn't match user's real email!");
+                    throw new SecurityException("Email doesn't match user's real email!");
+                case "mailerror":
+                    //md = new MessageDialog("Error", "An error has occurred whilst trying to send your email!");
+                    throw new EmailException("An error has occurred whilst trying to send your email!");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String[][] getAccounts() {

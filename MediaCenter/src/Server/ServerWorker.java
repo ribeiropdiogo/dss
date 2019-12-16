@@ -1,5 +1,6 @@
 package Server;
 
+import Exceptions.EmailException;
 import Exceptions.PasswordIncorretaException;
 import Exceptions.UtilizadorInexistenteException;
 import MediaCenterSystem.MediaCenter;
@@ -34,7 +35,20 @@ public class ServerWorker implements Runnable {
                         this.md.loginGuest();
                         System.out.println("> Login as Guest");
                         break;
-
+                    case "forgotPass":
+                        try {
+                            this.md.forgottenPassword(ops[1],ops[2]);
+                            out.println("emailsent");
+                        } catch(UtilizadorInexistenteException e) {
+                            out.println("usernexists");
+                        } catch (SecurityException e) {
+                            out.println("wrongmail");
+                        } catch (EmailException e) {
+                            out.println("mailerror");
+                        } finally {
+                            out.flush();
+                        }
+                        break;
                     case "login":
                         try {
                             boolean isu = this.md.login(ops[1], ops[2]);
