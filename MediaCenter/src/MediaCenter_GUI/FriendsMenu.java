@@ -21,11 +21,10 @@ public class FriendsMenu extends JFrame{
     static FriendsMenu themenuamigos;
 
     JPanel pnMenuAmigos;
-    JComboBox cmbCombo0;
+    JList cmbCombo0;
     JButton btAcceptButton;
     JButton btRefuseButton;
     JList lsList0;
-    JComboBox cmbCombo1;
     JButton btSendButton;
     JButton btRemoveButton;
     JTextField tfText0;
@@ -40,7 +39,7 @@ public class FriendsMenu extends JFrame{
         pnMenuAmigos.setLayout( gbMenuAmigos );
 
         String []dataCombo0 = { "Chocolate", "Ice Cream", "Apple Pie" };
-        cmbCombo0 = new JComboBox( dataCombo0 );
+        cmbCombo0 = new JList( dataCombo0 );
         gbcMenuAmigos.gridx = 1;
         gbcMenuAmigos.gridy = 1;
         gbcMenuAmigos.gridwidth = 1;
@@ -49,7 +48,7 @@ public class FriendsMenu extends JFrame{
         gbcMenuAmigos.weightx = 1;
         gbcMenuAmigos.weighty = 0;
         gbcMenuAmigos.anchor = GridBagConstraints.CENTER;
-        gbcMenuAmigos.insets = new Insets( 5,15,0,0 );
+        gbcMenuAmigos.insets = new Insets( 15,15,0,0 );
         gbMenuAmigos.setConstraints( cmbCombo0, gbcMenuAmigos );
         pnMenuAmigos.add( cmbCombo0 );
 
@@ -95,20 +94,6 @@ public class FriendsMenu extends JFrame{
         gbMenuAmigos.setConstraints( lsList0, gbcMenuAmigos );
         pnMenuAmigos.add( lsList0 );
 
-        String []dataCombo1 = { "Chocolate", "Ice Cream", "Apple Pie" };
-        cmbCombo1 = new JComboBox( dataCombo1 );
-        gbcMenuAmigos.gridx = 1;
-        gbcMenuAmigos.gridy = 7;
-        gbcMenuAmigos.gridwidth = 1;
-        gbcMenuAmigos.gridheight = 1;
-        gbcMenuAmigos.fill = GridBagConstraints.BOTH;
-        gbcMenuAmigos.weightx = 1;
-        gbcMenuAmigos.weighty = 0;
-        gbcMenuAmigos.anchor = GridBagConstraints.NORTH;
-        gbcMenuAmigos.insets = new Insets( 0,15,0,0 );
-        gbMenuAmigos.setConstraints( cmbCombo1, gbcMenuAmigos );
-        pnMenuAmigos.add( cmbCombo1 );
-
         btSendButton = new JButton( "Send Request"  );
         gbcMenuAmigos.gridx = 3;
         gbcMenuAmigos.gridy = 7;
@@ -119,6 +104,7 @@ public class FriendsMenu extends JFrame{
         gbcMenuAmigos.weighty = 0;
         gbcMenuAmigos.anchor = GridBagConstraints.CENTER;
         gbMenuAmigos.setConstraints( btSendButton, gbcMenuAmigos );
+        gbcMenuAmigos.insets = new Insets(0,0,15,0);
         pnMenuAmigos.add( btSendButton );
 
         btRemoveButton = new JButton( "Remove Friend"  );
@@ -136,22 +122,21 @@ public class FriendsMenu extends JFrame{
 
         tfText0 = new JTextField( );
         gbcMenuAmigos.gridx = 1;
-        gbcMenuAmigos.gridy = 10;
+        gbcMenuAmigos.gridy = 7;
         gbcMenuAmigos.gridwidth = 1;
         gbcMenuAmigos.gridheight = 1;
-        gbcMenuAmigos.fill = GridBagConstraints.BOTH;
+        gbcMenuAmigos.fill = GridBagConstraints.HORIZONTAL;
         gbcMenuAmigos.weightx = 1;
         gbcMenuAmigos.weighty = 0;
-        gbcMenuAmigos.anchor = GridBagConstraints.NORTH;
-        gbcMenuAmigos.insets = new Insets( 0,15,15,0 );
+        gbcMenuAmigos.anchor = GridBagConstraints.CENTER;
+        gbcMenuAmigos.insets = new Insets( 0,15,0,0 );
         gbMenuAmigos.setConstraints( tfText0, gbcMenuAmigos );
         pnMenuAmigos.add( tfText0 );
 
 
         setContentPane( pnMenuAmigos );
-        pack();
         setLocationRelativeTo(null);
-        setSize(350, 200);
+        setSize(400, 200);
         setVisible( true );
     }
 }

@@ -113,8 +113,6 @@ public class textEntryForm extends JFrame
             }
         });
 
-        setDefaultCloseOperation( EXIT_ON_CLOSE );
-
         setContentPane( pnTextEntryForm );
         pack();
         setLocationRelativeTo(null);
