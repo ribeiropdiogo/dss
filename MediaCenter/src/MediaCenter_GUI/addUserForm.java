@@ -1,0 +1,156 @@
+package MediaCenter_GUI;
+
+import Client.MediaCenterInterface;
+
+import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.JPanel;
+import javax.swing.BorderFactory;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JRadioButton;
+import javax.swing.JButton;
+
+public class addUserForm extends JFrame {
+
+    public addUserForm(MediaCenterInterface mediacenter)
+    {
+        super( "Add User" );
+
+        JPanel pnPanel0 = new JPanel();
+        ButtonGroup rbgPanel0 = new ButtonGroup();
+        GridBagLayout gbPanel0 = new GridBagLayout();
+        GridBagConstraints gbcPanel0 = new GridBagConstraints();
+        pnPanel0.setLayout( gbPanel0 );
+
+        JLabel lbUsernameLabel = new JLabel("username:");
+        gbcPanel0.gridx = 1;
+        gbcPanel0.gridy = 1;
+        gbcPanel0.gridwidth = 6;
+        gbcPanel0.gridheight = 2;
+        gbcPanel0.fill = GridBagConstraints.NONE;
+        gbcPanel0.weightx = 1;
+        gbcPanel0.weighty = 0;
+        gbcPanel0.anchor = GridBagConstraints.EAST;
+        gbcPanel0.insets = new Insets( 15,15,5,0 );
+        gbPanel0.setConstraints(lbUsernameLabel, gbcPanel0 );
+        pnPanel0.add(lbUsernameLabel);
+
+        JLabel lbEmailLabel = new JLabel("email:");
+        gbcPanel0.gridx = 1;
+        gbcPanel0.gridy = 4;
+        gbcPanel0.gridwidth = 6;
+        gbcPanel0.gridheight = 2;
+        gbcPanel0.fill = GridBagConstraints.NONE;
+        gbcPanel0.weightx = 1;
+        gbcPanel0.weighty = 0;
+        gbcPanel0.anchor = GridBagConstraints.EAST;
+        gbcPanel0.insets = new Insets( 0,15,5,0 );
+        gbPanel0.setConstraints(lbEmailLabel, gbcPanel0 );
+        pnPanel0.add(lbEmailLabel);
+
+        JLabel lbPasswordLabel = new JLabel("password:");
+        gbcPanel0.gridx = 1;
+        gbcPanel0.gridy = 7;
+        gbcPanel0.gridwidth = 6;
+        gbcPanel0.gridheight = 2;
+        gbcPanel0.fill = GridBagConstraints.NONE;
+        gbcPanel0.weightx = 1;
+        gbcPanel0.weighty = 0;
+        gbcPanel0.anchor = GridBagConstraints.EAST;
+        gbcPanel0.insets = new Insets( 0,15,15,0 );
+        gbPanel0.setConstraints(lbPasswordLabel, gbcPanel0 );
+        pnPanel0.add(lbPasswordLabel);
+
+        JTextField tfText0 = new JTextField();
+        gbcPanel0.gridx = 8;
+        gbcPanel0.gridy = 1;
+        gbcPanel0.gridwidth = 9;
+        gbcPanel0.gridheight = 2;
+        gbcPanel0.fill = GridBagConstraints.HORIZONTAL;
+        gbcPanel0.weightx = 1;
+        gbcPanel0.weighty = 0;
+        gbcPanel0.anchor = GridBagConstraints.WEST;
+        gbcPanel0.insets = new Insets( 15,0,5,35 );
+        gbPanel0.setConstraints(tfText0, gbcPanel0 );
+        pnPanel0.add(tfText0);
+
+        JTextField tfText1 = new JTextField();
+        gbcPanel0.gridx = 8;
+        gbcPanel0.gridy = 4;
+        gbcPanel0.gridwidth = 9;
+        gbcPanel0.gridheight = 2;
+        gbcPanel0.fill = GridBagConstraints.HORIZONTAL;
+        gbcPanel0.weightx = 1;
+        gbcPanel0.weighty = 0;
+        gbcPanel0.anchor = GridBagConstraints.WEST;
+        gbcPanel0.insets = new Insets( 0,0,5,35 );
+        gbPanel0.setConstraints(tfText1, gbcPanel0 );
+        pnPanel0.add(tfText1);
+
+        JTextField tfText2 = new JTextField();
+        gbcPanel0.gridx = 8;
+        gbcPanel0.gridy = 7;
+        gbcPanel0.gridwidth = 9;
+        gbcPanel0.gridheight = 2;
+        gbcPanel0.fill = GridBagConstraints.HORIZONTAL;
+        gbcPanel0.weightx = 1;
+        gbcPanel0.weighty = 0;
+        gbcPanel0.anchor = GridBagConstraints.WEST;
+        gbcPanel0.insets = new Insets( 0,0,15,35 );
+        gbPanel0.setConstraints(tfText2, gbcPanel0 );
+        pnPanel0.add(tfText2);
+
+        JRadioButton rbRdBut0 = new JRadioButton("User");
+        rbRdBut0.setSelected( true );
+        rbgPanel0.add(rbRdBut0);
+        gbcPanel0.gridx = 3;
+        gbcPanel0.gridy = 10;
+        gbcPanel0.gridwidth = 4;
+        gbcPanel0.gridheight = 2;
+        gbcPanel0.fill = GridBagConstraints.NONE;
+        gbcPanel0.weightx = 1;
+        gbcPanel0.weighty = 0;
+        gbcPanel0.anchor = GridBagConstraints.EAST;
+        gbPanel0.setConstraints(rbRdBut0, gbcPanel0 );
+        pnPanel0.add(rbRdBut0);
+
+        JRadioButton rbRdBut1 = new JRadioButton("Admin");
+        rbgPanel0.add(rbRdBut1);
+        gbcPanel0.gridx = 8;
+        gbcPanel0.gridy = 10;
+        gbcPanel0.gridwidth = 4;
+        gbcPanel0.gridheight = 2;
+        gbcPanel0.fill = GridBagConstraints.NONE;
+        gbcPanel0.weightx = 1;
+        gbcPanel0.weighty = 0;
+        gbcPanel0.anchor = GridBagConstraints.WEST;
+        gbPanel0.setConstraints(rbRdBut1, gbcPanel0 );
+        pnPanel0.add(rbRdBut1);
+
+        JButton btBut1 = new JButton("Create");
+        gbcPanel0.gridx = 8;
+        gbcPanel0.gridy = 13;
+        gbcPanel0.gridwidth = 4;
+        gbcPanel0.gridheight = 1;
+        gbcPanel0.fill = GridBagConstraints.NONE;
+        gbcPanel0.weightx = 1;
+        gbcPanel0.weighty = 0;
+        gbcPanel0.anchor = GridBagConstraints.WEST;
+        gbcPanel0.insets = new Insets( 0,0,15,15 );
+        gbPanel0.setConstraints(btBut1, gbcPanel0 );
+        pnPanel0.add(btBut1);
+
+        setContentPane(pnPanel0);
+        pack();
+        setLocationRelativeTo(null);
+        setSize(250, 200);
+        setVisible( true );
+    }
+
+}

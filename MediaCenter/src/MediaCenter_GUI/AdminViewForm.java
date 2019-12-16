@@ -163,7 +163,7 @@ public class AdminViewForm extends JFrame {
 
         btNext.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("ADD NEW USER");//mp.nextContent();
+                addUserForm auf = new addUserForm(mediacenter);
             }
         });
 
