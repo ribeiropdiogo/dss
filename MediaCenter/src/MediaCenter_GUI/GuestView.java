@@ -134,7 +134,13 @@ public class GuestView extends JFrame {
         String[] columnNames = new String[]{"Name", "Author", "Duration","Options"};
         data = mediacenter.getListaMusicas();
 
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        DefaultTableModel model = new DefaultTableModel(data, columnNames){
+            public boolean isCellEditable(int row, int column){
+                if (column <= 3)
+                    return false;
+                else return true;
+            }
+        };
         tbContentTable = new JTable(data, columnNames);
         tbContentTable.setModel(model);
 

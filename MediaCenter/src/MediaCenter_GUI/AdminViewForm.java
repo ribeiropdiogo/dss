@@ -56,7 +56,13 @@ public class AdminViewForm extends JFrame {
         String[] columnNames = new String[]{"Username", "Email", ""};
         data = mediacenter.getAccounts();
 
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        DefaultTableModel model = new DefaultTableModel(data, columnNames){
+            public boolean isCellEditable(int row, int column){
+                if (column <= 2)
+                    return false;
+                else return true;
+            }
+        };
         tbContentTable = new JTable(data, columnNames);
         tbContentTable.setModel(model);
 

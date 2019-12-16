@@ -202,6 +202,7 @@ public class RemoteMediaCenter implements MediaCenterInterface {
         out.println("download " + idContent);
         out.flush();
 
+        System.out.println("> Downloading file");
         try {
             String[] resposta = in.readLine().split(" ");
             StringBuilder builder = new StringBuilder();
