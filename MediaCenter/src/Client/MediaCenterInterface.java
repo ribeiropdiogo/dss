@@ -23,7 +23,7 @@ public interface MediaCenterInterface {
 
     void formConvite(String idConta, String idAmigo) throws UtilizadorInexistenteException, AmizadeException;
 
-    void removeContent(String idConta, long idContent);
+    void removeContent(String idConta, int idContent);
 
     void alteraPass(String idConta, String pOld, String pNew, String pNewC);
 

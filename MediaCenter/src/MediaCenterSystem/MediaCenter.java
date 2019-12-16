@@ -107,7 +107,7 @@ public class MediaCenter {
         membros.put(idAmigo, am);
     }
 
-    public void removeContent(String idConta, int idContent) {
+    public void removeContent(String idConta, int idContent) throws SecurityException {
         int sz;
         Conteudo con;
         List<Playlist> plays;

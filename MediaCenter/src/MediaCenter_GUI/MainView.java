@@ -266,7 +266,8 @@ public class MainView extends JFrame {
 
         download.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                int cont = Integer.parseInt(dataContentTable[tbContentTable.getSelectedRow()][5]);
+                int row = tbContentTable.getSelectedRow();
+                int cont = Integer.parseInt((String)tbContentTable.getValueAt(row, 5));
                 if (mediacenter.checkPermissions(username,cont)) {
                     mediacenter.download(cont);
                     new MessageDialog("Success", "The file has been downloaded.");
@@ -284,7 +285,15 @@ public class MainView extends JFrame {
 
         delete.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                MessageDialog md = new MessageDialog("HEY!","BITCH ASS NIGGER");
+                int row = tbContentTable.getSelectedRow();
+                int cont = Integer.parseInt(dataContentTable[tbContentTable.getSelectedRow()][5]);
+                if (mediacenter.checkPermissions(username,cont)) {
+                    mediacenter.removeContent(username, cont);
+                    ((DefaultTableModel)tbContentTable.getModel()).removeRow(row);
+                    new MessageDialog("Success", "The file has been deleted.");
+                } else {
+                    new MessageDialog("Wait!","You don't have permissions for that!");
+                }
             }
         });
 

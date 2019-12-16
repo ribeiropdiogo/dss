@@ -8,6 +8,7 @@ import javax.print.attribute.standard.Media;
 import java.io.*;
 import java.lang.SecurityException;
 import java.net.Socket;
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -79,8 +80,9 @@ public class RemoteMediaCenter implements MediaCenterInterface {
 
     }
 
-    public void removeContent(String idConta, long idContent) {
-
+    public void removeContent(String idConta, int idContent) {
+        out.println("removeContentUser " + idConta + " " + idContent);
+        out.flush();
     }
 
     public void alteraPass(String idConta, String pOld, String pNew, String pNewC) {
