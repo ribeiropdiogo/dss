@@ -50,7 +50,12 @@ public class PlaylistDAO {
         String params = "('" + idPlaylist + "','" + pl.getNome() + "','" + pl.getDescricao() + "')";
         DBAcess.putQuery(myt, id, params);
 
-        pl.getContents().forEach((k, v) -> conteudos.put(k, v));
+        DBAcess.removeEntry(pConts, id);
+
+        pl.getContents().forEach((k, v) -> {
+            conteudos.put(k, v);
+            DBAcess.putQuery(pConts, "", "('" + k + "','" + idPlaylist + "')");
+        });
 
     }
 

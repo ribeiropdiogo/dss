@@ -15,7 +15,7 @@ public interface MediaCenterInterface {
 
     void removeContent(long idPlaylist, long idContent);
 
-    void addAlbum(long idPlaylist, long idAlbum);
+    void addAlbum(int idPlaylist, int idAlbum);
 
     void removerAmigo(String idConta, String idAmigo);
 

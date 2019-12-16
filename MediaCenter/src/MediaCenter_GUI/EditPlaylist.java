@@ -7,6 +7,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class EditPlaylist extends JFrame{
 
@@ -17,7 +19,9 @@ public class EditPlaylist extends JFrame{
     JButton btConfirmButton;
     JButton btAddButton;
     JButton btRemoveButton;
-    public EditPlaylist(MediaCenterInterface mediacenter, String username)
+    JButton btAlbum;
+
+    public EditPlaylist(MediaCenterInterface mediacenter, int idPlaylist)
     {
         super( "Edit Playlist" );
 
@@ -97,11 +101,24 @@ public class EditPlaylist extends JFrame{
         gbPanel0.setConstraints( btAddButton, gbcPanel0 );
         pnPanel0.add( btAddButton );
 
-        btRemoveButton = new JButton( "Remover Conteudo"  );
+        btAlbum = new JButton( "Adicionar Album"  );
         gbcPanel0.gridx = 16;
         gbcPanel0.gridy = 14;
         gbcPanel0.gridwidth = 4;
-        gbcPanel0.gridheight = 1;
+        gbcPanel0.gridheight = 2;
+        gbcPanel0.fill = GridBagConstraints.NONE;
+        gbcPanel0.weightx = 0;
+        gbcPanel0.weighty = 0;
+        gbcPanel0.anchor = GridBagConstraints.CENTER;
+        gbcPanel0.insets = new Insets( 0,0,0,15 );
+        gbPanel0.setConstraints( btAlbum, gbcPanel0 );
+        pnPanel0.add( btAlbum );
+
+        btRemoveButton = new JButton( "Remover Conteudo"  );
+        gbcPanel0.gridx = 16;
+        gbcPanel0.gridy = 17;
+        gbcPanel0.gridwidth = 4;
+        gbcPanel0.gridheight = 2;
         gbcPanel0.fill = GridBagConstraints.NONE;
         gbcPanel0.weightx = 0;
         gbcPanel0.weighty = 0;
@@ -116,5 +133,13 @@ public class EditPlaylist extends JFrame{
         setSize(350, 250);
         setResizable(false);
         setVisible( true );
+
+        btAlbum.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new addAlbumForm(mediacenter, idPlaylist);
+            }
+        });
+
     }
 }

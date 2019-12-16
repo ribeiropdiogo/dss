@@ -462,9 +462,9 @@ public class MainView extends JFrame {
         lsPlaylists.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 JList list = (JList)evt.getSource();
+                int index = lsPlaylists.getSelectedIndex();
+                int selectedItem = Integer.parseInt(dataPlaylists[index][1]);
                 if (evt.getClickCount() == 1) {
-                    int index = lsPlaylists.getSelectedIndex();
-                    int selectedItem = Integer.parseInt(dataPlaylists[index][1]);
                     dataContentTable = mediacenter.getListaMusicas(selectedItem);
 
                     DefaultTableModel tableModel = (DefaultTableModel) tbContentTable.getModel();
@@ -480,7 +480,7 @@ public class MainView extends JFrame {
                     tableModel.fireTableDataChanged();
                 }
                 else if (evt.getClickCount() == 2) {
-                    EditPlaylist ep = new EditPlaylist(mediacenter,username);
+                    EditPlaylist ep = new EditPlaylist(mediacenter,selectedItem);
                 }
             }
         });

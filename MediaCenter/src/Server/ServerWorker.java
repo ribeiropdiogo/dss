@@ -280,15 +280,14 @@ public class ServerWorker implements Runnable {
                         out.println(a.length);
                         this.pushMatrix(out, a, a.length, 2);
                         break;
-                    default:
-                        System.out.println("> Unrecognized operation");
+                    case "addAlbum":
+                        System.out.println("> Adding album to playlist");
+                        this.md.addAlbum(Integer.parseInt(ops[1]), Integer.parseInt(ops[2]));
                         break;
-
                     case "addCategoria":
                         System.out.println("> Adding new category to file");
                         md.adicionarCategoria(Integer.parseInt(ops[1]),ops[2]);
                         break;
-
                     case "removeCategoria":
                         System.out.println("> Removing category from file");
                         md.removerCategoria(Integer.parseInt(ops[1]),ops[2]);
@@ -297,6 +296,9 @@ public class ServerWorker implements Runnable {
                     case "alterarCategoria":
                         System.out.println("> Changing category from file");
                         md.alterarCategoria(Integer.parseInt(ops[1]),ops[2],ops[3]);
+                        break;
+                    default:
+                        System.out.println("> Unrecognized operation");
                         break;
                 }
                 data = in.readLine();

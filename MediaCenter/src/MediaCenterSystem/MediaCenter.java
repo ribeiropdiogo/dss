@@ -490,7 +490,7 @@ public class MediaCenter {
 
     private String[] album2arr(Object o) {
         Album al = (Album)o;
-        return new String[]{al.getNome(), Integer.toString(al.getID())};
+        return new String[]{Integer.toString(al.getID()), al.getNome()};
     }
 
     private String[][] constructMat(List<? extends Object> objs, ArrMaker am) {

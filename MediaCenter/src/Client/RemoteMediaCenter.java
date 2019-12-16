@@ -64,8 +64,9 @@ public class RemoteMediaCenter implements MediaCenterInterface {
 
     }
 
-    public void addAlbum(long idPlaylist, long idAlbum) {
-
+    public void addAlbum(int idPlaylist, int idAlbum) {
+        out.println("addAlbum " + idPlaylist + " " + idAlbum);
+        out.flush();
     }
 
     public void removerAmigo(String idConta, String idAmigo) {
