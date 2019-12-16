@@ -66,6 +66,14 @@ public class MainView extends JFrame {
         gbLeftPanel.setConstraints(lbUsernameLabel, gbcLeftPanel);
         pnLeftPanel.add(lbUsernameLabel);
 
+        lbUsernameLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                new MessageDialog("you want to edit", "you want to edit");
+            }
+        });
+
 
         JButton btLogoutButton = new JButton("Logout");
         gbcLeftPanel.gridx = 0;
