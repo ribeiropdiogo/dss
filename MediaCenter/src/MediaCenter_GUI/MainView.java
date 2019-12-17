@@ -472,7 +472,7 @@ public class MainView extends JFrame {
                     tableModel.fireTableDataChanged();
                 }
                 else if (evt.getClickCount() == 2) {
-                    EditPlaylist ep = new EditPlaylist(mediacenter,selectedItem);
+                    EditPlaylist ep = new EditPlaylist(mediacenter,username,selectedItem);
                 }
             }
         });

@@ -58,11 +58,8 @@ public class Playlist {
         this.conteudos.remove(idContent);
     }
 
-    public void addContent(int idContent, Conteudo cn) throws ConteudoRepetidoException {
-
-        if (this.conteudos.containsKey(idContent)) {
-            this.conteudos.put(idContent, cn);
-        } else throw new ConteudoRepetidoException("Conteudo Repetido");
+    public void addContent(int idContent, Conteudo cn) {
+        this.conteudos.put(idContent, cn);
     }
 
     public void addDefContent(int idContent, Conteudo cn) {

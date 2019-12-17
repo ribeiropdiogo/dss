@@ -234,7 +234,7 @@ public class MediaCenter {
         playlists.put(idPlaylist, p);
     }
 
-    public void adicionaPlaylist(int idPlaylist, int idContent) throws ConteudoRepetidoException {
+    public void adicionaPlaylist(int idPlaylist, int idContent){
         Playlist p = playlists.get(idPlaylist);
         Conteudo cn = conteudos.get(idContent);
 
@@ -347,6 +347,10 @@ public class MediaCenter {
 
     public String[][] getListaMusicas(){
         return constructMat(conteudos.getAllConts(), this::content2arr);
+    }
+
+    public String[][] getListaMusicasBasic(){
+        return constructMat(conteudos.getAllConts(), this::basic_content2arr);
     }
 
     public String[][] getListaMusicas(String idCat){
@@ -485,7 +489,7 @@ public class MediaCenter {
 
     private String[] basic_content2arr(Object o) {
         Conteudo c = (Conteudo)o;
-        return new String[]{c.getNome(), c.getAutor(), "Remove", Integer.toString(c.getId())};
+        return new String[]{c.getNome(), c.getAutor(), Integer.toString(c.getId())};
     }
 
     private String[] album2arr(Object o) {

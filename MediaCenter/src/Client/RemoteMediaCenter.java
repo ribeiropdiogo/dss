@@ -60,10 +60,6 @@ public class RemoteMediaCenter implements MediaCenterInterface {
 
     }
 
-    public void removeContent(long idPlaylist, long idContent) {
-
-    }
-
     public void addAlbum(int idPlaylist, int idAlbum) {
         out.println("addAlbum " + idPlaylist + " " + idAlbum);
         out.flush();
@@ -207,20 +203,35 @@ public class RemoteMediaCenter implements MediaCenterInterface {
         return null;
     }
 
-    public void removePlaylist(String idConta, long idPlaylist) {
-
+    public void removePlaylist(String idConta, int idPlaylist) {
+        out.println("removePlaylist " + idConta + " " + idPlaylist);
+        out.flush();
     }
 
-    public void editPName(long idPlaylist, String pNome) {
-
+    public void editPName(int idPlaylist, String pNome) {
+        out.println("editPName _" + idPlaylist + "_" + pNome + "_");
+        out.flush();
     }
 
-    public void editPDesc(long idPlaylist, String pDesc) {
-
+    public void editPDesc(int idPlaylist, String pDesc) {
+        out.println("editPDesc _" + idPlaylist + "_" + pDesc + "_");
+        out.flush();
     }
 
-    public void adicionaPlaylist(long idPlaylist, long idContent) throws ConteudoRepetidoException {
+    public void adicionaPlaylist(int idPlaylist, int idContent) {
+        out.println("adicionaPlaylistCont " + idPlaylist + " " + idContent);
+        out.flush();
+    }
 
+    public void removeContent(int idPlaylist, int idContent) {
+        out.println("removeContentPlay " +  idPlaylist + " " + idContent);
+        out.flush();
+    }
+
+    public String[][] getListaMusicasBasic() {
+        out.println("getListMusicasBasic");
+        out.flush();
+        return this.getOp(3);
     }
 
     public boolean checkPermissions(String idConta, long idContent) {
@@ -426,7 +437,7 @@ public class RemoteMediaCenter implements MediaCenterInterface {
     public String[][] getAllConteudoBasic(int idPlaylist) {
         out.println("getBasicPlCont _" +  idPlaylist);
         out.flush();
-        return this.getOp(4);
+        return this.getOp(3);
     }
 
     public String[][] getAllAlbuns() {

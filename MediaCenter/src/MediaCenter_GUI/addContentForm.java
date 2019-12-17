@@ -1,15 +1,17 @@
 package MediaCenter_GUI;
 
 import Client.MediaCenterInterface;
+import Exceptions.ConteudoRepetidoException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-public class addAlbumForm extends JFrame {
-
-    static addAlbumForm theaaa;
+public class addContentForm extends JFrame {
 
     JPanel pnMainview;
     JSplitPane sppSplitPane1;
@@ -37,8 +39,8 @@ public class addAlbumForm extends JFrame {
         super.dispose();
     }
 
-    public addAlbumForm(MediaCenterInterface mediacenter, int idPlaylist) {
-        super("Add Album");
+    public addContentForm(MediaCenterInterface mediacenter, int idPlaylist) {
+        super("Add Content");
 
         //Painel Master
         pnMainview = new JPanel();
@@ -52,12 +54,12 @@ public class addAlbumForm extends JFrame {
         GridBagConstraints gbcRightPanel = new GridBagConstraints();
         pnRightPanel.setLayout(gbRightPanel);
 
-        String[] columnNames = new String[]{"ID", "Name"};
-        data = mediacenter.getAllAlbuns();
+        String[] columnNames = new String[]{"Name", "Author", "ID"};
+        data = mediacenter.getListaMusicasBasic();
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames){
             public boolean isCellEditable(int row, int column){
-                return column >= 2;
+                return false;
             }
         };
         tbContentTable = new JTable(data, columnNames);
@@ -143,21 +145,14 @@ public class addAlbumForm extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int index = tbContentTable.getSelectedRow();
                 if(index == -1) {
-                    new MessageDialog("Error!", "You must select one album to add!");
+                    new MessageDialog("Error!", "You must select one content to add!");
                 } else {
-                    mediacenter.addAlbum(idPlaylist, Integer.parseInt((String)tbContentTable.getValueAt(index, 0)));
-                    new MessageDialog("Success", "The album has sucessfully been added to your playlist!");
+                    mediacenter.adicionaPlaylist(idPlaylist, Integer.parseInt((String)tbContentTable.getValueAt(index, 2)));
+                    new MessageDialog("Success", "The content has sucessfully been added to your playlist!");
                 }
             }
         });
-
-        this.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
-            }
-        });
     }
-
 
 
 }

@@ -321,17 +321,37 @@ public class ServerWorker implements Runnable {
                             this.pushMatrix(out, a, a.length, 6);
                         }
                         break;
-
+                    case "getListMusicasBasic":
+                        a = this.md.getListaMusicasBasic();
+                        out.println(a.length);
+                        this.pushMatrix(out, a, a.length, 3);
+                        break;
                     case "getBasicPlCont":
                         String[] ee = data.split("_");
                         if(ee.length == 2) {
                             System.out.println("> List all basic content from " + ee[1]);
                             a = this.md.getAllConteudoBasic(Integer.parseInt(ee[1]));
                             out.println(a.length);
-                            this.pushMatrix(out, a, a.length, 4);
+                            this.pushMatrix(out, a, a.length, 3);
                         }
                         break;
-
+                    case "removePlaylist":
+                        this.md.removePlaylist(ops[1], Integer.parseInt(ops[2]));
+                        break;
+                    case "editPName":
+                        vec = data.split("_");
+                        this.md.editPName(Integer.parseInt(vec[1]),vec[2]);
+                        break;
+                    case "editPDesc":
+                        vec = data.split("_");
+                        this.md.editPDesc(Integer.parseInt(vec[1]),vec[2]);
+                        break;
+                    case "adicionaPlaylistCont":
+                        this.md.adicionaPlaylist(Integer.parseInt(ops[1]),Integer.parseInt(ops[2]));
+                        break;
+                    case "removeContentPlay":
+                        this.md.removeContent(Integer.parseInt(ops[1]),Integer.parseInt(ops[2]));
+                        break;
                     case "getAllAlbuns":
                         System.out.println("> List all albuns");
                         a = this.md.getAllAlbuns();

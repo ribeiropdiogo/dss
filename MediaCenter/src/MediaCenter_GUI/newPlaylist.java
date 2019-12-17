@@ -124,7 +124,6 @@ public class newPlaylist extends JFrame
         gbnewPlaylist.setConstraints( tfText1, gbcnewPlaylist );
         pnnewPlaylist.add( tfText1 );
         tfText1.setEditable(false);
-        setDefaultCloseOperation( EXIT_ON_CLOSE );
 
         setContentPane( pnnewPlaylist );
         pack();

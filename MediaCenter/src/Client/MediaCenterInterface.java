@@ -13,7 +13,7 @@ public interface MediaCenterInterface {
 
     void logout();
 
-    void removeContent(long idPlaylist, long idContent);
+    void removeContent(int idPlaylist, int idContent);
 
     void addAlbum(int idPlaylist, int idAlbum);
 
@@ -28,6 +28,8 @@ public interface MediaCenterInterface {
     void alteraPass(String idConta, String pOld, String pNew, String pNewC) throws PasswordFracaException, PasswordIncorretaException;
 
     void alteraEmail(String idConta, String newMl);
+
+    String[][] getListaMusicasBasic();
 
     String[][] getAccounts();
 
@@ -53,13 +55,13 @@ public interface MediaCenterInterface {
 
     List<Par<Long, String>> getPlaylists(String idConta);
 
-    void removePlaylist(String idConta, long idPlaylist);
+    void removePlaylist(String idConta, int idPlaylist);
 
-    void editPName(long idPlaylist, String pNome);
+    void editPName(int idPlaylist, String pNome);
 
-    void editPDesc(long idPlaylist, String pDesc);
+    void editPDesc(int idPlaylist, String pDesc);
 
-    void adicionaPlaylist(long idPlaylist, long idContent) throws ConteudoRepetidoException;
+    void adicionaPlaylist(int idPlaylist, int idContent);
 
     boolean checkPermissions(String idConta, long idContent);
 
