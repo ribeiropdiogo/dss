@@ -25,7 +25,7 @@ public interface MediaCenterInterface {
 
     void removeContent(String idConta, int idContent);
 
-    void alteraPass(String idConta, String pOld, String pNew, String pNewC);
+    void alteraPass(String idConta, String pOld, String pNew, String pNewC) throws PasswordFracaException, PasswordIncorretaException;
 
     void alteraEmail(String idConta, String newMl);
 

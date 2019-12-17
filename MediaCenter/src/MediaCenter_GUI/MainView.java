@@ -70,7 +70,7 @@ public class MainView extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                new MessageDialog("you want to edit", "you want to edit");
+                new editUser(mediacenter, username);
             }
         });
 
@@ -266,15 +266,7 @@ public class MainView extends JFrame {
         JMenuItem download = new JMenuItem("Download");
         JMenuItem changecat = new JMenuItem("Change Category");
         JMenuItem delete = new JMenuItem("Delete");
-        JMenuItem addpl = new JMenuItem("Add to Playlist");
-        popupmenu.add(download); popupmenu.add(changecat); popupmenu.add(delete); popupmenu.add(addpl);
-
-        addpl.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new MessageDialog("HELLO PETROVSKI","I SEE YOU AND COMRADE DIMITR WANT TO ADD TO PLAYLIST CUKA");
-            }
-        });
+        popupmenu.add(download); popupmenu.add(changecat); popupmenu.add(delete);
 
         download.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {

@@ -38,7 +38,7 @@ public class AdminViewForm extends JFrame {
         super.dispose();
     }
 
-    public AdminViewForm(MediaCenterInterface mediacenter) {
+    public AdminViewForm(MediaCenterInterface mediacenter, String username) {
         super("Admin Panel");
 
         //Painel Master
@@ -123,9 +123,9 @@ public class AdminViewForm extends JFrame {
         gbcPanelReproducao.gridwidth = 1;
         gbcPanelReproducao.gridheight = 1;
         gbcPanelReproducao.fill = GridBagConstraints.NONE;
-        gbcPanelReproducao.weightx = 0;
+        gbcPanelReproducao.weightx = 1;
         gbcPanelReproducao.weighty = 0;
-        gbcPanelReproducao.anchor = GridBagConstraints.CENTER;
+        gbcPanelReproducao.anchor = GridBagConstraints.EAST;
         gbPanelReproducao.setConstraints(btNext, gbcPanelReproducao);
         pnPanelReproducao.add(btNext);
 
@@ -141,6 +141,19 @@ public class AdminViewForm extends JFrame {
         gbcPanelReproducao.anchor = GridBagConstraints.WEST;
         gbPanelReproducao.setConstraints(btLogoutButton, gbcPanelReproducao);
         pnPanelReproducao.add(btLogoutButton);
+
+        lbUsernameLabel = new JLabel(username);
+        gbcPanelReproducao.gridx = 10;
+        gbcPanelReproducao.gridy = 0;
+        gbcPanelReproducao.gridwidth = 1;
+        gbcPanelReproducao.gridheight = 1;
+        gbcPanelReproducao.fill = GridBagConstraints.NONE;
+        gbcPanelReproducao.weightx = 0;
+        gbcPanelReproducao.weighty = 0;
+        gbcPanelReproducao.anchor = GridBagConstraints.CENTER;
+        gbcPanelReproducao.insets = new Insets(5, 0, 0, 0);
+        gbPanelReproducao.setConstraints(lbUsernameLabel, gbcPanelReproducao);
+        pnPanelReproducao.add(lbUsernameLabel);
 
         pnMainview.add(pnRightPanel);
 
@@ -167,10 +180,11 @@ public class AdminViewForm extends JFrame {
             }
         });
 
-        this.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                mp.exit();
-                super.windowClosing(e);
+        lbUsernameLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                new editUser(mediacenter, username);
             }
         });
     }

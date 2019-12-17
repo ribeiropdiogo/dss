@@ -52,7 +52,7 @@ public class RemoteMediaCenter implements MediaCenterInterface {
             } else if (r.equals("okuser")) {
                 MainView md = new MainView(this, username);
             } else if (r.equals("okadmin")) {
-                AdminViewForm md = new AdminViewForm(this);
+                AdminViewForm md = new AdminViewForm(this, username);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -99,12 +99,24 @@ public class RemoteMediaCenter implements MediaCenterInterface {
         out.flush();
     }
 
-    public void alteraPass(String idConta, String pOld, String pNew, String pNewC) {
-
+    public void alteraPass(String idConta, String pOld, String pNew, String pNewC) throws PasswordFracaException, PasswordIncorretaException {
+        out.println("alteraPass " + idConta + " " + pOld + " " + pNew + " "+ pNewC);
+        out.flush();
+        try {
+            String r = in.readLine();
+            if (r.equals("nopassmatch")) {
+                throw new PasswordIncorretaException("The old password you've entered doesn't match!");
+            } else if (r.equals("weakpass")) {
+                throw new PasswordFracaException("The password you've entered is too weak!");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void alteraEmail(String idConta, String newMl) {
-
+        out.println("alteraEmail " + idConta + " " + newMl);
+        out.flush();
     }
 
     public String[] getCategorias(long idContent) {

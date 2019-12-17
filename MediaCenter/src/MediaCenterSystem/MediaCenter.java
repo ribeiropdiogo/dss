@@ -138,9 +138,6 @@ public class MediaCenter {
     public void alteraPass(String idConta, String pOld, String pNew, String pNewC)
             throws PasswordFracaException, PasswordIncorretaException {
 
-        if (!pNew.equals(pNewC))
-            throw new PasswordIncorretaException("A confirmação da password está incorreta!");
-
         if (isWeakPassword(pNew))
             throw new PasswordFracaException("A sua password é demasiado fraca, deve colocar números e letras!");
 
@@ -396,7 +393,7 @@ public class MediaCenter {
     }
 
     private boolean isWeakPassword(String pass) {
-        return true;
+        return false;
     }
 
     private Cadastrado getUser(String id) throws UtilizadorInexistenteException {

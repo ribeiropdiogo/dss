@@ -75,7 +75,21 @@ public class ServerWorker implements Runnable {
 
                         System.out.println("> Login from "+ops[1]);
                         break;
-
+                    case "alteraPass":
+                        try {
+                            this.md.alteraPass(ops[1],ops[2],ops[3],ops[4]);
+                            out.println("allok");
+                        } catch (PasswordIncorretaException exc) {
+                            out.println("nopassmatch");
+                        } catch (PasswordFracaException exc) {
+                            out.println("weakpass");
+                        } finally {
+                            out.flush();
+                        }
+                        break;
+                    case "alteraEmail":
+                        this.md.alteraEmail(ops[1],ops[2]);
+                        break;
                     case "logout":
                         this.md.logout();
                         System.out.println("> Logout");
