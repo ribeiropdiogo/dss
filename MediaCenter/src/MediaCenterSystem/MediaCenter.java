@@ -468,6 +468,7 @@ public class MediaCenter {
         u.addPlaylist(pl);
 
         membros.put(idConta, u);
+        playlists.put(pl.getId(), pl);
     }
 
     private String[] playlist2arr(Object o) {

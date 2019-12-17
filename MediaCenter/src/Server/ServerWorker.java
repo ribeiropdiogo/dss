@@ -22,6 +22,7 @@ public class ServerWorker implements Runnable {
         System.out.println("> New client has established connection from " + socket.getRemoteSocketAddress());
         String[][] a;
         String[] vec;
+        String[] parametros;
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -81,11 +82,26 @@ public class ServerWorker implements Runnable {
                         break;
 
                     case "upload":
-                        String[] parametros = data.split("_");
+                        parametros = data.split("_");
                         this.md.upload(parametros[1],parametros[2],1,1,parametros[3],parametros[4],parametros[5]);
                         //System.out.println("> Uploaded file from "+ops[1]);
                         break;
-
+                    case "randomPlaylist":
+                        parametros = data.split("_");
+                        this.md.randomPlaylist(parametros[1],parametros[2],parametros[3]);
+                        break;
+                    case "newPlaylistCat":
+                        parametros = data.split("_");
+                        this.md.newPlaylist(parametros[1],parametros[2],parametros[3],parametros[4]);
+                        break;
+                    case "artistPlaylist":
+                        parametros = data.split("_");
+                        this.md.artistPlaylist(parametros[1],parametros[2],parametros[3],parametros[4]);
+                        break;
+                    case "newPlaylist":
+                        parametros = data.split("_");
+                        this.md.newPlaylist(parametros[1],parametros[2],parametros[3]);
+                        break;
                     case "download":
                             this.md.download(Integer.parseInt(ops[1]));
                             System.out.println("> Downloading file");

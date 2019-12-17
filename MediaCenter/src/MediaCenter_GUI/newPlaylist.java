@@ -1,5 +1,7 @@
 package MediaCenter_GUI;
 
+import Client.MediaCenterInterface;
+
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -34,7 +36,7 @@ public class newPlaylist extends JFrame
         thenewPlaylist.dispose();
     }
 
-    public newPlaylist()
+    public newPlaylist(MediaCenterInterface mediacenter, String username)
     {
         super( "New Playlist" );
         thenewPlaylist=this;
@@ -161,6 +163,25 @@ public class newPlaylist extends JFrame
         btConfirm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String option = String.valueOf(cmbCombo.getSelectedItem());
+                String nome = tfNome.getText();
+                String desc = taDescricao.getText();
+                String extra = tfText1.getText();
+                switch(option) {
+                    case "Random":
+                        mediacenter.randomPlaylist(username,nome,desc);
+                        break;
+                    case "By Category":
+                        mediacenter.newPlaylist(username,nome,desc,extra);
+                        break;
+                    case "By Artist":
+                        mediacenter.artistPlaylist(username,nome,desc,extra);
+                        break;
+                    case "Simple":
+                        mediacenter.newPlaylist(username,nome,desc);
+                        break;
+                }
+                new MessageDialog("Success", "Playlist created with success");
                 thenewPlaylist.closeWindow();
             }
         });

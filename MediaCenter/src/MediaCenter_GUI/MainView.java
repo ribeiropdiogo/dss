@@ -530,7 +530,7 @@ public class MainView extends JFrame {
         btNewPlaylistButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                newPlaylist np = new newPlaylist();
+                newPlaylist np = new newPlaylist(mediacenter,username);
             }
         });
 

@@ -172,19 +172,23 @@ public class RemoteMediaCenter implements MediaCenterInterface {
     }
 
     public void randomPlaylist(String idConta, String nome, String desc) {
-
+        out.println("randomPlaylist _"+idConta+"_"+nome+"_"+desc+"_");
+        out.flush();
     }
 
     public void newPlaylist(String idConta, String nome, String desc, String cat) {
-
+        out.println("newPlaylistCat _"+idConta+"_"+nome+"_"+desc+"_"+cat+"_");
+        out.flush();
     }
 
     public void artistPlaylist(String idConta, String nome, String desc, String artista) {
-
+        out.println("artistPlaylist _"+idConta+"_"+nome+"_"+desc+"_"+artista+"_");
+        out.flush();
     }
 
     public void newPlaylist(String idConta, String nome, String desc) {
-
+        out.println("newPlaylist _"+idConta+"_"+nome+"_"+desc+"_");
+        out.flush();
     }
 
     public List<Par<Long, String>> getPlaylists(String idConta) {
