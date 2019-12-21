@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<jpanel name="Panel0" title="" class="0" bordered="0" scrollbars="0" x="0" y="0" dx="0" dy="0" wx="0" wy="0" fill="0" anchor="0" insets="0,0,0,0" maxx="20" maxy="20">
+   <jlabel name="UsernameLabel" title="username:" scrollbars="0" x="1" y="1" dx="6" dy="2" wx="1" wy="0" fill="0" anchor="13" insets="15,15,5,0">
+   </jlabel>
+   <jlabel name="EmailLabel" title="email:" scrollbars="0" x="1" y="4" dx="6" dy="2" wx="1" wy="0" fill="0" anchor="13" insets="0,15,5,0">
+   </jlabel>
+   <jlabel name="PasswordLabel" title="password:" scrollbars="0" x="1" y="7" dx="6" dy="2" wx="1" wy="0" fill="0" anchor="13" insets="0,15,15,0">
+   </jlabel>
+   <jtextfield name="Text0" x="8" y="1" dx="9" dy="2" wx="1" wy="0" fill="2" anchor="17" insets="15,0,5,35">
+   </jtextfield>
+   <jtextfield name="Text1" x="8" y="4" dx="9" dy="2" wx="1" wy="0" fill="2" anchor="17" insets="0,0,5,35">
+   </jtextfield>
+   <jtextfield name="Text2" x="8" y="7" dx="9" dy="2" wx="1" wy="0" fill="2" anchor="17" insets="0,0,15,35">
+   </jtextfield>
+   <jradiobutton name="RdBut0" title="User" x="3" y="10" dx="4" dy="2" wx="1" wy="0" fill="0" anchor="13" insets="0,0,0,0">
+      <property name="selected">true</property>
+   </jradiobutton>
+   <jradiobutton name="RdBut1" title="Admin" x="8" y="10" dx="4" dy="2" wx="1" wy="0" fill="0" anchor="17" insets="0,0,0,0">
+   </jradiobutton>
+   <jbutton name="But1" title="Create" x="8" y="13" dx="4" dy="1" wx="1" wy="0" fill="0" anchor="17" insets="0,0,0,15">
+   </jbutton>
+</jpanel>
